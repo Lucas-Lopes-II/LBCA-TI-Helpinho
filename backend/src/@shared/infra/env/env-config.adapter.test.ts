@@ -17,4 +17,10 @@ describe('EnvConfig integration tests', () => {
 
     expect(result).toStrictEqual(3001);
   });
+
+  it('should return the enviroment USERS_TABLE_NAME', async () => {
+    const result = sut.getUsersTableName();
+
+    expect(result).toStrictEqual('Users');
+  });
 });

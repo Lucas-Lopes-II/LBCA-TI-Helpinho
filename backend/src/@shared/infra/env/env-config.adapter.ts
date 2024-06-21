@@ -9,6 +9,6 @@ export class EnvConfig implements IEnvConfig {
   }
 
   public getUsersTableName(): string {
-    return String(process?.env?.USERS_TABLE_NAME);
+    return String(process?.env?.USERS_TABLE);
   }
 }

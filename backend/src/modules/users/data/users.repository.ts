@@ -44,7 +44,7 @@ export class UsersRepository implements IUsersRepository {
         const item = Items[0];
         return {
           id: item.id.S,
-          name: item.nome.S,
+          name: item.name.S,
           email: item.email.S,
           fone: item.fone.S,
           password: item.password.S,

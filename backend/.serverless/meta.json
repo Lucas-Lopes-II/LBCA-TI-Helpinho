@@ -1,0 +1,103 @@
+{
+  "C:\\Users\\lylopes\\Documents\\code\\LBCA-TI-Helpinho\\backend": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.5",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {},
+    "composeServiceName": null,
+    "servicePath": "C:\\Users\\lylopes\\Documents\\code\\LBCA-TI-Helpinho\\backend",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "lucaslopes2",
+      "app": "helpinho",
+      "service": "helpinho",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true
+      },
+      "package": {
+        "individually": true
+      },
+      "functions": {
+        "main": {
+          "handler": "src/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "method": "any",
+                "path": "/{proxy+}"
+              }
+            }
+          ]
+        }
+      },
+      "plugins": [
+        "serverless-jetpack",
+        "serverless-offline"
+      ]
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\r\norg: lucaslopes2\r\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\r\napp: helpinho\r\nservice: helpinho\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n\r\npackage:\r\n  individually: true\r\n\r\nfunctions:\r\n  main:\r\n    handler: src/lambda.handler\r\n    events:\r\n      - http:\r\n          method: any\r\n          path: /{proxy+}\r\n\r\nplugins:\r\n  - serverless-jetpack\r\n  - serverless-offline",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "error": {
+      "message": "Serverless plugin \"serverless-jetpack\" not found. Make sure it's installed and listed in the \"plugins\" section of your serverless config file. Use the --debug flag to learn more.",
+      "stack": "ServerlessError2: Serverless plugin \"serverless-jetpack\" not found. Make sure it's installed and listed in the \"plugins\" section of your serverless config file. Use the --debug flag to learn more.\n    at PluginManager.resolveServicePlugins (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1028:2667)\n    at async PluginManager.loadAllPlugins (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1028:1293)\n    at async Serverless.init (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1035:9760)\n    at async runFramework (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1079:880)\n    at async route (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1088:14692)\n    at async Object.run2 [as run] (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1088:15090)\n    at async run3 (file:///C:/Users/lylopes/.serverless/releases/4.1.5/package/dist/sf-core.js:1088:16324)",
+      "code": "PLUGIN_NOT_FOUND"
+    },
+    "params": {},
+    "machineId": "d6884c7eaa7facf65e1c3ee0f15e0259",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "ecf7954c-ff4d-4858-b94d-ec67d2aafb2f",
+    "orgName": "lucaslopes2",
+    "userId": "NPg1YT4pRXDFR9vr7R",
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": false,
+        "monitoring": false
+      },
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": "ZsPGRRJcMRfdDkqYPS",
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "lucaslopes2",
+    "subscription": null,
+    "userEmail": "lucas.santos.pessoal@outlook.com",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "590183756622",
+    "versionSf": "4.1.5",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:590183756622:stack/SFSetup-eee013/66e84c00-2fe9-11ef-a197-0eb8e641de69",
+    "serviceProviderAwsCfStackCreated": "2024-06-21T16:14:57.350Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "REVIEW_IN_PROGRESS",
+    "serviceProviderAwsCfStackOutputs": null
+  },
+  "unknown": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.5",
+    "isWithinCompose": false,
+    "composeOrgName": null,
+    "composeServiceName": null,
+    "command": [
+      "support"
+    ],
+    "options": {},
+    "error": null,
+    "machineId": "d6884c7eaa7facf65e1c3ee0f15e0259",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

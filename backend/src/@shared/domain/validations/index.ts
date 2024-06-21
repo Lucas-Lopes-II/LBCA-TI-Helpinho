@@ -6,4 +6,5 @@ export * from './strong-password.validation';
 export * from './min-value-field.validation';
 export * from './max-value-field.validation';
 export * from './min-length-field.validation';
+export * from './max-length-field.validation';
 // export * from './';

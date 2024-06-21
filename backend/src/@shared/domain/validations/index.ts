@@ -1,6 +1,7 @@
 export * from './validator';
 export * from './enum.validation';
 export * from './uuid.validation';
+export * from './email.validation';
 export * from './validation.inteface';
 export * from './iso-date.validation';
 export * from './required-field.validation';

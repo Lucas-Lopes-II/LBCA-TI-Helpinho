@@ -4,6 +4,7 @@ export * from './uuid.validation';
 export * from './email.validation';
 export * from './validation.inteface';
 export * from './iso-date.validation';
+export * from './validation.composite';
 export * from './required-field.validation';
 export * from './strong-password.validation';
 export * from './min-value-field.validation';

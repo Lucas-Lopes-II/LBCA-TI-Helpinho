@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@users/*": ["src/modules/users/*"]
+      "@users/*": ["src/modules/users/*"],
+      "@shared/*": ["src/@shared/*"]
      },
     "incremental": true,
     "skipLibCheck": true,

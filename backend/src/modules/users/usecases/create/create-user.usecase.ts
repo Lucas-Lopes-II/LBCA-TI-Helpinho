@@ -1,12 +1,11 @@
 import { DefaultUseCase } from '@shared/application/usecases';
-import { UnauthorizedError } from '@shared/domain/errors';
+import { ConflictError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
 import { IUsersRepository } from '@users/data';
 import { randomUUID } from 'crypto';
 
 export namespace CreateUser {
   export type Input = {
-    id: string;
     name: string;
     email: string;
     fone: string;
@@ -27,7 +26,7 @@ export namespace CreateUser {
         input.email,
       );
       if (hasUserWithGivenEmail) {
-        throw new UnauthorizedError('Já existe registro com este email');
+        throw new ConflictError('Já existe registro com este email');
       }
 
       this.userRepository.create({

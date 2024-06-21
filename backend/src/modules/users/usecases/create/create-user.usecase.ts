@@ -1,6 +1,7 @@
 import { DefaultUseCase } from '@shared/application/usecases';
 import { ConflictError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
+import { IHasher } from '@shared/infra/crypto/hasher';
 import { IUsersRepository } from '@users/data';
 import { randomUUID } from 'crypto';
 
@@ -18,6 +19,7 @@ export namespace CreateUser {
     constructor(
       private readonly userRepository: IUsersRepository,
       private readonly validator: Validation,
+      private readonly hasher: IHasher,
     ) {}
 
     public async execute(input: Input): Promise<Output> {
@@ -29,12 +31,14 @@ export namespace CreateUser {
         throw new ConflictError('Já existe registro com este email');
       }
 
+      const hashedPassword = await this.hasher.hash(input.password);
+
       this.userRepository.create({
         id: randomUUID(),
         email: input.email,
         name: input.name,
         fone: input.fone,
-        password: input.password,
+        password: hashedPassword,
       });
     }
   }

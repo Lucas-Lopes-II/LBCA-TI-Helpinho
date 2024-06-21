@@ -3,6 +3,7 @@ import { IUsersRepository } from '@users/data';
 import { CreateUser } from './create-user.usecase';
 import { ConflictError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
+import { IHasher } from '@shared/infra/crypto/hasher';
 
 describe('CreateUserUseCase unit tests', () => {
   const mockedInput: CreateUser.Input = {
@@ -15,6 +16,7 @@ describe('CreateUserUseCase unit tests', () => {
   let sut: CreateUser.UseCase;
   let mockedUserRepo: IUsersRepository;
   let mockedValidator: Validation;
+  let mockedHasher: IHasher;
 
   beforeEach(() => {
     mockedUserRepo = {
@@ -24,7 +26,10 @@ describe('CreateUserUseCase unit tests', () => {
     mockedValidator = {
       validate: jest.fn().mockResolvedValue(null),
     } as any as Validation;
-    sut = new CreateUser.UseCase(mockedUserRepo, mockedValidator);
+    mockedHasher = {
+      hash: jest.fn().mockResolvedValue('hashed password'),
+    } as any as IHasher;
+    sut = new CreateUser.UseCase(mockedUserRepo, mockedValidator, mockedHasher);
   });
 
   it('should create an user', async () => {
@@ -32,6 +37,7 @@ describe('CreateUserUseCase unit tests', () => {
 
     expect(mockedUserRepo.findByEmail).toHaveBeenCalledTimes(1);
     expect(mockedValidator.validate).toHaveBeenCalledTimes(1);
+    expect(mockedHasher.hash).toHaveBeenCalledTimes(1);
     expect(mockedUserRepo.create).toHaveBeenCalledTimes(1);
   });
 
@@ -55,6 +61,14 @@ describe('CreateUserUseCase unit tests', () => {
 
   it('should throw if validator.validate throws', async () => {
     jest.spyOn(mockedValidator, 'validate').mockImplementationOnce(() => {
+      throw new Error('');
+    });
+
+    expect(sut.execute(mockedInput)).rejects.toThrow();
+  });
+
+  it('should throw if hasher.hash throws', async () => {
+    jest.spyOn(mockedHasher, 'hash').mockImplementationOnce(() => {
       throw new Error('');
     });
 

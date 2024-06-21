@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
-import { configure as serverlessExpress } from '@vendia/serverless-express';
+import { configure as serverlessExpress } from '@codegenie/serverless-express';
 import { globalExeptionFiltersFactory } from '@shared/infra/exception-filters';
 
 let cachedServer;

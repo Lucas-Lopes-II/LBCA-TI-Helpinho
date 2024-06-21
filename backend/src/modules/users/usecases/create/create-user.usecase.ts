@@ -1,9 +1,9 @@
-import { DefaultUseCase } from '@shared/application/usecases';
+import { randomUUID } from 'node:crypto';
+import { IUsersRepository } from '@users/data';
+import { IHasher } from '@shared/infra/crypto/hasher';
 import { ConflictError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
-import { IHasher } from '@shared/infra/crypto/hasher';
-import { IUsersRepository } from '@users/data';
-import { randomUUID } from 'crypto';
+import { DefaultUseCase } from '@shared/application/usecases';
 
 export namespace CreateUser {
   export type Input = {

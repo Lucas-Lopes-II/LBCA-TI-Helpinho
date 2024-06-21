@@ -1,0 +1,24 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: lucaslopes2
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: helpinho
+service: helpinho
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+package:
+  individually: true
+
+functions:
+   api:
+    handler: src/lambda.handler
+    events:
+      - httpApi:
+          method: any
+          path: /{proxy+}
+
+plugins:
+  - serverless-jetpack
+  - serverless-offline

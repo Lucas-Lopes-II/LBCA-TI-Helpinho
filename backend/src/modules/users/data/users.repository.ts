@@ -3,6 +3,8 @@ import {
   DynamoDBClient,
   PutItemCommand,
   QueryCommand,
+  ReturnValue,
+  UpdateItemCommand,
 } from '@aws-sdk/client-dynamodb';
 import { InternalServerError } from '@shared/domain/errors';
 import { EnvConfigFactory } from '@shared/infra/env';
@@ -130,6 +132,40 @@ export class UsersRepository implements IUsersRepository {
       console.log('delete error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao deletar usuário',
+      );
+    }
+  }
+
+  public async update(id: string, data: Partial<User>): Promise<void> {
+    const params = {
+      TableName: this.tableName,
+      Key: {
+        id: { S: id },
+      },
+      UpdateExpression:
+        'set #name = :name, #email = :email, #fone = :fone, #password = :password',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+        '#fone': 'fone',
+        '#password': 'password',
+      },
+      ExpressionAttributeValues: {
+        ':name': { S: data.name ?? null },
+        ':email': { S: data.email ?? null },
+        ':fone': { S: data.fone ?? null },
+        ':password': { S: data.password ?? null },
+      },
+      ReturnValues: ReturnValue.UPDATED_NEW,
+    };
+
+    try {
+      const command = new UpdateItemCommand(params);
+      await this.dbClient.send(command);
+    } catch (error) {
+      console.log('updateById error', error);
+      throw new InternalServerError(
+        error.message || 'Ocorreu um erro ao atualizar usuário',
       );
     }
   }

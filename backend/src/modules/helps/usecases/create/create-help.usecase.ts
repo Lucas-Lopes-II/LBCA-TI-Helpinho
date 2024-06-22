@@ -37,7 +37,11 @@ export namespace CreateHelp {
         throw new NotFoundError('Usuário não criador não encontrado');
       }
 
-      const { fileUrl } = await this.storage.upload(input.file, 'hepls');
+      const { fileUrl } = await this.storage.upload(
+        input.file,
+        'hepls',
+        user.id,
+      );
       await this.repository.create({
         id: randomUUID(),
         title: input.title,

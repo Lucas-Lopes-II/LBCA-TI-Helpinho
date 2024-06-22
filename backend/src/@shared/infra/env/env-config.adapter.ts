@@ -25,6 +25,6 @@ export class EnvConfig implements IEnvConfig {
   }
 
   public getSecretKeyToken(): string {
-    return String(process?.env?.BUCKET_URL);
+    return String(process?.env?.SECRET_TOKEN);
   }
 }

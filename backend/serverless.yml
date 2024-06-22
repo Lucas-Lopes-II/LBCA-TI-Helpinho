@@ -40,6 +40,7 @@ provider:
     HELP_TABLE: ${self:custom.helpTable}
     BUCKET_NAME: ${self:custom.bucketName}
     BUCKET_URL: ${self:custom.urlBucket}
+    SECRET_TOKEN: ${sls:stage}-djfoqr=jgrk8usdfçlgp-+++99+-dgfrds+g+gewf
     
 
 package:

@@ -7,5 +7,5 @@ export interface StorageResponseDto {
 export interface IStorage<T = StorageResponseDto> {
   upload(data: FileDTO, folder: string, hash?: string): Promise<T>;
 
-  delete(folder: string, fileUrl: string): Promise<void>;
+  delete(fileUrl: string): Promise<void>;
 }

@@ -5,8 +5,11 @@ app: helpinho
 service: helpinho
 
 custom:
+  region: "us-east-1"
   usersTable: "users-table-${sls:stage}"
   helpTable: "help-table-${sls:stage}"
+  bucketName: "helpinho-test"
+  urlBucket: "https://helpinho-test.s3.amazonaws.com"
 
 provider:
   name: aws
@@ -19,29 +22,32 @@ provider:
   timeout: 15
   iam:
    role:
-     statements:
-       - Effect: Allow
-         Action:
-           - dynamodb:Query
-           - dynamodb:Scan
-           - dynamodb:GetItem
-           - dynamodb:PutItem
-           - dynamodb:UpdateItem
-           - dynamodb:DeleteItem
-           - dynamodb:DescribeTable
-         Resource:
-           - Fn::GetAtt: [UsersTable, Arn]
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:DescribeTable
+          Resource: "*"
            
   environment:
+    REGION: ${self:custom.region}
     USERS_TABLE: ${self:custom.usersTable}
     HELP_TABLE: ${self:custom.helpTable}
+    BUCKET_NAME: ${self:custom.bucketName}
+    BUCKET_URL: ${self:custom.urlBucket}
+    
 
 package:
   individually: true
 
 functions:
    api:
-    handler: dist/src/lambda.handler
+    handler: dist/lambda.handler
     events:
       - httpApi:
           method: any
@@ -60,9 +66,18 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: email
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: EmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
         BillingMode: PAY_PER_REQUEST
 
     HelpTable:
@@ -71,8 +86,6 @@ resources:
         TableName: ${self:custom.helpTable}
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: S
-          - AttributeName: userRelped
             AttributeType: S
         KeySchema:
           - AttributeName: id

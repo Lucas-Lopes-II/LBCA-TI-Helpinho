@@ -30,7 +30,7 @@ export class UsersRepository implements IUsersRepository {
   public async findByEmail(email: string): Promise<User | undefined> {
     const params = {
       TableName: this.tableName,
-      IndexName: 'email',
+      IndexName: 'EmailIndex',
       KeyConditionExpression: '#email = :email',
       ExpressionAttributeNames: { '#email': 'email' },
       ExpressionAttributeValues: { ':email': { S: email } },

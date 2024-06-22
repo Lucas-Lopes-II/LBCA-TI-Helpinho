@@ -1,22 +1,64 @@
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import { FileDTO } from '@shared/infra/storage/dtos';
 import { IStorage, StorageResponseDto } from '@shared/infra/storage';
+import { InternalServerError } from '@shared/domain/errors';
+import { EnvConfigFactory } from '../env';
+import { IEnvConfig } from '@shared/domain/env';
 
 export class StorageAdapter implements IStorage {
+  private readonly envConfig: IEnvConfig;
+  private readonly s3Client: S3Client;
+  private readonly bucketUrl: string;
+  private readonly bucketName: string;
+
+  constructor() {
+    this.envConfig = EnvConfigFactory.create();
+    this.bucketName = this.envConfig.getBucketName();
+    this.bucketUrl = this.envConfig.getBucketUrl();
+    this.s3Client = new S3Client({
+      region: this.envConfig.getRegion(),
+    });
+  }
+
   public async upload(
     data: FileDTO,
     folder: string,
     hash: string = '',
   ): Promise<StorageResponseDto> {
-    console.log(data, folder, hash);
-
-    return {
-      fileUrl: 'file url',
+    const params = {
+      Bucket: this.bucketName,
+      Key: `${folder}/${hash}-${data.originalname}`,
+      Body: data.buffer,
     };
+
+    try {
+      await this.s3Client.send(new PutObjectCommand(params));
+      const signedUrl = `${this.bucketUrl}/${params.Key}`;
+
+      return {
+        fileUrl: signedUrl,
+      };
+    } catch (error) {
+      console.error('Erro ao fazer upload:', error);
+      throw new InternalServerError('Erro ao fazer upload');
+    }
   }
 
-  public async delete(folder: string, fileUrl: string): Promise<void> {
-    console.log(folder, fileUrl);
+  public async delete(fileUrl: string): Promise<void> {
+    const params = {
+      Bucket: this.bucketName,
+      Key: fileUrl.replace(`${this.bucketUrl}/`, ''),
+    };
 
-    return;
+    try {
+      await this.s3Client.send(new DeleteObjectCommand(params));
+    } catch (error) {
+      console.error('Erro ao deletar arquivo:', error);
+      throw new InternalServerError('Erro ao deletar arquivo');
+    }
   }
 }

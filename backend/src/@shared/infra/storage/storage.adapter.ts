@@ -3,11 +3,11 @@ import {
   PutObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
-import { FileDTO } from '@shared/infra/storage/dtos';
-import { IStorage, StorageResponseDto } from '@shared/infra/storage';
-import { InternalServerError } from '@shared/domain/errors';
-import { EnvConfigFactory } from '../env';
 import { IEnvConfig } from '@shared/domain/env';
+import { EnvConfigFactory } from '@shared/infra/env';
+import { FileDTO } from '@shared/infra/storage/dtos';
+import { InternalServerError } from '@shared/domain/errors';
+import { IStorage, StorageResponseDto } from '@shared/infra/storage';
 
 export class StorageAdapter implements IStorage {
   private readonly envConfig: IEnvConfig;

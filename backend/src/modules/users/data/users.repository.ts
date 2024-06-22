@@ -27,31 +27,27 @@ export class UsersRepository implements IUsersRepository {
   public async findByEmail(email: string): Promise<User | undefined> {
     const params = {
       TableName: this.tableName,
+      IndexName: 'email',
       KeyConditionExpression: '#email = :email',
-      ExpressionAttributeNames: {
-        '#email': 'email',
-      },
-      ExpressionAttributeValues: {
-        ':email': { S: email },
-      },
+      ExpressionAttributeNames: { '#email': 'email' },
+      ExpressionAttributeValues: { ':email': { S: email } },
     };
 
     try {
       const command = new QueryCommand(params);
       const { Items } = await this.dbClient.send(command);
 
-      if (Items && Items.length > 0) {
-        const item = Items[0];
-        return {
-          id: item.id.S,
-          name: item.name.S,
-          email: item.email.S,
-          fone: item.fone.S,
-          password: item.password.S,
-        };
-      }
+      if (!Items && Items.length <= 0) return undefined;
 
-      return undefined;
+      const item = Items[0];
+
+      return {
+        id: item.id.S,
+        name: item.name.S,
+        email: item.email.S,
+        fone: item.fone.S,
+        password: item.password.S,
+      };
     } catch (error) {
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao buscar usuário por email',
@@ -75,8 +71,40 @@ export class UsersRepository implements IUsersRepository {
       const command = new PutItemCommand(params);
       await this.dbClient.send(command);
     } catch (error) {
+      console.log('create error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao criar usuário',
+      );
+    }
+  }
+
+  public async findById(id: string): Promise<User> {
+    const params = {
+      TableName: this.tableName,
+      IndexName: 'id',
+      KeyConditionExpression: '#id = :id',
+      ExpressionAttributeNames: { '#id': 'id' },
+      ExpressionAttributeValues: { ':id': { S: id } },
+    };
+
+    try {
+      const command = new QueryCommand(params);
+      const { Items } = await this.dbClient.send(command);
+
+      if (!Items && Items.length <= 0) return undefined;
+
+      const item = Items[0];
+
+      return {
+        id: item.id.S,
+        name: item.name.S,
+        email: item.email.S,
+        fone: item.fone.S,
+        password: item.password.S,
+      };
+    } catch (error) {
+      throw new InternalServerError(
+        error.message || 'Ocorreu um erro ao buscar usuário por id',
       );
     }
   }

@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 
-import { UsersUseCasesFactory } from '@users/usecases';
 import { CreateUser } from './dtos';
+import { UsersRepositoryFactory } from '@users/data';
+import { UsersUseCasesFactory } from '@users/usecases';
 
 @Controller('users')
 export class UsersController {
@@ -15,5 +16,12 @@ export class UsersController {
       fone: data.fone,
       password: data.password,
     });
+  }
+
+  @Post(':email')
+  fndByEmail(@Param('email') email: string) {
+    const repo = UsersRepositoryFactory.create();
+
+    return repo.findByEmail(email);
   }
 }

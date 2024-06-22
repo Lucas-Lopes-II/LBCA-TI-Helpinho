@@ -1,4 +1,5 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
   QueryCommand,
@@ -37,18 +38,21 @@ export class UsersRepository implements IUsersRepository {
       const command = new QueryCommand(params);
       const { Items } = await this.dbClient.send(command);
 
-      if (!Items && Items.length <= 0) return undefined;
+      if (Items && Items.length > 0) {
+        const item = Items[0];
 
-      const item = Items[0];
+        return {
+          id: item.id.S,
+          name: item.name.S,
+          email: item.email.S,
+          fone: item.fone.S,
+          password: item.password.S,
+        };
+      }
 
-      return {
-        id: item.id.S,
-        name: item.name.S,
-        email: item.email.S,
-        fone: item.fone.S,
-        password: item.password.S,
-      };
+      return undefined;
     } catch (error) {
+      console.log('findByEmail error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao buscar usuário por email',
       );
@@ -71,6 +75,7 @@ export class UsersRepository implements IUsersRepository {
       const command = new PutItemCommand(params);
       await this.dbClient.send(command);
     } catch (error) {
+      console.log('create error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao criar usuário',
       );
@@ -90,20 +95,41 @@ export class UsersRepository implements IUsersRepository {
       const command = new QueryCommand(params);
       const { Items } = await this.dbClient.send(command);
 
-      if (!Items && Items.length <= 0) return undefined;
+      if (Items && Items.length > 0) {
+        const item = Items[0];
 
-      const item = Items[0];
+        return {
+          id: item.id.S,
+          name: item.name.S,
+          email: item.email.S,
+          fone: item.fone.S,
+          password: item.password.S,
+        };
+      }
 
-      return {
-        id: item.id.S,
-        name: item.name.S,
-        email: item.email.S,
-        fone: item.fone.S,
-        password: item.password.S,
-      };
+      return undefined;
     } catch (error) {
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao buscar usuário por id',
+      );
+    }
+  }
+
+  public async delete(id: string): Promise<void> {
+    const params = {
+      TableName: this.tableName,
+      Key: {
+        id: { S: id },
+      },
+    };
+
+    try {
+      const command = new DeleteItemCommand(params);
+      await this.dbClient.send(command);
+    } catch (error) {
+      console.log('delete error', error);
+      throw new InternalServerError(
+        error.message || 'Ocorreu um erro ao deletar usuário',
       );
     }
   }

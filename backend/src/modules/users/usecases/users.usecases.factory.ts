@@ -8,11 +8,14 @@ import {
   ValidationComposite,
 } from '@shared/domain/validations';
 import { UsersRepositoryFactory } from '@users/data';
-import { DeleteUser } from './delete/delete-user.usecase';
-import { CreateUser } from './create/create-user.usecase';
+import {
+  DeleteUser,
+  CreateUser,
+  ChangePassword,
+  FindUserById,
+} from '@users/usecases';
 import { hasherFactory } from '@shared/infra/crypto/hasher';
 import { DefaultUseCase } from '@shared/application/usecases';
-import { ChangePassword } from './change-password/change-password.usecase';
 
 export class UsersUseCasesFactory {
   private static readonly userRepository = UsersRepositoryFactory.create();
@@ -65,5 +68,17 @@ export class UsersUseCasesFactory {
       validator,
       this.hasher,
     );
+  }
+
+  public static findUserById(): DefaultUseCase<
+    FindUserById.Input,
+    FindUserById.Output
+  > {
+    const validators: Validation<FindUserById.Input>[] = [
+      new UUIDValidation('userId'),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new FindUserById.UseCase(this.userRepository, validator);
   }
 }

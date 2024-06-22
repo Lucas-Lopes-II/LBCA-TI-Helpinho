@@ -1,4 +1,4 @@
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from 'bcryptjs';
 import { IHasher } from '@shared/infra/crypto/hasher';
 
 export class BcryptAdapter implements IHasher {

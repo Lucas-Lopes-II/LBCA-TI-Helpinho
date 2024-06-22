@@ -11,4 +11,16 @@ export class EnvConfig implements IEnvConfig {
   public getUsersTableName(): string {
     return String(process?.env?.USERS_TABLE);
   }
+
+  public getRegion(): string {
+    return String(process?.env?.REGION);
+  }
+
+  public getBucketName(): string {
+    return String(process?.env?.BUCKET_NAME);
+  }
+
+  public getBucketUrl(): string {
+    return String(process?.env?.BUCKET_URL);
+  }
 }

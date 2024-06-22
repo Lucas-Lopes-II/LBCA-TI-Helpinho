@@ -23,4 +23,22 @@ describe('EnvConfig integration tests', () => {
 
     expect(result).toStrictEqual('Users');
   });
+
+  it('should return the enviroment REGION', async () => {
+    const result = sut.getRegion();
+
+    expect(result).toStrictEqual('Region');
+  });
+
+  it('should return the enviroment BUCKET_NAME', async () => {
+    const result = sut.getBucketName();
+
+    expect(result).toStrictEqual('Bucket Name');
+  });
+
+  it('should return the enviroment BUCKET_URL', async () => {
+    const result = sut.getBucketUrl();
+
+    expect(result).toStrictEqual('Bucket Url');
+  });
 });

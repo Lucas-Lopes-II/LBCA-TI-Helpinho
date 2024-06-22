@@ -1,4 +1,10 @@
 import {
+  DeleteUser,
+  CreateUser,
+  ChangePassword,
+  FindUserById,
+} from '@users/usecases';
+import {
   EmailValidation,
   MaxLengthFieldValidation,
   MinLengthFieldValidation,
@@ -8,12 +14,6 @@ import {
   ValidationComposite,
 } from '@shared/domain/validations';
 import { UsersRepositoryFactory } from '@users/data';
-import {
-  DeleteUser,
-  CreateUser,
-  ChangePassword,
-  FindUserById,
-} from '@users/usecases';
 import { hasherFactory } from '@shared/infra/crypto/hasher';
 import { DefaultUseCase } from '@shared/application/usecases';
 

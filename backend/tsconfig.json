@@ -12,6 +12,7 @@
     "baseUrl": "./",
     "paths": {
       "@users/*": ["src/modules/users/*"],
+      "@helps/*": ["src/modules/helps/*"],
       "@shared/*": ["src/@shared/*"]
      },
     "incremental": true,

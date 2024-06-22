@@ -6,6 +6,7 @@ service: helpinho
 
 custom:
   usersTable: "users-table-${sls:stage}"
+  helpTable: "help-table-${sls:stage}"
 
 provider:
   name: aws
@@ -33,6 +34,7 @@ provider:
            
   environment:
     USERS_TABLE: ${self:custom.usersTable}
+    HELP_TABLE: ${self:custom.helpTable}
 
 package:
   individually: true
@@ -58,6 +60,21 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    HelpTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.helpTable}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: userRelped
+            AttributeType: S
+          - AttributeName: helpers
+            AttributeType: SS
         KeySchema:
           - AttributeName: id
             KeyType: HASH

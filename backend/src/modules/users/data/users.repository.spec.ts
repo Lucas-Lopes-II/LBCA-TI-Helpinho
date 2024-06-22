@@ -101,7 +101,7 @@ describe('UsersRepository unit tests', () => {
 
   describe('findById', () => {
     it('should find an user by id', async () => {
-      const result = await sut.findById(data.email);
+      const result = await sut.findById(data.id);
 
       expect(result).toStrictEqual(data);
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -112,7 +112,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.findById(data.email)).rejects.toThrow(
+      expect(sut.findById(data.id)).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -122,8 +122,36 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.findById(data.email)).rejects.toThrow(
+      expect(sut.findById(data.id)).rejects.toThrow(
         new InternalServerError('Ocorreu um erro ao buscar usuário por id'),
+      );
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete an user by id', async () => {
+      await sut.delete(data.id);
+
+      expect(mockedClientDB.send).toHaveBeenCalled();
+    });
+
+    it('should throw if mockedClientDB.send throws error with message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('teste de erro');
+      });
+
+      expect(sut.delete(data.id)).rejects.toThrow(
+        new InternalServerError('teste de erro'),
+      );
+    });
+
+    it('should throw if mockedClientDB.send throws error without message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('');
+      });
+
+      expect(sut.delete(data.id)).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao deletar usuário'),
       );
     });
   });

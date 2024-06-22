@@ -1,13 +1,12 @@
-import { envConfigFactory } from '@shared/infra/env';
 import { IJsonWebToken } from './jwt.interface';
 import { JsonWebTokenAdapter } from './jesonwebtoken/jesonwebtoken.adapter';
+import { EnvConfigFactory } from '../env';
 
 export class JwtFactory {
-  public static create(): IJsonWebToken {
-    const envConfig = envConfigFactory();
-    const secretKey = envConfig.getSecretKeyToken();
+  private static readonly envConfig = EnvConfigFactory.create();
 
-    return new JsonWebTokenAdapter(secretKey);
+  public static create(): IJsonWebToken {
+    return new JsonWebTokenAdapter(this.envConfig.getSecretKeyToken());
   }
 
   public static createWithGivenSecretKey(secretKey: string): IJsonWebToken {

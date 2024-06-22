@@ -13,6 +13,7 @@
     "paths": {
       "@users/*": ["src/modules/users/*"],
       "@helps/*": ["src/modules/helps/*"],
+      "@auth/*": ["src/modules/auth/*"],
       "@shared/*": ["src/@shared/*"]
      },
     "incremental": true,

@@ -18,7 +18,7 @@ export namespace DeleteUser {
     ) {}
 
     public async execute({ actionDoneBy, userId }: Input): Promise<Output> {
-      this.validator.validate(userId);
+      this.validator.validate({ userId, actionDoneBy });
 
       const actionIsNotDoneByOwnUser = actionDoneBy !== userId;
       if (actionIsNotDoneByOwnUser) {

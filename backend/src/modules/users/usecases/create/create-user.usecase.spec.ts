@@ -51,7 +51,7 @@ describe('CreateUserUseCase unit tests', () => {
     );
   });
 
-  it('should throw if mockedUserDataGateway.findByEmail throws', async () => {
+  it('should throw if mockedUserRepo.findByEmail throws', async () => {
     jest.spyOn(mockedUserRepo, 'findByEmail').mockImplementationOnce(() => {
       throw new Error('');
     });

@@ -71,7 +71,6 @@ export class UsersRepository implements IUsersRepository {
       const command = new PutItemCommand(params);
       await this.dbClient.send(command);
     } catch (error) {
-      console.log('create error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao criar usuário',
       );

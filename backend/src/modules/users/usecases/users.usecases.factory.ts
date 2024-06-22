@@ -12,6 +12,7 @@ import { DeleteUser } from './delete/delete-user.usecase';
 import { CreateUser } from './create/create-user.usecase';
 import { hasherFactory } from '@shared/infra/crypto/hasher';
 import { DefaultUseCase } from '@shared/application/usecases';
+import { ChangePassword } from './change-password/change-password.usecase';
 
 export class UsersUseCasesFactory {
   private static readonly userRepository = UsersRepositoryFactory.create();
@@ -48,5 +49,21 @@ export class UsersUseCasesFactory {
     const validator = new ValidationComposite(validators);
 
     return new DeleteUser.UseCase(this.userRepository, validator);
+  }
+
+  public static changePassword(): DefaultUseCase<
+    ChangePassword.Input,
+    ChangePassword.Output
+  > {
+    const validators: Validation<ChangePassword.Input>[] = [
+      new StrongPasswordValidation('newPassword'),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new ChangePassword.UseCase(
+      this.userRepository,
+      validator,
+      this.hasher,
+    );
   }
 }

@@ -12,7 +12,7 @@ import {
 } from '@shared/domain/validations';
 
 export class UsersUseCasesFactory {
-  public static readonly userRepository = UsersRepositoryFactory.create();
+  private static readonly userRepository = UsersRepositoryFactory.create();
 
   public static createUser(): DefaultUseCase<
     CreateUser.Input,

@@ -78,6 +78,16 @@ describe('UsersRepository unit tests', () => {
       expect(mockedClientDB.send).toHaveBeenCalled();
     });
 
+    it('should return undefined', async () => {
+      jest
+        .spyOn(mockedClientDB, 'send')
+        .mockResolvedValueOnce(undefined as never);
+      const result = await sut.findById(data.email);
+
+      expect(result).toStrictEqual(undefined);
+      expect(mockedClientDB.send).toHaveBeenCalled();
+    });
+
     it('should throw if mockedClientDB.send throws error with message', async () => {
       jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
         throw new Error('teste de erro');
@@ -104,6 +114,16 @@ describe('UsersRepository unit tests', () => {
       const result = await sut.findById(data.id);
 
       expect(result).toStrictEqual(data);
+      expect(mockedClientDB.send).toHaveBeenCalled();
+    });
+
+    it('should return undefined', async () => {
+      jest
+        .spyOn(mockedClientDB, 'send')
+        .mockResolvedValueOnce(undefined as never);
+      const result = await sut.findById(data.id);
+
+      expect(result).toStrictEqual(undefined);
       expect(mockedClientDB.send).toHaveBeenCalled();
     });
 
@@ -168,7 +188,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.update(data.id, { name: 'new name' })).rejects.toThrow(
+      expect(sut.update(data.id, { email: 'new name' })).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -178,7 +198,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.update(data.id, { name: 'new name' })).rejects.toThrow(
+      expect(sut.update(data.id, { password: 'new name' })).rejects.toThrow(
         new InternalServerError('Ocorreu um erro ao atualizar usuário'),
       );
     });

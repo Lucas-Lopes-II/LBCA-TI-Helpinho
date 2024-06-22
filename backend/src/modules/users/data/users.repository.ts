@@ -38,10 +38,10 @@ export class UsersRepository implements IUsersRepository {
 
     try {
       const command = new QueryCommand(params);
-      const { Items } = await this.dbClient.send(command);
+      const result = await this.dbClient.send(command);
 
-      if (Items && Items.length > 0) {
-        const item = Items[0];
+      if (result?.Items && result?.Items.length > 0) {
+        const item = result?.Items[0];
 
         return {
           id: item.id.S,
@@ -84,7 +84,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  public async findById(id: string): Promise<User> {
+  public async findById(id: string): Promise<User | undefined> {
     const params = {
       TableName: this.tableName,
       IndexName: 'id',
@@ -95,10 +95,10 @@ export class UsersRepository implements IUsersRepository {
 
     try {
       const command = new QueryCommand(params);
-      const { Items } = await this.dbClient.send(command);
+      const result = await this.dbClient.send(command);
 
-      if (Items && Items.length > 0) {
-        const item = Items[0];
+      if (result?.Items && result?.Items.length > 0) {
+        const item = result?.Items[0];
 
         return {
           id: item.id.S,

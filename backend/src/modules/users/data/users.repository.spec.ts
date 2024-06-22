@@ -155,4 +155,32 @@ describe('UsersRepository unit tests', () => {
       );
     });
   });
+
+  describe('update', () => {
+    it('should update an user', async () => {
+      await sut.update(data.id, { name: 'new name' });
+
+      expect(mockedClientDB.send).toHaveBeenCalled();
+    });
+
+    it('should throw if mockedClientDB.send throws error with message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('teste de erro');
+      });
+
+      expect(sut.update(data.id, { name: 'new name' })).rejects.toThrow(
+        new InternalServerError('teste de erro'),
+      );
+    });
+
+    it('should throw if mockedClientDB.send throws error without message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('');
+      });
+
+      expect(sut.update(data.id, { name: 'new name' })).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao atualizar usuário'),
+      );
+    });
+  });
 });

@@ -64,6 +64,7 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
     HelpTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -73,8 +74,6 @@ resources:
             AttributeType: S
           - AttributeName: userRelped
             AttributeType: S
-          - AttributeName: helpers
-            AttributeType: SS
         KeySchema:
           - AttributeName: id
             KeyType: HASH

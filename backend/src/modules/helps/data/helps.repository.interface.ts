@@ -5,6 +5,4 @@ export interface IHelpsRepository
   extends ICreate<Help, void>,
     IFindById<Help>,
     IDelete,
-    IUpdate<Help> {
-  findByEmail(email: string): Promise<Help | undefined>;
-}
+    IUpdate<Help> {}

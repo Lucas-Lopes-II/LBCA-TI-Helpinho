@@ -1,27 +1,38 @@
-import { User } from './user';
-import { UsersRepository } from './users.repository';
-import { randomUUID } from 'crypto';
+import { Help } from './Help';
+import { randomUUID } from 'node:crypto';
+import { HelpCategory } from '@helps/data';
+import { HelpsRepository } from './Helps.repository';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { IUsersRepository } from './users.repository.interface';
 import { InternalServerError } from '@shared/domain/errors';
+import { IHelpsRepository } from './Helps.repository.interface';
 
-describe('UsersRepository unit tests', () => {
-  let sut: IUsersRepository;
-  const data: User = {
+describe('HelpsRepository unit tests', () => {
+  let sut: IHelpsRepository;
+  const data: Help = {
     id: randomUUID(),
-    name: 'Name',
-    email: 'email@example.com',
-    fone: '85996321456',
-    password: 'Test@123',
+    category: HelpCategory.HEALTH,
+    title: 'title',
+    description: 'description',
+    pixKey: '4547897467899',
+    userRelped: randomUUID(),
+    deadline: new Date().toISOString(),
+    value: 500.0,
+    userName: 'name',
+    imgUrl: '',
   };
-  const returnedUser = {
+  const returnedHelp = {
     Items: [
       {
         id: { S: data.id },
-        name: { S: data.name },
-        email: { S: data.email },
-        fone: { S: data.fone },
-        password: { S: data.password },
+        title: { S: data.title },
+        description: { S: data.description },
+        userRelped: { S: data.userRelped },
+        userName: { S: data.userName },
+        value: { N: String(data.value) },
+        pixKey: { S: data.pixKey },
+        deadline: { S: data.deadline },
+        category: { S: data.category },
+        imgUrl: { S: data.imgUrl },
       },
     ],
   } as never;
@@ -30,9 +41,9 @@ describe('UsersRepository unit tests', () => {
   beforeAll(async () => {
     try {
       mockedClientDB = {
-        send: jest.fn().mockResolvedValue(returnedUser),
+        send: jest.fn().mockResolvedValue(returnedHelp),
       } as any as DynamoDBClient;
-      sut = UsersRepository.createInstance(mockedClientDB);
+      sut = HelpsRepository.createInstance(mockedClientDB);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +54,7 @@ describe('UsersRepository unit tests', () => {
   });
 
   describe('create', () => {
-    it('should create an user', async () => {
+    it('should create an Help', async () => {
       await sut.create(data);
 
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -54,7 +65,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.create(data)).rejects.toThrow(
+      await expect(sut.create(data)).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -64,53 +75,14 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.create(data)).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao criar usuário'),
-      );
-    });
-  });
-
-  describe('findByEmail', () => {
-    it('should find an user by email', async () => {
-      const result = await sut.findByEmail(data.email);
-
-      expect(result).toStrictEqual(data);
-      expect(mockedClientDB.send).toHaveBeenCalled();
-    });
-
-    it('should return undefined', async () => {
-      jest
-        .spyOn(mockedClientDB, 'send')
-        .mockResolvedValueOnce(undefined as never);
-      const result = await sut.findById(data.email);
-
-      expect(result).toStrictEqual(undefined);
-      expect(mockedClientDB.send).toHaveBeenCalled();
-    });
-
-    it('should throw if mockedClientDB.send throws error with message', async () => {
-      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
-        throw new Error('teste de erro');
-      });
-
-      expect(sut.findByEmail(data.email)).rejects.toThrow(
-        new InternalServerError('teste de erro'),
-      );
-    });
-
-    it('should throw if mockedClientDB.send throws error without message', async () => {
-      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
-        throw new Error('');
-      });
-
-      expect(sut.findByEmail(data.email)).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao buscar usuário por email'),
+      await expect(sut.create(data)).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao criar help'),
       );
     });
   });
 
   describe('findById', () => {
-    it('should find an user by id', async () => {
+    it('should find an Help by id', async () => {
       const result = await sut.findById(data.id);
 
       expect(result).toStrictEqual(data);
@@ -132,7 +104,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.findById(data.id)).rejects.toThrow(
+      await expect(sut.findById(data.id)).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -142,14 +114,14 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.findById(data.id)).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao buscar usuário por id'),
+      await expect(sut.findById(data.id)).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao buscar help por id'),
       );
     });
   });
 
   describe('delete', () => {
-    it('should delete an user by id', async () => {
+    it('should delete an Help by id', async () => {
       await sut.delete(data.id);
 
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -160,7 +132,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.delete(data.id)).rejects.toThrow(
+      await expect(sut.delete(data.id)).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -170,14 +142,14 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.delete(data.id)).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao deletar usuário'),
+      await expect(sut.delete(data.id)).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao deletar help'),
       );
     });
   });
 
   describe('update', () => {
-    it('should update an user', async () => {
+    it('should update an Help', async () => {
       await sut.update(data.id, { ...data });
 
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -188,7 +160,7 @@ describe('UsersRepository unit tests', () => {
         throw new Error('teste de erro');
       });
 
-      expect(sut.update(data.id, { ...data })).rejects.toThrow(
+      await expect(sut.update(data.id, { ...data })).rejects.toThrow(
         new InternalServerError('teste de erro'),
       );
     });
@@ -198,8 +170,8 @@ describe('UsersRepository unit tests', () => {
         throw new Error('');
       });
 
-      expect(sut.update(data.id, { ...data })).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao atualizar usuário'),
+      await expect(sut.update(data.id, { ...data })).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao atualizar help'),
       );
     });
   });

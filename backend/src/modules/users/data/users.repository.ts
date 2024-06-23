@@ -87,7 +87,7 @@ export class UsersRepository implements IUsersRepository {
   public async findById(id: string): Promise<User | undefined> {
     const params = {
       TableName: this.tableName,
-      IndexName: 'id',
+      IndexName: 'IdIndex',
       KeyConditionExpression: '#id = :id',
       ExpressionAttributeNames: { '#id': 'id' },
       ExpressionAttributeValues: { ':id': { S: id } },
@@ -136,9 +136,10 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  public async update(id: string, data: Partial<User>): Promise<void> {
+  public async update(id: string, data: User): Promise<void> {
     const params = {
       TableName: this.tableName,
+      IndexName: 'IdIndex',
       Key: {
         id: { S: id },
       },

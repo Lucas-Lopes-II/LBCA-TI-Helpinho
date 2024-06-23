@@ -38,6 +38,7 @@ export namespace ChangePassword {
 
       const newPasswordHashed = await this.hasher.hash(input.newPassword);
       await this.userRepository.update(user.id, {
+        ...user,
         password: newPasswordHashed,
       });
     }

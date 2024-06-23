@@ -24,6 +24,12 @@ describe('EnvConfig integration tests', () => {
     expect(result).toStrictEqual('Users');
   });
 
+  it('should return the enviroment HELPS_TABLE', async () => {
+    const result = sut.getHelpsTableName();
+
+    expect(result).toStrictEqual('Helps');
+  });
+
   it('should return the enviroment REGION', async () => {
     const result = sut.getRegion();
 

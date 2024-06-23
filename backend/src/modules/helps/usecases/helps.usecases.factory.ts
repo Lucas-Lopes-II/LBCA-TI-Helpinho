@@ -9,7 +9,7 @@ import {
   Validation,
   ValidationComposite,
 } from '@shared/domain/validations';
-import { CreateHelp, DeleteHelp } from '@helps/usecases';
+import { CreateHelp, DeleteHelp, FindHelpById } from '@helps/usecases';
 import { UsersRepositoryFactory } from '@users/data';
 import { StorageFactory } from '@shared/infra/storage';
 import { hasherFactory } from '@shared/infra/crypto/hasher';
@@ -60,5 +60,17 @@ export class HelpsUseCasesFactory {
     const validator = new ValidationComposite(validators);
 
     return new DeleteHelp.UseCase(this.repository, validator, this.storage);
+  }
+
+  public static findHelpById(): DefaultUseCase<
+    FindHelpById.Input,
+    FindHelpById.Output
+  > {
+    const validators: Validation<FindHelpById.Input>[] = [
+      new UUIDValidation('helpId'),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new FindHelpById.UseCase(this.repository, validator);
   }
 }

@@ -1,11 +1,12 @@
 import { UnauthorizedError } from '@shared/domain/errors';
 import { IJsonWebToken } from '../jwt.interface';
-import jwt, {
+import {
   JwtPayload,
   SignOptions,
   DecodeOptions,
   VerifyOptions,
 } from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 export class JsonWebTokenAdapter
   implements

@@ -1,6 +1,6 @@
+import { JwtFactory } from '@shared/infra/jwt';
 import { UnauthorizedError } from '@shared/domain/errors';
 import { JsonWebTokenAdapter } from './jesonwebtoken.adapter';
-import { JwtFactory } from '@shared/infra/jwt';
 
 describe('JsonWebTokenAdapter integration tests', () => {
   const secretKey = 'mySecretKey';

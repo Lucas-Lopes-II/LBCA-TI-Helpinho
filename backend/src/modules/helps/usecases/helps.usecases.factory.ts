@@ -9,12 +9,21 @@ import {
   Validation,
   ValidationComposite,
 } from '@shared/domain/validations';
-import { CreateHelp, DeleteHelp, FindHelpById } from '@helps/usecases';
+import {
+  CreateHelp,
+  DeleteHelp,
+  FindHelpById,
+  SearchHelp,
+} from '@helps/usecases';
 import { UsersRepositoryFactory } from '@users/data';
 import { StorageFactory } from '@shared/infra/storage';
 import { hasherFactory } from '@shared/infra/crypto/hasher';
 import { DefaultUseCase } from '@shared/application/usecases';
-import { HelpCategory, HelpsRepositoryFactory } from '@helps/data';
+import {
+  HelpCategory,
+  HelpFilteredFilds,
+  HelpsRepositoryFactory,
+} from '@helps/data';
 
 export class HelpsUseCasesFactory {
   private static readonly repository = HelpsRepositoryFactory.create();
@@ -72,5 +81,31 @@ export class HelpsUseCasesFactory {
     const validator = new ValidationComposite(validators);
 
     return new FindHelpById.UseCase(this.repository, validator);
+  }
+
+  public static searchHelp(): DefaultUseCase<
+    SearchHelp.Input,
+    SearchHelp.Output
+  > {
+    const validators: Validation<SearchHelp.Input>[] = [
+      new MinLengthFieldValidation('filter', 2, false),
+      new MaxLengthFieldValidation('filter', 50, false),
+      new MinLengthFieldValidation('sortDir', 3, false),
+      new MaxLengthFieldValidation('sortDir', 4, false),
+      new MinValueFieldValidation('page', 0, false),
+      new MinValueFieldValidation('perPage', 1, false),
+      new MaxValueFieldValidation('perPage', 100, false),
+      new MinLengthFieldValidation('sort', 2, false),
+      new MaxLengthFieldValidation('sort', 50, false),
+      new EnumValidation(
+        'field',
+        HelpFilteredFilds,
+        'HelpFilteredFilds',
+        false,
+      ),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new SearchHelp.UseCase(this.repository, validator);
   }
 }

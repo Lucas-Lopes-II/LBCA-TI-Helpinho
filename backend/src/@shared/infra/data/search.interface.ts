@@ -154,8 +154,5 @@ export interface ISearchableRepository<
   Filter = unknown,
   SearchOutput = SearchResult<E, Filter>,
 > {
-  search<T>(
-    props?: SearchParams<T>,
-    whereConditions?: object | null,
-  ): Promise<SearchOutput>;
+  search(props?: SearchParams<Filter>): Promise<SearchOutput>;
 }

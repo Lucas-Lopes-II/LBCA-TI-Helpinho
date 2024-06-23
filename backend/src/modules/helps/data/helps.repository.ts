@@ -1,14 +1,22 @@
+import { paginateQuery, QueryCommandInput } from '@aws-sdk/lib-dynamodb';
 import {
   DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
   QueryCommand,
   ReturnValue,
+  ScanCommand,
   UpdateItemCommand,
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import { Help, HelpCategory, IHelpsRepository } from '@helps/data';
+import {
+  Help,
+  HelpCategory,
+  HelpFilteredFilds,
+  IHelpsRepository,
+} from '@helps/data';
+import { SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsRepository implements IHelpsRepository {
   public static instance: HelpsRepository | null = null;
@@ -150,6 +158,72 @@ export class HelpsRepository implements IHelpsRepository {
       console.log('updateById error', error);
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao atualizar help',
+      );
+    }
+  }
+
+  public async search(
+    props?: SearchParams<HelpFilteredFilds>,
+  ): Promise<SearchResult<Help, HelpFilteredFilds>> {
+    try {
+      const scanResult = await this.dbClient.send(
+        new ScanCommand({
+          TableName: this.tableName,
+        }),
+      );
+      const queryParams: QueryCommandInput = {
+        TableName: this.tableName,
+        KeyConditionExpression: `${props.field} = :${props.field}`,
+        ExpressionAttributeValues: {
+          [`:${props.field}`]: { S: props.filter },
+        },
+        Limit: props.perPage,
+        ScanIndexForward: props.sortDir === 'DESC',
+      };
+      const paginator = paginateQuery(
+        { client: this.dbClient, pageSize: props.perPage },
+        queryParams,
+      );
+
+      const items: Help[] = [];
+      let lastEvaluatedKey;
+
+      for await (const page of paginator) {
+        if (lastEvaluatedKey) {
+          queryParams.ExclusiveStartKey = lastEvaluatedKey;
+        }
+
+        items.push(
+          ...page.Items.map((item) => ({
+            id: item.id.S,
+            title: item.title.S,
+            description: item.description.S,
+            userRelped: item.userRelped.S,
+            userName: item.userName.S,
+            value: parseFloat(item.value.S),
+            pixKey: item.pixKey.S,
+            deadline: item.deadline.S,
+            category: item.category.S as HelpCategory,
+            imgUrl: item.imgUrl.S,
+          })),
+        );
+
+        lastEvaluatedKey = page.LastEvaluatedKey;
+      }
+
+      return new SearchResult({
+        items,
+        total: scanResult.Count,
+        currentPage: props.page + 1,
+        perPage: props.perPage,
+        sort: props.sort,
+        sortDir: props.sortDir,
+        filter: props.filter,
+      });
+    } catch (error) {
+      console.log('search error', error);
+      throw new InternalServerError(
+        error.message || 'Ocorreu um erro ao liestar helps',
       );
     }
   }

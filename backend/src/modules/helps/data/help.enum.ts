@@ -4,3 +4,8 @@ export enum HelpCategory {
   LEISURE = 'Lazer',
   HEALTH = 'Saúde',
 }
+
+export enum HelpFilteredFilds {
+  NAME = 'name',
+  CATEGORY = 'category',
+}

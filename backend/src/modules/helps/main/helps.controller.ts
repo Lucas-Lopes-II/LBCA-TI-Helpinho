@@ -36,7 +36,7 @@ export class HelpsController {
       category: body.category,
       deadline: body.deadline,
       pixKey: body.pixKey,
-      value: body.value,
+      value: Number(body.value),
       file: file,
       userRelped: actionDoneBy,
     });

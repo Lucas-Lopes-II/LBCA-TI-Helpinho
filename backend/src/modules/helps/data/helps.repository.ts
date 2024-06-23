@@ -77,7 +77,7 @@ export class HelpsRepository implements IHelpsRepository {
           description: item.description.S,
           userRelped: item.userRelped.S,
           userName: item.userName.S,
-          value: Number(item.value.N),
+          value: parseFloat(item.value.S),
           pixKey: item.pixKey.S,
           deadline: item.deadline.S,
           category: item.category.S as HelpCategory,

@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -36,6 +38,20 @@ export class HelpsController {
       value: body.value,
       file: file,
       userRelped: actionDoneBy,
+    });
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':helpId')
+  delete(
+    @Param('helpId') helpId: string,
+    @CurrentUser() { id: actionDoneBy }: AuthRequest,
+  ) {
+    const usecase = HelpsUseCasesFactory.deleteHelp();
+
+    return usecase.execute({
+      actionDoneBy: actionDoneBy,
+      helpId: helpId,
     });
   }
 }

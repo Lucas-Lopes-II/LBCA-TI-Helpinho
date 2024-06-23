@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -51,6 +52,16 @@ export class HelpsController {
 
     return usecase.execute({
       actionDoneBy: actionDoneBy,
+      helpId: helpId,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get(':helpId')
+  find(@Param('helpId') helpId: string) {
+    const usecase = HelpsUseCasesFactory.findHelpById();
+
+    return usecase.execute({
       helpId: helpId,
     });
   }

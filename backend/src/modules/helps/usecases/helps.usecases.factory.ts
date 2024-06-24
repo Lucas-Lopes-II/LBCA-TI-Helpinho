@@ -1,5 +1,7 @@
 import {
   HelpCategory,
+  HelpsProvidedFields,
+  HelpsProvidedIndexes,
   HelpsRepositoryFactory,
   IHelpsProvidedRepository,
 } from '@helps/data';
@@ -9,6 +11,7 @@ import {
   DeleteHelp,
   FindHelpById,
   SearchHelp,
+  SearchHelpsProvidedByFilter,
 } from '@helps/usecases';
 import {
   EnumValidation,
@@ -119,6 +122,26 @@ export class HelpsUseCasesFactory {
       this.helpsProvidedRepository,
       this.usersRepository,
       this.helpsRepository,
+      validator,
+    );
+  }
+
+  public static searchHelpsProvidedByFilter(): DefaultUseCase<
+    SearchHelpsProvidedByFilter.Input,
+    SearchHelpsProvidedByFilter.Output
+  > {
+    const validators: Validation<SearchHelpsProvidedByFilter.Input>[] = [
+      new MinValueFieldValidation('page', 0, false),
+      new MinValueFieldValidation('perPage', 1, false),
+      new MaxValueFieldValidation('perPage', 100, false),
+      new EnumValidation('index', HelpsProvidedIndexes),
+      new EnumValidation('field', HelpsProvidedFields),
+      new UUIDValidation('value'),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new SearchHelpsProvidedByFilter.UseCase(
+      this.helpsProvidedRepository,
       validator,
     );
   }

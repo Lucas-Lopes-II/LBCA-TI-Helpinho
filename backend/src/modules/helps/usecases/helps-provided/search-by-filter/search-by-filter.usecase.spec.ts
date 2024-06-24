@@ -6,10 +6,10 @@ import {
 } from '@helps/data';
 import { randomUUID } from 'node:crypto';
 import { Validation } from '@shared/domain/validations';
-import { SearchHelpSProvidedByFilter } from './search-by-filter.usecase';
+import { SearchHelpsProvidedByFilter } from './search-by-filter.usecase';
 
-describe('SearchHelpSProvidedByFilter.UseCase unit tests', () => {
-  const mockedInput: SearchHelpSProvidedByFilter.Input = {
+describe('SearchHelpsProvidedByFilter.UseCase unit tests', () => {
+  const mockedInput: SearchHelpsProvidedByFilter.Input = {
     page: 1,
     perPage: 2,
     index: HelpsProvidedIndexes.ID,
@@ -35,7 +35,7 @@ describe('SearchHelpSProvidedByFilter.UseCase unit tests', () => {
     },
   ];
 
-  let sut: SearchHelpSProvidedByFilter.UseCase;
+  let sut: SearchHelpsProvidedByFilter.UseCase;
   let mockedRepo: IHelpsProvidedRepository;
   let mockedValidator: Validation;
 
@@ -46,7 +46,7 @@ describe('SearchHelpSProvidedByFilter.UseCase unit tests', () => {
     mockedValidator = {
       validate: jest.fn().mockResolvedValue(null),
     } as any as Validation;
-    sut = new SearchHelpSProvidedByFilter.UseCase(mockedRepo, mockedValidator);
+    sut = new SearchHelpsProvidedByFilter.UseCase(mockedRepo, mockedValidator);
   });
 
   it('should search by filter a paginated list of Help provided', async () => {

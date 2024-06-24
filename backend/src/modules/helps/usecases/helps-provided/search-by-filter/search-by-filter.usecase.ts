@@ -11,7 +11,7 @@ import {
 import { DefaultUseCase } from '@shared/application/usecases';
 import { Validation } from '@shared/domain/validations';
 
-export namespace SearchHelpSProvidedByFilter {
+export namespace SearchHelpsProvidedByFilter {
   export type Input = SearchProps & FilterIndexes<string>;
 
   export type Output = SearchResultProps<HelpProvided>;

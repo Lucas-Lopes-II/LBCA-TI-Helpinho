@@ -50,83 +50,6 @@ describe('Search unit tests', () => {
         );
       });
     });
-
-    it('sort prop', () => {
-      const sut = new SearchParams();
-      expect(sut.sort).toBeNull();
-      const params = [
-        { sort: null as any, expected: null },
-        { sort: undefined as any, expected: null },
-        { sort: '' as any, expected: null },
-        { sort: 'test', expected: 'test' },
-        { sort: 0, expected: '0' },
-        { sort: -1, expected: '-1' },
-        { sort: 5.5, expected: '5.5' },
-        { sort: true, expected: 'true' },
-        { sort: false, expected: 'false' },
-        { sort: {}, expected: '[object Object]' },
-        { sort: 1, expected: '1' },
-        { sort: 2, expected: '2' },
-        { sort: 25, expected: '25' },
-      ];
-      params.forEach((param) => {
-        expect(new SearchParams({ sort: param.sort }).sort).toBe(
-          param.expected,
-        );
-      });
-    });
-
-    it('sortDir prop', () => {
-      let sut = new SearchParams();
-      expect(sut.sortDir).toBeNull();
-      sut = new SearchParams({ sort: null });
-      expect(sut.sortDir).toBeNull();
-      sut = new SearchParams({ sort: undefined });
-      expect(sut.sortDir).toBeNull();
-      sut = new SearchParams({ sort: '' });
-      expect(sut.sortDir).toBeNull();
-      const params = [
-        { sortDir: null as any, expected: 'DESC' },
-        { sortDir: undefined as any, expected: 'DESC' },
-        { sortDir: '' as any, expected: 'DESC' },
-        { sortDir: 'test', expected: 'DESC' },
-        { sortDir: 0, expected: 'DESC' },
-        { sortDir: 'asc', expected: 'ASC' },
-        { sortDir: 'desc', expected: 'DESC' },
-        { sortDir: 'ASC', expected: 'ASC' },
-        { sortDir: 'DESC', expected: 'DESC' },
-      ];
-      params.forEach((param) => {
-        expect(
-          new SearchParams({ sort: 'field', sortDir: param.sortDir }).sortDir,
-        ).toBe(param.expected);
-      });
-    });
-
-    it('filter prop', () => {
-      const sut = new SearchParams();
-      expect(sut.filter).toBeNull();
-      const params = [
-        { filter: null as any, expected: null },
-        { filter: undefined as any, expected: null },
-        { filter: '' as any, expected: null },
-        { filter: 'test', expected: 'test' },
-        { filter: 0, expected: '0' },
-        { filter: -1, expected: '-1' },
-        { filter: 5.5, expected: '5.5' },
-        { filter: true, expected: 'true' },
-        { filter: false, expected: 'false' },
-        { filter: {}, expected: '[object Object]' },
-        { filter: 1, expected: '1' },
-        { filter: 2, expected: '2' },
-        { filter: 25, expected: '25' },
-      ];
-      params.forEach((param) => {
-        expect(new SearchParams({ filter: param.filter }).filter).toBe(
-          param.expected,
-        );
-      });
-    });
   });
 
   describe('SearchResult tests', () => {
@@ -136,9 +59,6 @@ describe('Search unit tests', () => {
         total: 4,
         currentPage: 1,
         perPage: 2,
-        sort: null,
-        sortDir: null,
-        filter: null,
       });
       expect(sut.toJSON()).toStrictEqual({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
@@ -146,18 +66,12 @@ describe('Search unit tests', () => {
         currentPage: 1,
         perPage: 2,
         lastPage: 2,
-        sort: null,
-        sortDir: null,
-        filter: null,
       });
       sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 4,
         currentPage: 1,
         perPage: 2,
-        sort: 'name',
-        sortDir: 'asc',
-        filter: 'test',
       });
       expect(sut.toJSON()).toStrictEqual({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
@@ -165,18 +79,12 @@ describe('Search unit tests', () => {
         currentPage: 1,
         perPage: 2,
         lastPage: 2,
-        sort: 'name',
-        sortDir: 'asc',
-        filter: 'test',
       });
       sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 4,
         currentPage: 1,
         perPage: 10,
-        sort: 'name',
-        sortDir: 'asc',
-        filter: 'test',
       });
       expect(sut.lastPage).toBe(1);
       sut = new SearchResult({
@@ -184,9 +92,6 @@ describe('Search unit tests', () => {
         total: 54,
         currentPage: 1,
         perPage: 10,
-        sort: 'name',
-        sortDir: 'asc',
-        filter: 'test',
       });
       expect(sut.lastPage).toBe(6);
     });

@@ -6,6 +6,6 @@ export enum HelpCategory {
 }
 
 export enum HelpFilteredFilds {
-  NAME = 'name',
+  TITLE = 'title',
   CATEGORY = 'category',
 }

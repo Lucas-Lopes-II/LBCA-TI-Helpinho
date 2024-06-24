@@ -11,7 +11,7 @@ import { Validation } from '@shared/domain/validations';
 export namespace SearchHelp {
   export type Input = SearchProps<HelpFilteredFilds>;
 
-  export type Output = SearchResultProps<Help, HelpFilteredFilds>;
+  export type Output = SearchResultProps<Help>;
 
   export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(

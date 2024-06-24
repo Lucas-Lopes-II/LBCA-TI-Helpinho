@@ -7,12 +7,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { CreateHelpDTO } from './dtos';
+import { CreateHelpDTO, SearchQueryParamsDto } from './dtos';
 import { AuthRequest } from '@auth/main/dtos';
 import { FileDTO } from '@shared/infra/storage/dtos';
 import { CurrentUser } from '@shared/infra/decorators';
@@ -63,6 +64,21 @@ export class HelpsController {
 
     return usecase.execute({
       helpId: helpId,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get()
+  search(@Query() quryParams: SearchQueryParamsDto) {
+    const usecase = HelpsUseCasesFactory.searchHelp();
+
+    return usecase.execute({
+      field: quryParams?.field,
+      filter: quryParams?.filter,
+      perPage: parseInt(quryParams?.perPage as any),
+      page: parseInt(quryParams?.page as any),
+      sort: quryParams?.sort,
+      sortDir: quryParams?.sortDir,
     });
   }
 }

@@ -1,34 +1,34 @@
 export type SortDirection = 'ASC' | 'DESC';
 
-export type SearchProps<Filter = unknown> = {
+export type SearchProps<Field = unknown> = {
   page?: number;
   perPage?: number;
-  sort?: string | null;
-  sortDir?: SortDirection | null;
-  filter?: Filter | null;
-  field?: string | null;
+  sort?: string;
+  sortDir?: SortDirection;
+  filter?: unknown;
+  field?: Field;
 };
 
-export type SearchResultProps<E, Filter> = {
+export type SearchResultProps<E> = {
   items: E[];
   total: number;
   currentPage: number;
   perPage: number;
   lastPage: number;
-  sort: string | null;
-  sortDir: string | null;
-  filter: Filter | null;
+  sort?: string;
+  sortDir?: string;
+  filter?: unknown;
 };
 
-export class SearchParams<Filter = unknown> {
+export class SearchParams<Field = unknown> {
   protected _perPage = 10;
   protected _sort: string | null;
-  protected _field: string | null;
+  protected _field: Field | null;
   protected _sortDir: SortDirection | null;
-  protected _filter: Filter | null;
+  protected _filter: unknown | null;
   protected _page: number;
 
-  constructor(props: SearchProps<Filter> = {}) {
+  constructor(props: SearchProps<Field> = {}) {
     this.page = props.page;
     this.perPage = props.perPage;
     this.sort = props.sort;
@@ -76,11 +76,11 @@ export class SearchParams<Filter = unknown> {
       value === null || value === undefined || value === '' ? null : `${value}`;
   }
 
-  get field(): string | null {
+  get field(): Field | null {
     return this._field;
   }
 
-  private set field(value: string | null) {
+  private set field(value: Field | null) {
     this._field =
       value === null || value === undefined || value === ''
         ? null
@@ -102,11 +102,11 @@ export class SearchParams<Filter = unknown> {
     this._sortDir = dir !== 'ASC' && dir !== 'DESC' ? 'DESC' : dir;
   }
 
-  get filter(): Filter | null {
+  get filter(): unknown | null {
     return this._filter;
   }
 
-  private set filter(value: Filter | null) {
+  private set filter(value: unknown | null) {
     this._filter =
       value === null || value === undefined || value === ''
         ? null
@@ -114,7 +114,7 @@ export class SearchParams<Filter = unknown> {
   }
 }
 
-export class SearchResult<E, Filter = unknown> {
+export class SearchResult<E> {
   public readonly items: E[];
   public readonly total: number;
   public readonly currentPage: number;
@@ -122,9 +122,9 @@ export class SearchResult<E, Filter = unknown> {
   public readonly lastPage: number;
   public readonly sort: string | null;
   public readonly sortDir: string | null;
-  public readonly filter: Filter | null;
+  public readonly filter: unknown | null;
 
-  constructor(props: Omit<SearchResultProps<E, Filter>, 'lastPage'>) {
+  constructor(props: Omit<SearchResultProps<E>, 'lastPage'>) {
     this.items = props.items;
     this.total = props.total;
     this.currentPage = props.currentPage;
@@ -135,7 +135,7 @@ export class SearchResult<E, Filter = unknown> {
     this.filter = props.filter ?? null;
   }
 
-  public toJSON(): SearchResultProps<E, Filter> {
+  public toJSON(): SearchResultProps<E> {
     return {
       items: this.items,
       total: this.total,
@@ -151,8 +151,8 @@ export class SearchResult<E, Filter = unknown> {
 
 export interface ISearchableRepository<
   E,
-  Filter = unknown,
-  SearchOutput = SearchResult<E, Filter>,
+  Field = unknown,
+  SearchOutput = SearchResult<E>,
 > {
-  search(props?: SearchParams<Filter>): Promise<SearchOutput>;
+  search(props?: SearchParams<Field>): Promise<SearchOutput>;
 }

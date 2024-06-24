@@ -1,4 +1,9 @@
-import { paginateQuery, QueryCommandInput } from '@aws-sdk/lib-dynamodb';
+import {
+  Help,
+  HelpCategory,
+  HelpFilteredFilds,
+  IHelpsRepository,
+} from '@helps/data';
 import {
   DeleteItemCommand,
   DynamoDBClient,
@@ -10,26 +15,27 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import {
-  Help,
-  HelpCategory,
-  HelpFilteredFilds,
-  IHelpsRepository,
-} from '@helps/data';
+import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 import { SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsRepository implements IHelpsRepository {
   public static instance: HelpsRepository | null = null;
   public readonly tableName: string;
 
-  private constructor(private readonly dbClient: DynamoDBClient) {
+  private constructor(
+    private readonly dbClient: DynamoDBClient,
+    private readonly docClient: DynamoDBDocumentClient,
+  ) {
     const envConfig = EnvConfigFactory.create();
     this.tableName = envConfig.getHelpsTableName();
   }
 
-  public static createInstance(dbClient: DynamoDBClient): HelpsRepository {
+  public static createInstance(
+    dbClient: DynamoDBClient,
+    docClient: DynamoDBDocumentClient,
+  ): HelpsRepository {
     if (!HelpsRepository.instance) {
-      HelpsRepository.instance = new HelpsRepository(dbClient);
+      HelpsRepository.instance = new HelpsRepository(dbClient, docClient);
     }
 
     return this.instance;
@@ -129,7 +135,7 @@ export class HelpsRepository implements IHelpsRepository {
       },
       UpdateExpression:
         `set #title = :title, #description = :description, #userRelped = :userRelped, #userName = :userName,
-        #value = :value, #pixKey = :pixKey, #deadline = :deadline, #category = :category, #imgUrl = :imgUrl`.trim(),
+      #value = :value, #pixKey = :pixKey, #deadline = :deadline, #category = :category, #imgUrl = :imgUrl`.trim(),
       ExpressionAttributeNames: {
         '#name': 'name',
         '#email': 'email',
@@ -164,57 +170,54 @@ export class HelpsRepository implements IHelpsRepository {
 
   public async search(
     props?: SearchParams<HelpFilteredFilds>,
-  ): Promise<SearchResult<Help, HelpFilteredFilds>> {
+  ): Promise<SearchResult<Help>> {
     try {
-      const scanResult = await this.dbClient.send(
-        new ScanCommand({
+      let exclusiveStartKey;
+      const items = [];
+      let totalCount = 0;
+      let itensCount = 0;
+      do {
+        const command = new ScanCommand({
           TableName: this.tableName,
-        }),
-      );
-      const queryParams: QueryCommandInput = {
-        TableName: this.tableName,
-        KeyConditionExpression: `${props.field} = :${props.field}`,
-        ExpressionAttributeValues: {
-          [`:${props.field}`]: { S: props.filter },
-        },
-        Limit: props.perPage,
-        ScanIndexForward: props.sortDir === 'DESC',
-      };
-      const paginator = paginateQuery(
-        { client: this.dbClient, pageSize: props.perPage },
-        queryParams,
-      );
+          Limit: props.perPage,
+          ExclusiveStartKey: exclusiveStartKey,
+        });
 
-      const items: Help[] = [];
-      let lastEvaluatedKey;
+        const result = await this.dbClient.send(command);
 
-      for await (const page of paginator) {
-        if (lastEvaluatedKey) {
-          queryParams.ExclusiveStartKey = lastEvaluatedKey;
+        if (!result.LastEvaluatedKey || items.length >= props.perPage) {
+          break;
         }
 
-        items.push(
-          ...page.Items.map((item) => ({
-            id: item.id.S,
-            title: item.title.S,
-            description: item.description.S,
-            userRelped: item.userRelped.S,
-            userName: item.userName.S,
-            value: parseFloat(item.value.S),
-            pixKey: item.pixKey.S,
-            deadline: item.deadline.S,
-            category: item.category.S as HelpCategory,
-            imgUrl: item.imgUrl.S,
-          })),
-        );
+        exclusiveStartKey = result.LastEvaluatedKey;
 
-        lastEvaluatedKey = page.LastEvaluatedKey;
-      }
+        console.log(result.Items);
+        if ((props.page <= 1 ? 0 : props.page * props.perPage) === itensCount) {
+          items.push(
+            ...result.Items.map((item) => ({
+              id: item.id.S,
+              title: item.title.S,
+              description: item.description.S,
+              userRelped: item.userRelped.S,
+              userName: item.userName.S,
+              value: parseFloat(item.value.S),
+              pixKey: item.pixKey.S,
+              deadline: item.deadline.S,
+              category: item.category.S as HelpCategory,
+              imgUrl: item.imgUrl.S,
+            })),
+          );
+        } else {
+          itensCount++;
+        }
+
+        totalCount += result.Count;
+      } while (exclusiveStartKey);
 
       return new SearchResult({
-        items,
-        total: scanResult.Count,
-        currentPage: props.page + 1,
+        items: items,
+        total: totalCount,
+        currentPage: props.page,
         perPage: props.perPage,
         sort: props.sort,
         sortDir: props.sortDir,

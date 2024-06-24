@@ -6,8 +6,8 @@ service: helpinho
 
 custom:
   region: "us-east-1"
-  usersTable: "users-table-${sls:stage}"
-  helpTable: "help-table-${sls:stage}"
+  usersTable: "users--table-${sls:stage}"
+  helpTable: "helps--table-${sls:stage}"
   bucketName: "helpinho-test"
   urlBucket: "https://helpinho-test.s3.amazonaws.com"
 
@@ -25,13 +25,7 @@ provider:
       statements:
         - Effect: Allow
           Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-            - dynamodb:DescribeTable
+            - dynamodb:*
           Resource: "*"
         - Effect: Allow
           Action:

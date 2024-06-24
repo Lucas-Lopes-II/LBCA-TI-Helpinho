@@ -4,8 +4,3 @@ export enum HelpCategory {
   LEISURE = 'Lazer',
   HEALTH = 'Saúde',
 }
-
-export enum HelpFilteredFilds {
-  TITLE = 'title',
-  CATEGORY = 'category',
-}

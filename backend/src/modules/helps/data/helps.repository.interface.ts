@@ -1,4 +1,3 @@
-import { Help, HelpFilteredFilds } from '@helps/data';
 import {
   ICreate,
   IDelete,
@@ -6,10 +5,11 @@ import {
   ISearchableRepository,
   IUpdate,
 } from '@shared/infra/data';
+import { Help } from './help';
 
 export interface IHelpsRepository
   extends ICreate<Help, void>,
     IFindById<Help>,
     IDelete,
-    ISearchableRepository<Help, HelpFilteredFilds>,
+    ISearchableRepository<Help>,
     IUpdate<Help> {}

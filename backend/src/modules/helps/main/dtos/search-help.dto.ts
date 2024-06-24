@@ -1,11 +1,6 @@
-import { HelpFilteredFilds } from '@helps/data';
-import { SearchProps, SortDirection } from '@shared/infra/data';
+import { SearchProps } from '@shared/infra/data';
 
-export class SearchQueryParamsDto implements SearchProps<HelpFilteredFilds> {
+export class SearchQueryParamsDto implements SearchProps {
   page?: number;
   perPage?: number;
-  sort?: string;
-  sortDir?: SortDirection;
-  filter?: string;
-  field?: HelpFilteredFilds;
 }

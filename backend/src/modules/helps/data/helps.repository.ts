@@ -1,9 +1,4 @@
-import {
-  Help,
-  HelpCategory,
-  HelpFilteredFilds,
-  IHelpsRepository,
-} from '@helps/data';
+import { Help, HelpCategory, IHelpsRepository } from '@helps/data';
 import {
   DeleteItemCommand,
   DynamoDBClient,
@@ -15,7 +10,10 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
+import {
+  DynamoDBDocumentClient,
+  ScanCommandInput,
+} from '@aws-sdk/lib-dynamodb';
 import { SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsRepository implements IHelpsRepository {
@@ -168,31 +166,26 @@ export class HelpsRepository implements IHelpsRepository {
     }
   }
 
-  public async search(
-    props?: SearchParams<HelpFilteredFilds>,
-  ): Promise<SearchResult<Help>> {
+  public async search(props?: SearchParams): Promise<SearchResult<Help>> {
     try {
       let exclusiveStartKey;
       const items = [];
-      let totalCount = 0;
-      let itensCount = 0;
+      let interationCount = 1;
+      const count = await this.getTableCount();
       do {
         const command = new ScanCommand({
           TableName: this.tableName,
           Limit: props.perPage,
           ExclusiveStartKey: exclusiveStartKey,
         });
-
         const result = await this.dbClient.send(command);
+        exclusiveStartKey = result.LastEvaluatedKey;
 
-        if (!result.LastEvaluatedKey || items.length >= props.perPage) {
+        if (items.length >= props.perPage) {
           break;
         }
 
-        exclusiveStartKey = result.LastEvaluatedKey;
-
-        console.log(result.Items);
-        if ((props.page <= 1 ? 0 : props.page * props.perPage) === itensCount) {
+        if (props.page == interationCount) {
           items.push(
             ...result.Items.map((item) => ({
               id: item.id.S,
@@ -208,26 +201,35 @@ export class HelpsRepository implements IHelpsRepository {
             })),
           );
         } else {
-          itensCount++;
+          interationCount++;
         }
-
-        totalCount += result.Count;
       } while (exclusiveStartKey);
 
       return new SearchResult({
         items: items,
-        total: totalCount,
+        total: count,
         currentPage: props.page,
         perPage: props.perPage,
-        sort: props.sort,
-        sortDir: props.sortDir,
-        filter: props.filter,
       });
     } catch (error) {
       console.log('search error', error);
       throw new InternalServerError(
-        error.message || 'Ocorreu um erro ao liestar helps',
+        error.message || 'Ocorreu um erro ao listar helps',
       );
+    }
+  }
+
+  private async getTableCount(): Promise<number> {
+    const params: ScanCommandInput = {
+      TableName: this.tableName,
+      Select: 'COUNT',
+    };
+    try {
+      const response = await this.dbClient.send(new ScanCommand(params));
+      return response.Count;
+    } catch (error) {
+      console.error('Erro ao contar itens:', error);
+      throw error;
     }
   }
 }

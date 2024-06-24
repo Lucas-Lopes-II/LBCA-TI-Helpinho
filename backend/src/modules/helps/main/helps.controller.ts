@@ -73,12 +73,8 @@ export class HelpsController {
     const usecase = HelpsUseCasesFactory.searchHelp();
 
     return usecase.execute({
-      field: quryParams?.field,
-      filter: quryParams?.filter,
       perPage: parseInt(quryParams?.perPage as any),
       page: parseInt(quryParams?.page as any),
-      sort: quryParams?.sort,
-      sortDir: quryParams?.sortDir,
     });
   }
 }

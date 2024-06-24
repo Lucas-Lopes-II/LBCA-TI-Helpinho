@@ -4,12 +4,12 @@ import {
   SearchResultProps,
 } from '@shared/infra/data';
 
-import { Help, HelpFilteredFilds, IHelpsRepository } from '@helps/data';
+import { Help, IHelpsRepository } from '@helps/data';
 import { DefaultUseCase } from '@shared/application/usecases';
 import { Validation } from '@shared/domain/validations';
 
 export namespace SearchHelp {
-  export type Input = SearchProps<HelpFilteredFilds>;
+  export type Input = SearchProps;
 
   export type Output = SearchResultProps<Help>;
 
@@ -22,7 +22,7 @@ export namespace SearchHelp {
     public async execute(input: Input): Promise<Output> {
       this.validator.validate(input);
 
-      return this.repository.search(new SearchParams<HelpFilteredFilds>(input));
+      return this.repository.search(new SearchParams(input));
     }
   }
 }

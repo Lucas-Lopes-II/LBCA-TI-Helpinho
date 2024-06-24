@@ -1,15 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import { IUsersRepository } from '@users/data';
-import { NotFoundError } from '@shared/domain/errors';
+import { InternalServerError, NotFoundError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
-import { IHelpsProvidedRepository } from '@helps/data';
+import { IHelpsProvidedRepository, IHelpsRepository } from '@helps/data';
 import { DefaultUseCase } from '@shared/application/usecases';
 
 export namespace CreateHelpProvided {
   export type Input = {
     helpId: string;
-    userRelped: string;
     actionDoneBy: string;
+    userRelped: string;
     value: number;
     executionDate: string;
   };
@@ -20,25 +20,43 @@ export namespace CreateHelpProvided {
     constructor(
       private readonly repository: IHelpsProvidedRepository,
       private readonly userRepository: IUsersRepository,
+      private readonly helpsRepository: IHelpsRepository,
       private readonly validator: Validation,
     ) {}
 
     public async execute(input: Input): Promise<Output> {
       this.validator.validate(input);
 
-      const user = await this.userRepository.findById(input.userRelped);
+      const [user, help] = await Promise.all([
+        this.userRepository.findById(input.helpId),
+        this.helpsRepository.findById(input.userRelped),
+      ]);
       if (!user) {
         throw new NotFoundError('Usuário não ajudado não encontrado');
       }
-
+      if (!help) {
+        throw new NotFoundError('Help não encontrado');
+      }
+      const helpProvidedId = randomUUID();
       await this.repository.create({
-        id: randomUUID(),
+        id: helpProvidedId,
         helpId: input.helpId,
         executionDate: input.executionDate,
         userDonor: input.actionDoneBy,
         userRelped: input.userRelped,
         value: input.value,
       });
+
+      try {
+        this.helpsRepository.update(help.id, {
+          ...help,
+          helpValue: help.helpValue + input.value,
+        });
+      } catch (error) {
+        this.repository.delete(helpProvidedId);
+        console.log('CreateHelpProvided.UseCase error', error);
+        throw new InternalServerError('Ocorreu um erro ao criar help provide');
+      }
     }
   }
 }

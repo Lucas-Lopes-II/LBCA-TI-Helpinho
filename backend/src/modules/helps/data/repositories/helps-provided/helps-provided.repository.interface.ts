@@ -1,5 +1,6 @@
 import {
   ICreate,
+  IDelete,
   IFindById,
   ISearchableRepository,
   IUpdate,
@@ -9,5 +10,6 @@ import { HelpProvided } from '../../entities/help-provided';
 export interface IHelpsProvidedRepository
   extends ICreate<HelpProvided, void>,
     IFindById<HelpProvided>,
+    IDelete,
     ISearchableRepository<HelpProvided>,
     IUpdate<HelpProvided> {}

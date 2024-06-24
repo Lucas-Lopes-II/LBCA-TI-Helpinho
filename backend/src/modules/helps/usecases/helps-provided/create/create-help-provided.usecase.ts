@@ -48,12 +48,12 @@ export namespace CreateHelpProvided {
       });
 
       try {
-        this.helpsRepository.update(help.id, {
+        await this.helpsRepository.update(help.id, {
           ...help,
           helpValue: help.helpValue + input.value,
         });
       } catch (error) {
-        this.repository.delete(helpProvidedId);
+        await this.repository.delete(helpProvidedId);
         console.log('CreateHelpProvided.UseCase error', error);
         throw new InternalServerError('Ocorreu um erro ao criar help provide');
       }

@@ -18,6 +18,7 @@
     "test:cov": "npx dotenv-cli -e .env.test -- jest --coverage",
     "test:debug": "npx dotenv-cli -e .env.test -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:staged": "npx dotenv-cli -e .env.test -- jest --passWithNoTests --onlyChanged",
+    "test:staged:w": "npx dotenv-cli -e .env.test -- jest --passWithNoTests --onlyChanged --watch",
     "test:unit": "npx dotenv-cli -e .env.test -- jest --passWithNoTests --testRegex \".*\\.spec\\.ts$\"",
     "test:int": "npx dotenv-cli -e .env.test -- jest --passWithNoTests --testRegex \".*\\.test\\.ts$\""
   },

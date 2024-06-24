@@ -1,4 +1,4 @@
-import { Help } from '../entities/help';
+import { Help } from '../../entities/help';
 import { randomUUID } from 'node:crypto';
 import { HelpCategory } from '@helps/data';
 import { HelpsRepository } from './helps.repository';

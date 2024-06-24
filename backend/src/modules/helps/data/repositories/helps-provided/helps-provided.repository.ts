@@ -9,7 +9,11 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import { HelpProvided, IHelpsProvidedRepository } from '@helps/data';
+import {
+  FilterIndexes,
+  HelpProvided,
+  IHelpsProvidedRepository,
+} from '@helps/data';
 import { DatabaseUtils, SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsProvidedRepository implements IHelpsProvidedRepository {
@@ -127,8 +131,9 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
     }
   }
 
-  public async search(
-    props?: SearchParams,
+  public async searchByFilter(
+    props: SearchParams,
+    filter: FilterIndexes<string>,
   ): Promise<SearchResult<HelpProvided>> {
     try {
       let exclusiveStartKey;
@@ -138,6 +143,12 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
       do {
         const command = new ScanCommand({
           TableName: this.tableName,
+          IndexName: `${filter.index}`,
+          FilterExpression: `${filter.field} = :${filter.field}`,
+          ExpressionAttributeNames: { [`#${filter.field}`]: `${filter.field}` },
+          ExpressionAttributeValues: {
+            [`:${filter.field}`]: { S: `${filter.value}` },
+          },
           Limit: props.perPage,
           ExclusiveStartKey: exclusiveStartKey,
         });

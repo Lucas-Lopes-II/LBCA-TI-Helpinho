@@ -118,6 +118,7 @@ export class HelpsUseCasesFactory {
     return new CreateHelpProvided.UseCase(
       this.helpsProvidedRepository,
       this.usersRepository,
+      this.helpsRepository,
       validator,
     );
   }

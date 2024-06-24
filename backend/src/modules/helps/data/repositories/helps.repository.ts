@@ -1,4 +1,3 @@
-import { Help, HelpCategory, IHelpsRepository } from '@helps/data';
 import {
   DeleteItemCommand,
   DynamoDBClient,
@@ -10,30 +9,21 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import {
-  DynamoDBDocumentClient,
-  ScanCommandInput,
-} from '@aws-sdk/lib-dynamodb';
-import { SearchParams, SearchResult } from '@shared/infra/data';
+import { Help, HelpCategory, IHelpsRepository } from '@helps/data';
+import { DatabaseUtils, SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsRepository implements IHelpsRepository {
   public static instance: HelpsRepository | null = null;
   public readonly tableName: string;
 
-  private constructor(
-    private readonly dbClient: DynamoDBClient,
-    private readonly docClient: DynamoDBDocumentClient,
-  ) {
+  private constructor(private readonly dbClient: DynamoDBClient) {
     const envConfig = EnvConfigFactory.create();
     this.tableName = envConfig.getHelpsTableName();
   }
 
-  public static createInstance(
-    dbClient: DynamoDBClient,
-    docClient: DynamoDBDocumentClient,
-  ): HelpsRepository {
+  public static createInstance(dbClient: DynamoDBClient): HelpsRepository {
     if (!HelpsRepository.instance) {
-      HelpsRepository.instance = new HelpsRepository(dbClient, docClient);
+      HelpsRepository.instance = new HelpsRepository(dbClient);
     }
 
     return this.instance;
@@ -171,7 +161,7 @@ export class HelpsRepository implements IHelpsRepository {
       let exclusiveStartKey;
       const items = [];
       let interationCount = 1;
-      const count = await this.getTableCount();
+      const count = await DatabaseUtils.getTableCount(this.tableName);
       do {
         const command = new ScanCommand({
           TableName: this.tableName,
@@ -216,20 +206,6 @@ export class HelpsRepository implements IHelpsRepository {
       throw new InternalServerError(
         error.message || 'Ocorreu um erro ao listar helps',
       );
-    }
-  }
-
-  private async getTableCount(): Promise<number> {
-    const params: ScanCommandInput = {
-      TableName: this.tableName,
-      Select: 'COUNT',
-    };
-    try {
-      const response = await this.dbClient.send(new ScanCommand(params));
-      return response.Count;
-    } catch (error) {
-      console.error('Erro ao contar itens:', error);
-      throw error;
     }
   }
 }

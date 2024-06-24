@@ -5,7 +5,6 @@ import { HelpsRepository } from './helps.repository';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { InternalServerError } from '@shared/domain/errors';
 import { IHelpsRepository } from './Helps.repository.interface';
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 
 describe('HelpsRepository unit tests', () => {
   let sut: IHelpsRepository;
@@ -38,17 +37,13 @@ describe('HelpsRepository unit tests', () => {
     ],
   } as never;
   let mockedClientDB: DynamoDBClient;
-  let mockedDocClientDB: DynamoDBDocumentClient;
 
   beforeAll(async () => {
     try {
       mockedClientDB = {
         send: jest.fn().mockResolvedValue(returnedHelp),
       } as any as DynamoDBClient;
-      mockedDocClientDB = {
-        send: jest.fn().mockResolvedValue(returnedHelp),
-      } as any as DynamoDBDocumentClient;
-      sut = HelpsRepository.createInstance(mockedClientDB, mockedDocClientDB);
+      sut = HelpsRepository.createInstance(mockedClientDB);
     } catch (error) {
       console.log(error);
     }

@@ -1,6 +1,6 @@
 import { SearchProps } from '@shared/infra/data';
 
-export class SearchQueryParamsDto implements SearchProps {
+export class SearchQueryParamsDTO implements SearchProps {
   page?: number;
   perPage?: number;
 }

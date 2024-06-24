@@ -40,6 +40,7 @@ export default {
     '-e2e.utils.ts',
     'e2e.utils.ts',
     '-error.ts',
+    '-utils.ts',
     '.+/infra/main/.*\\.controller\\.ts$',
     '.+/main/.*\\.controller\\.ts$',
   ],

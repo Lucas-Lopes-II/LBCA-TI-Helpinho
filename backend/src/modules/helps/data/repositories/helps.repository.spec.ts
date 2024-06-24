@@ -1,7 +1,7 @@
-import { Help } from './Help';
+import { Help } from '../entities/help';
 import { randomUUID } from 'node:crypto';
 import { HelpCategory } from '@helps/data';
-import { HelpsRepository } from './Helps.repository';
+import { HelpsRepository } from './helps.repository';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { InternalServerError } from '@shared/domain/errors';
 import { IHelpsRepository } from './Helps.repository.interface';

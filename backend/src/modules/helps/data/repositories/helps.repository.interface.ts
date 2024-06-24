@@ -5,7 +5,7 @@ import {
   ISearchableRepository,
   IUpdate,
 } from '@shared/infra/data';
-import { Help } from './help';
+import { Help } from '../entities/help';
 
 export interface IHelpsRepository
   extends ICreate<Help, void>,

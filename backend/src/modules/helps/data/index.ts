@@ -1,6 +1,8 @@
-export * from './help';
-export * from './helps.repository';
 export * from './help.enum';
-export * from './helps.repository.factory';
-export * from './helps.repository.interface';
+export * from './entities/help';
+export * from './entities/help-provided';
+export * from './repositories/helps.repository';
+export * from './repositories/helps.repository.factory';
+export * from './repositories/helps.repository.interface';
+export * from './repositories/helps-provided.repository.interface';
 // export * from './';

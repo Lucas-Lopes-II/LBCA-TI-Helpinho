@@ -50,6 +50,7 @@ export namespace CreateHelp {
         pixKey: input.pixKey,
         userRelped: input.userRelped,
         value: input.value,
+        helpValue: 0.0,
         category: input.category,
         userName: user.name,
         imgUrl: fileUrl,

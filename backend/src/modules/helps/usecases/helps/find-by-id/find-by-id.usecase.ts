@@ -15,6 +15,7 @@ export namespace FindHelpById {
     userRelped: string;
     userName: string;
     value: number;
+    helpValue: number;
     pixKey: string;
     deadline: string;
     category: HelpCategory;
@@ -45,6 +46,7 @@ export namespace FindHelpById {
         userName: help.userName,
         userRelped: help.userRelped,
         value: help.value,
+        helpValue: help.helpValue,
         imgUrl: help.imgUrl,
       };
     }

@@ -18,6 +18,7 @@ describe('DeleteHelp.UseCase unit tests', () => {
     userRelped: mockedInput.actionDoneBy,
     deadline: new Date().toISOString(),
     value: 500.0,
+    helpValue: 500.0,
     userName: 'name',
     imgUrl: '',
   };

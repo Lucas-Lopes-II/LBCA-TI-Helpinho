@@ -17,6 +17,7 @@ describe('HelpsRepository unit tests', () => {
     userRelped: randomUUID(),
     deadline: new Date().toISOString(),
     value: 500.0,
+    helpValue: 30.0,
     userName: 'name',
     imgUrl: '',
   };
@@ -29,6 +30,7 @@ describe('HelpsRepository unit tests', () => {
         userRelped: { S: data.userRelped },
         userName: { S: data.userName },
         value: { S: String(data.value) },
+        helpValue: { S: String(data.helpValue) },
         pixKey: { S: data.pixKey },
         deadline: { S: data.deadline },
         category: { S: data.category },

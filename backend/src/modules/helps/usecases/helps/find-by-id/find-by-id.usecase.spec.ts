@@ -17,6 +17,7 @@ describe('FindHelpById.UseCase unit tests', () => {
     userRelped: 'teste id',
     deadline: new Date().toISOString(),
     value: 500.0,
+    helpValue: 100.0,
     userName: 'name',
     imgUrl: '',
   };

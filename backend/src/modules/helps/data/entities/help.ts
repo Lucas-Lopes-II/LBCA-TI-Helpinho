@@ -7,6 +7,7 @@ export interface Help {
   userRelped: string;
   userName: string;
   value: number;
+  helpValue: number;
   pixKey: string;
   deadline: string;
   category: HelpCategory;

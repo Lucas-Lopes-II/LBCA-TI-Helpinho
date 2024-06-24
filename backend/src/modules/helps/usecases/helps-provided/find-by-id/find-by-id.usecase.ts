@@ -28,7 +28,7 @@ export namespace FindHelpProvidedById {
 
       const help = await this.helpRepository.findById(input.helpProvidedId);
       if (!help) {
-        throw new NotFoundError('Help não existe');
+        throw new NotFoundError('Help provido não existe');
       }
 
       return {

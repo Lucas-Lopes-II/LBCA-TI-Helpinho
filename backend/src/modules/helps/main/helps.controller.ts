@@ -22,6 +22,7 @@ import { AuthRequest } from '@auth/main/dtos';
 import { FileDTO } from '@shared/infra/storage/dtos';
 import { CurrentUser } from '@shared/infra/decorators';
 import { HelpsUseCasesFactory } from '@helps/usecases';
+import { HelpsProvidedFields, HelpsProvidedIndexes } from '@helps/data';
 
 @Controller('helps')
 export class HelpsController {
@@ -96,6 +97,57 @@ export class HelpsController {
       helpId: body.helpId,
       userRelped: body.userRelped,
       actionDoneBy: actionDoneBy,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('provided/:helpProvidedId')
+  public async findHelpProvided(
+    @Param('helpProvidedId') helpProvidedId: string,
+  ) {
+    const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
+    const result = await usecase.execute({
+      page: 1,
+      perPage: 1,
+      field: HelpsProvidedFields.ID,
+      index: HelpsProvidedIndexes.ID,
+      value: helpProvidedId,
+    });
+
+    return result.items[0];
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('provided/by-help/:helpId')
+  public findHelpProvidedByHelpId(
+    @Query() quryParams: SearchQueryParamsDTO,
+    @Param('helpId') helpId: string,
+  ) {
+    const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
+
+    return usecase.execute({
+      page: quryParams.page,
+      perPage: quryParams.perPage,
+      field: HelpsProvidedFields.HELP_ID,
+      index: HelpsProvidedIndexes.HELP_ID,
+      value: helpId,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('provided/by-user-helped/:userHelpedId')
+  public findHelpProvidedByUserHelpedId(
+    @Query() quryParams: SearchQueryParamsDTO,
+    @Param('userHelpedId') userHelpedId: string,
+  ) {
+    const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
+
+    return usecase.execute({
+      page: quryParams.page,
+      perPage: quryParams.perPage,
+      field: HelpsProvidedFields.USER_HELPED_ID,
+      index: HelpsProvidedIndexes.USER_HELPED_ID,
+      value: userHelpedId,
     });
   }
 }

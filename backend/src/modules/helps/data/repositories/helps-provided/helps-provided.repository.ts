@@ -1,4 +1,5 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
   QueryCommand,
@@ -49,7 +50,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
     } catch (error) {
       console.log('create error', error);
       throw new InternalServerError(
-        error.message || 'Ocorreu um erro ao criar help',
+        error.message || 'Ocorreu um erro ao criar help provided',
       );
     }
   }
@@ -121,7 +122,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
     } catch (error) {
       console.log('updateById error', error);
       throw new InternalServerError(
-        error.message || 'Ocorreu um erro ao atualizar help',
+        error.message || 'Ocorreu um erro ao atualizar help provided',
       );
     }
   }
@@ -172,7 +173,26 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
     } catch (error) {
       console.log('search error', error);
       throw new InternalServerError(
-        error.message || 'Ocorreu um erro ao listar helps',
+        error.message || 'Ocorreu um erro ao listar helps provided',
+      );
+    }
+  }
+
+  public async delete(id: string): Promise<void> {
+    const params = {
+      TableName: this.tableName,
+      Key: {
+        id: { S: id },
+      },
+    };
+
+    try {
+      const command = new DeleteItemCommand(params);
+      await this.dbClient.send(command);
+    } catch (error) {
+      console.log('delete error', error);
+      throw new InternalServerError(
+        error.message || 'Ocorreu um erro ao deletar help provided',
       );
     }
   }

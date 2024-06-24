@@ -47,7 +47,7 @@ describe('HelpsProvidedRepository unit tests', () => {
   });
 
   describe('create', () => {
-    it('should create an Help', async () => {
+    it('should create an Help provided', async () => {
       await sut.create(data);
 
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -69,7 +69,7 @@ describe('HelpsProvidedRepository unit tests', () => {
       });
 
       await expect(sut.create(data)).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao criar help'),
+        new InternalServerError('Ocorreu um erro ao criar help provided'),
       );
     });
   });
@@ -114,7 +114,7 @@ describe('HelpsProvidedRepository unit tests', () => {
   });
 
   describe('update', () => {
-    it('should update an Help', async () => {
+    it('should update an Help provided', async () => {
       await sut.update(data.id, { ...data });
 
       expect(mockedClientDB.send).toHaveBeenCalled();
@@ -136,7 +136,35 @@ describe('HelpsProvidedRepository unit tests', () => {
       });
 
       await expect(sut.update(data.id, { ...data })).rejects.toThrow(
-        new InternalServerError('Ocorreu um erro ao atualizar help'),
+        new InternalServerError('Ocorreu um erro ao atualizar help provided'),
+      );
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete an Help by id', async () => {
+      await sut.delete(data.id);
+
+      expect(mockedClientDB.send).toHaveBeenCalled();
+    });
+
+    it('should throw if mockedClientDB.send throws error with message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('teste de erro');
+      });
+
+      await expect(sut.delete(data.id)).rejects.toThrow(
+        new InternalServerError('teste de erro'),
+      );
+    });
+
+    it('should throw if mockedClientDB.send throws error without message', async () => {
+      jest.spyOn(mockedClientDB, 'send').mockImplementationOnce(() => {
+        throw new Error('');
+      });
+
+      await expect(sut.delete(data.id)).rejects.toThrow(
+        new InternalServerError('Ocorreu um erro ao deletar help provided'),
       );
     });
   });

@@ -1,4 +1,16 @@
 import {
+  HelpCategory,
+  HelpsRepositoryFactory,
+  IHelpsProvidedRepository,
+} from '@helps/data';
+import {
+  CreateHelp,
+  CreateHelpProvided,
+  DeleteHelp,
+  FindHelpById,
+  SearchHelp,
+} from '@helps/usecases';
+import {
   EnumValidation,
   ISODateValidation,
   MaxLengthFieldValidation,
@@ -9,22 +21,14 @@ import {
   Validation,
   ValidationComposite,
 } from '@shared/domain/validations';
-import {
-  CreateHelp,
-  DeleteHelp,
-  FindHelpById,
-  SearchHelp,
-} from '@helps/usecases';
 import { UsersRepositoryFactory } from '@users/data';
 import { StorageFactory } from '@shared/infra/storage';
-import { hasherFactory } from '@shared/infra/crypto/hasher';
 import { DefaultUseCase } from '@shared/application/usecases';
-import { HelpCategory, HelpsRepositoryFactory } from '@helps/data';
 
 export class HelpsUseCasesFactory {
-  private static readonly repository = HelpsRepositoryFactory.create();
+  private static readonly helpsRepository = HelpsRepositoryFactory.create();
   private static readonly usersRepository = UsersRepositoryFactory.create();
-  private static readonly hasher = hasherFactory();
+  private static readonly helpsProvidedRepository: IHelpsProvidedRepository;
   private static readonly storage = StorageFactory.create();
 
   public static createHelp(): DefaultUseCase<
@@ -47,7 +51,7 @@ export class HelpsUseCasesFactory {
     const validator = new ValidationComposite(validators);
 
     return new CreateHelp.UseCase(
-      this.repository,
+      this.helpsRepository,
       this.usersRepository,
       validator,
       this.storage,
@@ -64,7 +68,11 @@ export class HelpsUseCasesFactory {
     ];
     const validator = new ValidationComposite(validators);
 
-    return new DeleteHelp.UseCase(this.repository, validator, this.storage);
+    return new DeleteHelp.UseCase(
+      this.helpsRepository,
+      validator,
+      this.storage,
+    );
   }
 
   public static findHelpById(): DefaultUseCase<
@@ -76,7 +84,7 @@ export class HelpsUseCasesFactory {
     ];
     const validator = new ValidationComposite(validators);
 
-    return new FindHelpById.UseCase(this.repository, validator);
+    return new FindHelpById.UseCase(this.helpsRepository, validator);
   }
 
   public static searchHelp(): DefaultUseCase<
@@ -90,6 +98,27 @@ export class HelpsUseCasesFactory {
     ];
     const validator = new ValidationComposite(validators);
 
-    return new SearchHelp.UseCase(this.repository, validator);
+    return new SearchHelp.UseCase(this.helpsRepository, validator);
+  }
+
+  public static createHelpProvided(): DefaultUseCase<
+    CreateHelpProvided.Input,
+    CreateHelpProvided.Output
+  > {
+    const validators: Validation<CreateHelpProvided.Input>[] = [
+      new UUIDValidation('userRelped'),
+      new UUIDValidation('helpId'),
+      new UUIDValidation('actionDoneBy'),
+      new ISODateValidation('executionDate'),
+      new MinValueFieldValidation('value', 0.1),
+      new MaxValueFieldValidation('value', 10000000),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new CreateHelpProvided.UseCase(
+      this.helpsProvidedRepository,
+      this.usersRepository,
+      validator,
+    );
   }
 }

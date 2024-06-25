@@ -14,8 +14,9 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
 })
 export class CardComponent {
-  @Input() cardData: (Help & { isOwner: boolean }) | undefined;
-  @Output() onOpenHelp = new EventEmitter<Help & { isOwner: boolean }>();
+  @Input() isOwner: boolean | undefined;
+  @Input() cardData: Help | undefined;
+  @Output() onOpenHelp = new EventEmitter<Help>();
 
   public openHelp(): void {
     this.onOpenHelp.emit(this.cardData);

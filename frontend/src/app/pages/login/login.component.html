@@ -1,0 +1,56 @@
+<main class="w-full h-full md:h-screen flex flex-col md:flex-row">
+  <section class="w-full md:w-1/2 h-full flex flex-col justify-between">
+    <div class="w-full h-1/6 flex items-center justify-center md:justify-start">
+      <img src="assets/svgs/logo.svg">
+    </div>
+
+    <form class="p-[1.5rem] sm:p-[3rem] md:m-0 h-5/6 flex flex-col justify-start items-center self-center w-full md:w-[28rem] lg:w-[37rem]"
+    [formGroup]="loginForm" (submit)="login()">
+      <div>
+        <h1 class="font-boldn mb-[1rem]">Bem vindo de volta!</h1>
+        <p>Entre e ajude os helpinhos de hoje</p>
+      </div>
+
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+        @if (loginForm.get('email')?.hasError('required')) {
+          <mat-error>Email é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="nome">
+        @if (loginForm.get('password')?.hasError('required')) {
+          <mat-error>Senha é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+      <div class="inline-flex items-center justify-between w-full">
+        <mat-checkbox color="warn">
+          Lembre de mim
+        </mat-checkbox>
+      </div>
+
+      <div class="w-full px-[1rem]">
+        <button [disabled]="loginForm.invalid" mat-flat-button color="warn" class="w-full py-[5rem]" type="submit">
+          Entrar
+        </button>
+      </div>
+
+      <div class="flex items-center justify-center w-full mt-[1rem]">
+        <p>
+          Ainda não faz parte do helpinho?
+          <a class="text-md font-medium text-primary-500 hover:underline cursor-pointer" [routerLink]="['/register']">
+            Registre-se grátis
+          </a>
+        </p>
+      </div>
+    </form>
+  </section>
+
+  <section class="w-full p-[1.5rem] sm:p-[3rem] md:w-1/2 md:h-screen flex justify-center items-center">
+    <img class="w-full h-screen p-0 m-0 md:my-[1.5rem] md:mr-[1rem]" src="assets/images/register-image.png">
+  </section>
+</main>
+

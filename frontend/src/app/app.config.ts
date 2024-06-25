@@ -5,7 +5,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
-import { provideAuth } from './core/auth/auth.provider';
+import { provideAuth } from './core/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [

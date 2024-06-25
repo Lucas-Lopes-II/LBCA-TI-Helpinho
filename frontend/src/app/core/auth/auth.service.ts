@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { jwtDecode } from 'jwt-decode';
 import { UserService } from '../../shared/services';
 import { environment } from '../../../eviroments/environment';
 import { Credentials, SigninResponse, UserInToken } from './models';
@@ -26,7 +27,7 @@ export class AuthService {
 
   public signIn(credentials: Credentials): Observable<void> {
     return this.httpClient
-      .post<SigninResponse>(`${this.baseUrl}/sign-in`, credentials)
+      .post<SigninResponse>(`${this.baseUrl}/auth/login`, credentials)
       .pipe(
         switchMap((response: SigninResponse) => {
           this.accessToken = response.access_token;
@@ -40,7 +41,7 @@ export class AuthService {
               }
             : undefined;
 
-          return of();
+          return of(undefined);
         })
       );
   }
@@ -55,7 +56,7 @@ export class AuthService {
 
   public decodePayloadJWT(): UserInToken | undefined {
     if (this.accessToken) {
-      return JSON.parse(atob(this.accessToken)) as UserInToken;
+      return jwtDecode(this.accessToken) as UserInToken;
     }
 
     return;

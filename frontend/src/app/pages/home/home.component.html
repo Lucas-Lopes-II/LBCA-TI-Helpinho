@@ -1,3 +1,9 @@
-<main class="w-screen p-[1.8rem]">
-  <card />
+<main class="w-screen p-[1.8rem] card-grid">
+  @for (item of helps; track $index ) {
+    <card [cardData]="item" />
+  }@empty {
+    <div class="flex justify-center items-center">
+      <p class="text-3xl font-semibold">Sem Helpinhos cadastrados</p>
+    </div>
+  }
 </main>

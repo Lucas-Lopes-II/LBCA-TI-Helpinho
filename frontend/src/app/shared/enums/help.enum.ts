@@ -3,4 +3,6 @@ export enum HelpCategory {
   DEBT = 'Dívida',
   LEISURE = 'Lazer',
   HEALTH = 'Saúde',
+  WORK = 'Trabalho',
+  MUSIC = 'Música',
 }

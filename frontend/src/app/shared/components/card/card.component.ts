@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
 })
 export class CardComponent {
-  @Input() isOwner: boolean | undefined;
   @Input() cardData: Help | undefined;
   @Output() onOpenHelp = new EventEmitter<Help>();
 

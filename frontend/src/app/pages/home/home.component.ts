@@ -7,6 +7,7 @@ import { Help } from '../../shared/models';
 import { LoggedUser } from '../../core/auth/models';
 import { HelpService, UserService } from '../../shared/services';
 import { CardComponent, PaginatorComponent } from '../../shared/components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +24,11 @@ export class HomeComponent implements OnInit {
     total: 0,
     perpage: 10,
   };
-  public user: LoggedUser | undefined;
+  private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
   private readonly helpService = inject(HelpService);
-  public readonly userService = inject(UserService);
 
   ngOnInit(): void {
-    this.user = this.userService.user();
     this.getAllHelps(this.listMetaData.currentPage);
   }
 
@@ -66,5 +65,10 @@ export class HomeComponent implements OnInit {
 
   public onNext(): void {
     this.getAllHelps(this.listMetaData.currentPage + 1);
+  }
+
+  public openHelp(data: Help): void {
+    this.helpService.help = data;
+    this.router.navigateByUrl(`helps/${data.id}`);
   }
 }

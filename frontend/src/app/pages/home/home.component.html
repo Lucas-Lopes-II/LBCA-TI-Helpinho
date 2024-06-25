@@ -1,7 +1,7 @@
 <main class="w-screen p-[1.8rem] flex flex-col">
   <div class="card-grid">
     @for (item of helps; track $index ) {
-      <card [cardData]="item" [isOwner]="user?.id == item.userHelped" />
+      <card [cardData]="item" (onOpenHelp)="openHelp($event)" />
     }@empty {
       <div class="flex justify-center items-center">
         <p class="text-3xl font-semibold">Sem Helpinhos cadastrados</p>

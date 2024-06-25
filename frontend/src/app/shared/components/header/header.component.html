@@ -1,24 +1,25 @@
 <header class="flex h-[5rem] justify-center items-center w-full py-[1.5rem] px-[1rem] bg-[#ffbcce]">
-  <div class="w-2/6 h-1/6 flex items-center justify-center md:justify-start">
-    <img src="assets/svgs/logo.svg">
+  <div class="w-2/12 md:w-2/6 h-1/6 flex items-center justify-center md:justify-start">
+    <img class="hidden md:flex" src="assets/svgs/logo.svg">
+    <img class="flex md:hidden" src="assets/svgs/logo-icon.svg">
   </div>
 
-  <div class="w-2/6 h-full flex items-center justify-center">
+  <div class="w-10/12 md:w-2/6 h-full flex items-center justify-center">
     <ul class="flex gap-5 justify-center items-center">
-      <li routerLink="home" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+      <li routerLink="home" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
         Home
       </li>
-      <li routerLink="my-helps" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+      <li routerLink="my-helps" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
         Meus helps
       </li>
-      <li routerLink="about" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+      <li routerLink="about" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
         Sobre
       </li>
     </ul>
   </div>
 
-  <div class="w-2/6  flex items-center justify-end gap-3">
-    <div class="flex flex-col justify-center items-start">
+  <div class="w-2/12 md:w-2/6  flex items-center justify-end gap-3">
+    <div class="hidden lg:flex flex-col justify-center items-start">
       <span class="font-semibold span-0 m-0">{{ user?.name }}</span>
       <span class="p-0 m-0">{{ user?.email }}</span>
     </div>

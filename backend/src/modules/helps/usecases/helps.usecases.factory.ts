@@ -2,8 +2,8 @@ import {
   HelpCategory,
   HelpsProvidedFields,
   HelpsProvidedIndexes,
+  HelpsProvidedRepositoryFactory,
   HelpsRepositoryFactory,
-  IHelpsProvidedRepository,
 } from '@helps/data';
 import {
   CreateHelp,
@@ -31,7 +31,8 @@ import { DefaultUseCase } from '@shared/application/usecases';
 export class HelpsUseCasesFactory {
   private static readonly helpsRepository = HelpsRepositoryFactory.create();
   private static readonly usersRepository = UsersRepositoryFactory.create();
-  private static readonly helpsProvidedRepository: IHelpsProvidedRepository;
+  private static readonly helpsProvidedRepository =
+    HelpsProvidedRepositoryFactory.create();
   private static readonly storage = StorageFactory.create();
 
   public static createHelp(): DefaultUseCase<

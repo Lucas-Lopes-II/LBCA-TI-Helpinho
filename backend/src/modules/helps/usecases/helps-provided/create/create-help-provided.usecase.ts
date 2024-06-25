@@ -28,11 +28,14 @@ export namespace CreateHelpProvided {
       this.validator.validate(input);
 
       const [user, help] = await Promise.all([
-        this.userRepository.findById(input.helpId),
-        this.helpsRepository.findById(input.userHelped),
+        this.userRepository.findById(input.userHelped),
+        this.helpsRepository.findById(input.helpId),
       ]);
+      console.log('user', user);
+      console.log('help', help);
+
       if (!user) {
-        throw new NotFoundError('Usuário não ajudado não encontrado');
+        throw new NotFoundError('Usuário ajudado não encontrado');
       }
       if (!help) {
         throw new NotFoundError('Help não encontrado');

@@ -22,7 +22,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
 
   private constructor(private readonly dbClient: DynamoDBClient) {
     const envConfig = EnvConfigFactory.create();
-    this.tableName = envConfig.getHelpsTableName();
+    this.tableName = envConfig.getHelpsProvidedTableName();
   }
 
   public static createInstance(

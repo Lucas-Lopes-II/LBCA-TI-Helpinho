@@ -126,8 +126,8 @@ export class HelpsController {
     const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
 
     return usecase.execute({
-      page: quryParams.page,
-      perPage: quryParams.perPage,
+      page: Number(quryParams.page),
+      perPage: Number(quryParams.perPage),
       field: HelpsProvidedFields.HELP_ID,
       index: HelpsProvidedIndexes.HELP_ID,
       value: helpId,
@@ -143,8 +143,8 @@ export class HelpsController {
     const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
 
     return usecase.execute({
-      page: quryParams.page,
-      perPage: quryParams.perPage,
+      page: Number(quryParams.page),
+      perPage: Number(quryParams.perPage),
       field: HelpsProvidedFields.USER_HELPED_ID,
       index: HelpsProvidedIndexes.USER_HELPED_ID,
       value: userHelpedId,

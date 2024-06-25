@@ -88,7 +88,7 @@ describe('CreateHelpProvided.UseCase unit tests', () => {
     jest.spyOn(mockedUserRepo, 'findById').mockResolvedValueOnce(undefined);
 
     await expect(sut.execute(mockedInput)).rejects.toThrow(
-      new NotFoundError('Usuário não ajudado não encontrado'),
+      new NotFoundError('Usuário ajudado não encontrado'),
     );
   });
 

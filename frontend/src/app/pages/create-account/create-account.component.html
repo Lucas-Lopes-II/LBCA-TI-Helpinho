@@ -1,0 +1,64 @@
+<main class="w-full h-screen flex">
+  <section class="w-1/2 h-full flex flex-col justify-between">
+    <div class="w-full h-1/6 ml-[5rem] self-start flex items-center justify-start">
+      <img src="assets/svgs/logo.svg" alt="">
+    </div>
+
+    <form class="h-5/6 flex flex-col gap-4  self-center w-[25rem]" [formGroup]="registerForm" (submit)="register()">
+      <div>
+        <h1 class="font-boldn mb-[1rem]">Registre-se grátis</h1>
+        <p>Seja bem vindo! Estamos felizes em tê-lo na nossa rede de apoio</p>
+      </div>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input type="text" matInput formControlName="name"
+               placeholder="nome">
+        @if (registerForm.get('name')?.hasError('required')) {
+          <mat-error>Nome é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+        @if (registerForm.get('email')?.hasError('email') && !registerForm.get('email')?.hasError('required')) {
+          <mat-error>Email no formato incorreto</mat-error>
+        }
+        @if (registerForm.get('email')?.hasError('required')) {
+          <mat-error>Email é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Telefone</mat-label>
+        <input matInput [placeholder]="'Telefone'" formControlName="fone" mask="(00) 00000000||+00 (00) 00000000" />
+        @if (registerForm.get('name')?.hasError('required')) {
+          <mat-error>Telefone é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="nome">
+        @if (registerForm.get('password')?.hasError('required')) {
+          <mat-error>Senha é <strong>obrigatório</strong></mat-error>
+        }
+        @if(registerForm.get('password')?.hasError('strongPassword') && !registerForm.get('password')?.hasError('required')){
+          <mat-error>
+          A senha deve conter no mínimo 6 caracteres, uma letra maiúscula, uma letra minúscula e um simbolo
+      </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="w-full h-full">
+        <button mat-flat-button color="warn" class="w-full py-[5rem]" type="submit">
+          Cadastre-se grátis
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="w-1/2 h-screen">
+    <img class="w-full h-screen py-[1.5rem] pr-[1rem]" src="assets/images/register-image.png">
+  </section>
+</main>

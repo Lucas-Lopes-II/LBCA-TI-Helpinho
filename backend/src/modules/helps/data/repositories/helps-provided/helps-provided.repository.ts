@@ -145,7 +145,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
           TableName: this.tableName,
           IndexName: `${filter.index}`,
           FilterExpression: `${filter.field} = :${filter.field}`,
-          ExpressionAttributeNames: { [`#${filter.field}`]: `${filter.field}` },
+          // ExpressionAttributeNames: { [`#${filter.field}`]: `${filter.field}` },
           ExpressionAttributeValues: {
             [`:${filter.field}`]: { S: `${filter.value}` },
           },

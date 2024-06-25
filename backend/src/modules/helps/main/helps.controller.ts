@@ -23,6 +23,7 @@ import { FileDTO } from '@shared/infra/storage/dtos';
 import { CurrentUser } from '@shared/infra/decorators';
 import { HelpsUseCasesFactory } from '@helps/usecases';
 import { HelpsProvidedFields, HelpsProvidedIndexes } from '@helps/data';
+import { NotFoundError } from '@shared/domain/errors';
 
 @Controller('helps')
 export class HelpsController {
@@ -114,7 +115,11 @@ export class HelpsController {
       value: helpProvidedId,
     });
 
-    return result.items[0];
+    if (result.items[0]) {
+      return result.items[0];
+    } else {
+      throw new NotFoundError('Registor não encontrado');
+    }
   }
 
   @HttpCode(HttpStatus.OK)

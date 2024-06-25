@@ -1,0 +1,24 @@
+<mat-card class="w-Full h-Full max-w-[30rem] max-h-[35rem] rounded-xl">
+  <img class="w-auto h-auto" mat-card-image src="{{ cardData?.imgUrl }}" alt="{{ cardData?.description }}">
+  <mat-card-content>
+    <div class="flex justify-between my-[0.5rem]">
+      <mat-card-title>{{ cardData?.userName }}</mat-card-title>
+      <mat-card-subtitle>{{ cardData?.category }}</mat-card-subtitle>
+    </div>
+    <p class="overflow-auto">
+      {{ cardData?.description }}
+    </p>
+  </mat-card-content
+  >
+  <mat-card-actions>
+    @if(cardData?.isOwner) {
+      <button  mat-flat-button color="warn" class="bg-[#ff2e6b] w-full py-[5rem]" (click)="openHelp()">
+        Vusualizar
+      </button>
+    } @else {
+      <button  mat-flat-button color="warn" class="bg-[#ff2e6b] w-full py-[5rem]" (click)="openHelp()">
+        Ajudar
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

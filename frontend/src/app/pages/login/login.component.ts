@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  public isLoading = false;
 
   ngOnInit(): void {
     this.initform();
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     if (this.loginForm.valid) {
+      this.isLoading = true;
       this.authService
         .signIn(this.loginForm.value)
         .pipe(take(1))
@@ -64,6 +66,9 @@ export class LoginComponent implements OnInit {
               horizontalPosition: 'right',
               verticalPosition: 'top',
             });
+          },
+          complete: () => {
+            this.isLoading = true;
           },
         });
     }

@@ -54,6 +54,14 @@ export class AuthService {
     return of(true);
   }
 
+  public checkIfIsAutenticated(): boolean {
+    if (this.authenticated || !!this.accessToken) {
+      return true;
+    }
+
+    return false;
+  }
+
   public decodePayloadJWT(): UserInToken | undefined {
     if (this.accessToken) {
       return jwtDecode(this.accessToken) as UserInToken;

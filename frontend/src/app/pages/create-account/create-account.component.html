@@ -44,7 +44,7 @@
           <mat-error>Senha é <strong>obrigatório</strong></mat-error>
         }
         @if(registerForm.get('password')?.hasError('strongPassword') && !registerForm.get('password')?.hasError('required')){
-          <mat-error>
+          <mat-error class="mb-2">
           A senha deve conter no mínimo 6 caracteres, uma letra maiúscula, uma letra minúscula e um simbolo
       </mat-error>
         }

@@ -1,15 +1,15 @@
-<main class="w-full h-screen flex">
-  <section class="w-1/2 h-full flex flex-col justify-between">
-    <div class="w-full h-1/6 ml-[5rem] self-start flex items-center justify-start">
+<main class="w-full h-full md:h-screen flex flex-col md:flex-row">
+  <section class="w-full md:w-1/2 h-full flex flex-col justify-between">
+    <div class="w-full h-1/6 flex items-center justify-center md:justify-start">
       <img src="assets/svgs/logo.svg" alt="">
     </div>
 
-    <form class="h-5/6 flex flex-col gap-4  self-center w-[25rem]" [formGroup]="registerForm" (submit)="register()">
+    <form class="p-[1.5rem] sm:p-[3rem] md:m-0 h-5/6 flex flex-col justify-center gap-4 items-center self-center w-full md:min-w-[22rem] lg:min-w-[30rem]" [formGroup]="registerForm" (submit)="register()">
       <div>
         <h1 class="font-boldn mb-[1rem]">Registre-se grátis</h1>
         <p>Seja bem vindo! Estamos felizes em tê-lo na nossa rede de apoio</p>
       </div>
-      <mat-form-field>
+      <mat-form-field class="w-full">
         <mat-label>Nome</mat-label>
         <input type="text" matInput formControlName="name"
                placeholder="nome">
@@ -18,7 +18,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="w-full">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
         @if (registerForm.get('email')?.hasError('email') && !registerForm.get('email')?.hasError('required')) {
@@ -29,7 +29,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="w-full">
         <mat-label>Telefone</mat-label>
         <input matInput [placeholder]="'Telefone'" formControlName="fone" mask="(00) 00000000||+00 (00) 00000000" />
         @if (registerForm.get('name')?.hasError('required')) {
@@ -37,7 +37,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="w-full">
         <mat-label>Senha</mat-label>
         <input type="password" matInput formControlName="password" placeholder="nome">
         @if (registerForm.get('password')?.hasError('required')) {
@@ -58,7 +58,7 @@
     </form>
   </section>
 
-  <section class="w-1/2 h-screen">
-    <img class="w-full h-screen py-[1.5rem] pr-[1rem]" src="assets/images/register-image.png">
+  <section class="w-full p-[1.5rem] sm:p-[3rem] md:w-1/2 md:h-screen flex justify-center items-center">
+    <img class="w-full h-screen p-0 m-0 md:my-[1.5rem] md:mr-[1rem]" src="assets/images/register-image.png">
   </section>
 </main>

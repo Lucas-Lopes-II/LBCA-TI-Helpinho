@@ -1,0 +1,21 @@
+<div class="flex flex-col items-center">
+  <span class="text-sm text-gray-700 dark:text-gray-400">
+    Mostrando <span class="font-semibold text-gray-900">
+      {{ initialCount }}
+    </span> a <span class="font-semibold text-gray-900">
+      {{ finalCount }}
+    </span> de <span class="font-semibold text-gray-900">{{ totalCount }}</span> Cards
+  </span>
+
+  <div class="inline-flex mt-2 xs:mt-0 ">
+    <button (click)="onPrevius()" [disabled]="page <= 1"
+      class="flex items-center justify-center px-3 h-8 text-sm font-medium  bg-[#dbe3eb] rounded-s hover:bg-[#c2d7f3] text-gray-900 disabled:opacity-50">
+      Anterior
+    </button>
+
+    <button (click)="onNext()" [disabled]="finalCount === totalCount"
+      class="flex items-center justify-center px-3 h-8 text-sm font-medium  bg-[#dbe3eb] border-0 border-s border-gray-700 rounded-e hover:bg-[#c2d7f3] text-gray-900 disabled:opacity-50">
+      Próxima
+    </button>
+  </div>
+</div>

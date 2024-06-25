@@ -1,9 +1,18 @@
-<main class="w-screen p-[1.8rem] card-grid">
-  @for (item of helps; track $index ) {
-    <card [cardData]="item" />
-  }@empty {
-    <div class="flex justify-center items-center">
-      <p class="text-3xl font-semibold">Sem Helpinhos cadastrados</p>
+<main class="w-screen p-[1.8rem] flex flex-col">
+  <div class="card-grid">
+    @for (item of helps; track $index ) {
+      <card [cardData]="item" [isOwner]="user?.id == item.userHelped" />
+    }@empty {
+      <div class="flex justify-center items-center">
+        <p class="text-3xl font-semibold">Sem Helpinhos cadastrados</p>
+      </div>
+    }
+  </div>
+
+  @if(helps.length > 0){
+    <div class="mt-5">
+      <paginator (next)="onNext()" (previus)="onPrevius()" [page]="this.listMetaData.currentPage" [pageSize]="this.listMetaData.perpage"
+        [totalCount]="this.listMetaData.total"></paginator>
     </div>
   }
 </main>

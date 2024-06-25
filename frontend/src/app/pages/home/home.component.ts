@@ -1,28 +1,36 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { Help } from '../../shared/models';
-import { CardComponent } from '../../shared/components';
-import { HelpService } from '../../shared/services';
-import { take } from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { take } from 'rxjs';
+import { Help } from '../../shared/models';
+import { LoggedUser } from '../../core/auth/models';
+import { HelpService, UserService } from '../../shared/services';
+import { CardComponent, PaginatorComponent } from '../../shared/components';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, CommonModule],
+  imports: [CardComponent, CommonModule, PaginatorComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   public helps: Help[] = [];
   public isLoading = false;
+  public listMetaData = {
+    currentPage: 1,
+    total: 0,
+    perpage: 10,
+  };
+  public user: LoggedUser | undefined;
   private readonly snackBar = inject(MatSnackBar);
   private readonly helpService = inject(HelpService);
-  public currentPage = 1;
+  public readonly userService = inject(UserService);
 
   ngOnInit(): void {
-    this.getAllHelps(this.currentPage);
+    this.user = this.userService.user();
+    this.getAllHelps(this.listMetaData.currentPage);
   }
 
   private getAllHelps(page: number): void {
@@ -32,6 +40,11 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
+          this.listMetaData = {
+            currentPage: response.currentPage,
+            perpage: response.perPage,
+            total: response.total,
+          };
           this.helps = response.items;
         },
         error: () => {
@@ -45,5 +58,13 @@ export class HomeComponent implements OnInit {
           this.isLoading = false;
         },
       });
+  }
+
+  public onPrevius(): void {
+    this.getAllHelps(this.listMetaData.currentPage - 1);
+  }
+
+  public onNext(): void {
+    this.getAllHelps(this.listMetaData.currentPage + 1);
   }
 }

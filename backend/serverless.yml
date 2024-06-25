@@ -1,0 +1,149 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: lucaslopes2
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: helpinho
+service: helpinho
+
+custom:
+  region: 'us-east-1'
+  usersTable: 'users-table-${sls:stage}'
+  helpsTable: 'helps-table-${sls:stage}'
+  helpsProvidedTable: 'helps-provided-table-${sls:stage}'
+  bucketName: 'helpinho-test'
+  urlBucket: 'https://helpinho-test.s3.amazonaws.com'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  architecture: arm64
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  memorySize: 128
+  logRetentionInDays: 1
+  timeout: 15
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: '*'
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: '*'
+
+  environment:
+    REGION: ${self:custom.region}
+    USERS_TABLE: ${self:custom.usersTable}
+    HELPS_TABLE: ${self:custom.helpsTable}
+    HELPS_PROVIDED_TABLE: ${self:custom.helpsProvidedTable}
+    BUCKET_NAME: ${self:custom.bucketName}
+    BUCKET_URL: ${self:custom.urlBucket}
+    SECRET_TOKEN: ${sls:stage}-djfoqr=jgrk8usdfçlgp-+++99+-dgfrds+g+gewf
+
+package:
+  individually: true
+
+functions:
+  api:
+    handler: dist/lambda.handler
+    events:
+      - httpApi:
+          method: any
+          path: /{proxy+}
+
+plugins:
+  - serverless-jetpack
+  - serverless-offline
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.usersTable}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: EmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: IdIndex
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+
+    HelpTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.helpsTable}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: IdIndex
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+
+    HelpProvidedTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.helpsProvidedTable}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: helpId
+            AttributeType: S
+          - AttributeName: userHelped
+            AttributeType: S
+          - AttributeName: userDonor
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: IdIndex
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: HelpIdIndex
+            KeySchema:
+              - AttributeName: helpId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: UserHelpedIndex
+            KeySchema:
+              - AttributeName: userHelped
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: UserDonorIndex
+            KeySchema:
+              - AttributeName: userDonor
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST

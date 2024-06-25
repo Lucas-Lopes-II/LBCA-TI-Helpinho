@@ -1,6 +1,6 @@
 export class CreateHelpProvidedDTO {
   helpId: string;
-  userRelped: string;
+  userHelped: string;
   value: number;
   executionDate: string;
 }

@@ -11,7 +11,7 @@ export namespace CreateHelp {
   export type Input = {
     title: string;
     description: string;
-    userRelped: string;
+    userHelped: string;
     value: number;
     pixKey: string;
     deadline: string;
@@ -32,7 +32,7 @@ export namespace CreateHelp {
     public async execute(input: Input): Promise<Output> {
       this.validator.validate(input);
 
-      const user = await this.userRepository.findById(input.userRelped);
+      const user = await this.userRepository.findById(input.userHelped);
       if (!user) {
         throw new NotFoundError('Usuário não criador não encontrado');
       }
@@ -48,7 +48,7 @@ export namespace CreateHelp {
         description: input.description,
         deadline: input.deadline,
         pixKey: input.pixKey,
-        userRelped: input.userRelped,
+        userHelped: input.userHelped,
         value: input.value,
         helpValue: 0.0,
         category: input.category,

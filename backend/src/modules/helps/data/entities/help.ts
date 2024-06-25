@@ -4,7 +4,7 @@ export interface Help {
   id: string;
   title: string;
   description: string;
-  userRelped: string;
+  userHelped: string;
   userName: string;
   value: number;
   helpValue: number;

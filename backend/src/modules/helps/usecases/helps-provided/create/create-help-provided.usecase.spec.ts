@@ -13,13 +13,13 @@ import { InternalServerError, NotFoundError } from '@shared/domain/errors';
 describe('CreateHelpProvided.UseCase unit tests', () => {
   const mockedInput: CreateHelpProvided.Input = {
     helpId: randomUUID(),
-    userRelped: randomUUID(),
+    userHelped: randomUUID(),
     actionDoneBy: randomUUID(),
     executionDate: new Date().toISOString(),
     value: 500.0,
   };
   const user: User = {
-    id: mockedInput.userRelped,
+    id: mockedInput.userHelped,
     name: 'Test',
     email: 'email@test.com',
     fone: '558596632147',
@@ -31,7 +31,7 @@ describe('CreateHelpProvided.UseCase unit tests', () => {
     title: 'title',
     description: 'description',
     pixKey: '4547897467899',
-    userRelped: 'teste id',
+    userHelped: 'teste id',
     deadline: new Date().toISOString(),
     value: 500.0,
     helpValue: 100.0,

@@ -11,7 +11,7 @@ export namespace FindHelpProvidedById {
   export type Output = {
     id: string;
     helpId: string;
-    userRelped: string;
+    userHelped: string;
     userDonor: string;
     value: number;
     executionDate: string;
@@ -37,7 +37,7 @@ export namespace FindHelpProvidedById {
         value: help.value,
         userDonor: help.userDonor,
         helpId: help.helpId,
-        userRelped: help.userRelped,
+        userHelped: help.userHelped,
       };
     }
   }

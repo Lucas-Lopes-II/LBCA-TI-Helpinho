@@ -11,13 +11,13 @@ import { HelpProvided } from '../../entities/help-provided';
 export enum HelpsProvidedIndexes {
   ID = 'IdIndex',
   HELP_ID = 'HelpIdIndex',
-  USER_HELPED_ID = 'UserRelpedIndex',
+  USER_HELPED_ID = 'UserHelpedIndex',
 }
 
 export enum HelpsProvidedFields {
   ID = 'id',
   HELP_ID = 'helpId',
-  USER_HELPED_ID = 'userRelped',
+  USER_HELPED_ID = 'userHelped',
 }
 
 export type FilterIndexes<T> = {

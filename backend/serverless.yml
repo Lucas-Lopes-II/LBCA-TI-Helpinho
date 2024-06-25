@@ -5,12 +5,12 @@ app: helpinho
 service: helpinho
 
 custom:
-  region: "us-east-1"
-  usersTable: "users-table-${sls:stage}"
-  helpsTable: "helps-table-${sls:stage}"
-  helpsProvidedTable: "helps-provided-table-${sls:stage}"
-  bucketName: "helpinho-test"
-  urlBucket: "https://helpinho-test.s3.amazonaws.com"
+  region: 'us-east-1'
+  usersTable: 'users-table-${sls:stage}'
+  helpsTable: 'helps-table-${sls:stage}'
+  helpsProvidedTable: 'helps-provided-table-${sls:stage}'
+  bucketName: 'helpinho-test'
+  urlBucket: 'https://helpinho-test.s3.amazonaws.com'
 
 provider:
   name: aws
@@ -22,17 +22,17 @@ provider:
   logRetentionInDays: 1
   timeout: 15
   iam:
-   role:
+    role:
       statements:
         - Effect: Allow
           Action:
             - dynamodb:*
-          Resource: "*"
+          Resource: '*'
         - Effect: Allow
           Action:
             - s3:*
-          Resource: "*"
-           
+          Resource: '*'
+
   environment:
     REGION: ${self:custom.region}
     USERS_TABLE: ${self:custom.usersTable}
@@ -41,13 +41,12 @@ provider:
     BUCKET_NAME: ${self:custom.bucketName}
     BUCKET_URL: ${self:custom.urlBucket}
     SECRET_TOKEN: ${sls:stage}-djfoqr=jgrk8usdfçlgp-+++99+-dgfrds+g+gewf
-    
 
 package:
   individually: true
 
 functions:
-   api:
+  api:
     handler: dist/lambda.handler
     events:
       - httpApi:
@@ -115,7 +114,7 @@ resources:
             AttributeType: S
           - AttributeName: helpId
             AttributeType: S
-          - AttributeName: userRelped
+          - AttributeName: userHelped
             AttributeType: S
           - AttributeName: userDonor
             AttributeType: S
@@ -135,9 +134,9 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-          - IndexName: UserRelpedIndex
+          - IndexName: UserHelpedIndex
             KeySchema:
-              - AttributeName: userRelped
+              - AttributeName: userHelped
                 KeyType: HASH
             Projection:
               ProjectionType: ALL

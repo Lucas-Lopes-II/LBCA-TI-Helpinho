@@ -41,7 +41,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
       Item: {
         id: { S: data.id },
         helpId: { S: data.helpId },
-        userRelped: { S: data.userRelped },
+        userHelped: { S: data.userHelped },
         userDonor: { S: data.userDonor },
         executionDate: { S: data.executionDate },
         value: { S: String(data.value) },
@@ -78,7 +78,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
         return {
           id: item.id.S,
           helpId: item.helpId.S,
-          userRelped: item.userRelped.S,
+          userHelped: item.userHelped.S,
           userDonor: item.userDonor.S,
           executionDate: item.executionDate.S,
           value: parseFloat(item.value.S),
@@ -101,7 +101,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
         id: { S: id },
       },
       UpdateExpression:
-        `set #title = :title, #description = :description, #userRelped = :userRelped, #userName = :userName,
+        `set #title = :title, #description = :description, #userHelped = :userHelped, #userName = :userName,
       #value = :value, #pixKey = :pixKey, #deadline = :deadline, #category = :category, #imgUrl = :imgUrl`.trim(),
       ExpressionAttributeNames: {
         '#name': 'name',
@@ -113,7 +113,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
         ':id': { S: data.id },
         ':userDonor': { S: data.userDonor },
         ':helpId': { S: data.helpId },
-        ':userRelped': { S: data.userRelped },
+        ':userHelped': { S: data.userHelped },
         ':executionDate': { S: data.executionDate },
         ':value': { S: String(data.value) },
       },
@@ -164,7 +164,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
             ...result.Items.map((item) => ({
               id: item.id.S,
               helpId: item.helpId.S,
-              userRelped: item.userRelped.S,
+              userHelped: item.userHelped.S,
               userDonor: item.userDonor.S,
               executionDate: item.executionDate.S,
               value: parseFloat(item.value.S),

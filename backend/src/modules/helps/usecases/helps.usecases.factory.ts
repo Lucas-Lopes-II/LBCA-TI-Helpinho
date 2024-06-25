@@ -45,7 +45,7 @@ export class HelpsUseCasesFactory {
       new MaxLengthFieldValidation('description', 200),
       new MinLengthFieldValidation('pixKey', 2),
       new MaxLengthFieldValidation('pixKey', 100),
-      new UUIDValidation('userRelped'),
+      new UUIDValidation('userHelped'),
       new ISODateValidation('deadline'),
       new MinValueFieldValidation('value', 0.1),
       new MaxValueFieldValidation('value', 10000000),
@@ -109,7 +109,7 @@ export class HelpsUseCasesFactory {
     CreateHelpProvided.Output
   > {
     const validators: Validation<CreateHelpProvided.Input>[] = [
-      new UUIDValidation('userRelped'),
+      new UUIDValidation('userHelped'),
       new UUIDValidation('helpId'),
       new UUIDValidation('actionDoneBy'),
       new ISODateValidation('executionDate'),

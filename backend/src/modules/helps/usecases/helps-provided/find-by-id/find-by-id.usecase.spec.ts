@@ -12,7 +12,7 @@ describe('FindHelpProvidedById.UseCase unit tests', () => {
     id: mockedInput.helpProvidedId,
     helpId: randomUUID(),
     userDonor: randomUUID(),
-    userRelped: randomUUID(),
+    userHelped: randomUUID(),
     value: 20.0,
     executionDate: new Date().toISOString(),
   };

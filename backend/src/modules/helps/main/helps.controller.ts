@@ -44,7 +44,7 @@ export class HelpsController {
       pixKey: body.pixKey,
       value: Number(body.value),
       file: file,
-      userRelped: actionDoneBy,
+      userHelped: actionDoneBy,
     });
   }
 
@@ -95,7 +95,7 @@ export class HelpsController {
       executionDate: body.executionDate,
       value: Number(body.value),
       helpId: body.helpId,
-      userRelped: body.userRelped,
+      userHelped: body.userHelped,
       actionDoneBy: actionDoneBy,
     });
   }

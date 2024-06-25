@@ -13,7 +13,7 @@ describe('HelpsProvidedRepository unit tests', () => {
     id: randomUUID(),
     helpId: randomUUID(),
     userDonor: randomUUID(),
-    userRelped: randomUUID(),
+    userHelped: randomUUID(),
     value: 20.0,
     executionDate: new Date().toISOString(),
   };
@@ -23,7 +23,7 @@ describe('HelpsProvidedRepository unit tests', () => {
         id: { S: data.id },
         helpId: { S: data.helpId },
         userDonor: { S: data.userDonor },
-        userRelped: { S: data.userRelped },
+        userHelped: { S: data.userHelped },
         executionDate: { S: data.executionDate },
         value: { S: String(data.value) },
       },

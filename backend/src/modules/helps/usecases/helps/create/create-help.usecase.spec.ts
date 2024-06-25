@@ -11,7 +11,7 @@ describe('CreateHelp.UseCase unit tests', () => {
     title: 'title',
     description: 'description',
     pixKey: '4547897467899',
-    userRelped: randomUUID(),
+    userHelped: randomUUID(),
     category: HelpCategory.HEALTH,
     deadline: new Date().toISOString(),
     value: 500.0,
@@ -25,7 +25,7 @@ describe('CreateHelp.UseCase unit tests', () => {
     },
   };
   const user: User = {
-    id: mockedInput.userRelped,
+    id: mockedInput.userHelped,
     name: 'Test',
     email: 'email@test.com',
     fone: '558596632147',

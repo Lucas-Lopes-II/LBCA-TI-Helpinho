@@ -15,7 +15,7 @@ describe('DeleteHelp.UseCase unit tests', () => {
     title: 'title',
     description: 'description',
     pixKey: '4547897467899',
-    userRelped: mockedInput.actionDoneBy,
+    userHelped: mockedInput.actionDoneBy,
     deadline: new Date().toISOString(),
     value: 500.0,
     helpValue: 500.0,

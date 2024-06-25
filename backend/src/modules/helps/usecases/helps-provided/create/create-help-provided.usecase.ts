@@ -9,7 +9,7 @@ export namespace CreateHelpProvided {
   export type Input = {
     helpId: string;
     actionDoneBy: string;
-    userRelped: string;
+    userHelped: string;
     value: number;
     executionDate: string;
   };
@@ -29,7 +29,7 @@ export namespace CreateHelpProvided {
 
       const [user, help] = await Promise.all([
         this.userRepository.findById(input.helpId),
-        this.helpsRepository.findById(input.userRelped),
+        this.helpsRepository.findById(input.userHelped),
       ]);
       if (!user) {
         throw new NotFoundError('Usuário não ajudado não encontrado');
@@ -43,7 +43,7 @@ export namespace CreateHelpProvided {
         helpId: input.helpId,
         executionDate: input.executionDate,
         userDonor: input.actionDoneBy,
-        userRelped: input.userRelped,
+        userHelped: input.userHelped,
         value: input.value,
       });
 

@@ -1,7 +1,7 @@
 export interface HelpProvided {
   id: string;
   helpId: string;
-  userRelped: string;
+  userHelped: string;
   userDonor: string;
   value: number;
   executionDate: string;

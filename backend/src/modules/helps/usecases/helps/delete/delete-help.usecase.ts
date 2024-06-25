@@ -27,7 +27,7 @@ export namespace DeleteHelp {
         throw new BadRequestError('help informado não existe');
       }
 
-      const userIsNotHelpOwner = input.actionDoneBy !== help.userRelped;
+      const userIsNotHelpOwner = input.actionDoneBy !== help.userHelped;
       if (userIsNotHelpOwner) {
         throw new ForbiddenError('Ação não permitida');
       }

@@ -12,7 +12,7 @@ export namespace FindHelpById {
     id: string;
     title: string;
     description: string;
-    userRelped: string;
+    userHelped: string;
     userName: string;
     value: number;
     helpValue: number;
@@ -44,7 +44,7 @@ export namespace FindHelpById {
         pixKey: help.pixKey,
         category: help.category,
         userName: help.userName,
-        userRelped: help.userRelped,
+        userHelped: help.userHelped,
         value: help.value,
         helpValue: help.helpValue,
         imgUrl: help.imgUrl,

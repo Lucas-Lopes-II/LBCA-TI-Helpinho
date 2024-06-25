@@ -4,7 +4,7 @@
       <img src="assets/svgs/logo.svg" alt="">
     </div>
 
-    <form class="p-[1.5rem] sm:p-[3rem] md:m-0 h-5/6 flex flex-col justify-center gap-4 items-center self-center w-full md:min-w-[22rem] lg:min-w-[30rem]" [formGroup]="registerForm" (submit)="register()">
+    <form class="p-[1.5rem] sm:p-[3rem] md:m-0 h-5/6 flex flex-col justify-center gap-4 items-center self-center w-full md:w-[28rem] lg:w-[37rem]" [formGroup]="registerForm" (submit)="register()">
       <div>
         <h1 class="font-boldn mb-[1rem]">Registre-se grátis</h1>
         <p>Seja bem vindo! Estamos felizes em tê-lo na nossa rede de apoio</p>
@@ -51,7 +51,7 @@
       </mat-form-field>
 
       <div class="w-full h-full">
-        <button mat-flat-button color="warn" class="w-full py-[5rem]" type="submit">
+        <button [disabled]="registerForm.invalid" mat-flat-button color="warn" class="w-full py-[5rem]" type="submit">
           Cadastre-se grátis
         </button>
       </div>

@@ -50,26 +50,28 @@ export class CreateAccountComponent implements OnInit {
   }
 
   public register(): void {
-    this,
-      this.userService
-        .regirter(this.registerForm.value)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.snackBar.open('Cadatro realizado com sucesso!', 'fechar', {
-              duration: 2000,
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            });
-            this.router.navigateByUrl('login');
-          },
-          error: () => {
-            this.snackBar.open('Ocorreu algum problema', 'fechar', {
-              duration: 2000,
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            });
-          },
-        });
+    if (this.registerForm.valid) {
+      this,
+        this.userService
+          .regirter(this.registerForm.value)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Cadatro realizado com sucesso!', 'fechar', {
+                duration: 2000,
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+              });
+              this.router.navigateByUrl('login');
+            },
+            error: () => {
+              this.snackBar.open('Ocorreu algum problema', 'fechar', {
+                duration: 2000,
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+              });
+            },
+          });
+    }
   }
 }

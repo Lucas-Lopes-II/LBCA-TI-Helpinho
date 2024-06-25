@@ -50,6 +50,7 @@ export class AuthService {
     this.authenticated = false;
     this.userService.user = undefined;
     localStorage.removeItem('accessToken');
+    location.reload();
 
     return of(true);
   }

@@ -1,0 +1,30 @@
+<header class="flex h-[5rem] justify-center items-center w-full py-[1.5rem] px-[1rem] bg-[#ffbcce]">
+  <div class="w-2/6 h-1/6 flex items-center justify-center md:justify-start">
+    <img src="assets/svgs/logo.svg">
+  </div>
+
+  <div class="w-2/6 h-full flex items-center justify-center">
+    <ul class="flex gap-5 justify-center items-center">
+      <li routerLink="home" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+        Home
+      </li>
+      <li routerLink="my-helps" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+        Meus helps
+      </li>
+      <li routerLink="about" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer text-lg">
+        Sobre
+      </li>
+    </ul>
+  </div>
+
+  <div class="w-2/6  flex items-center justify-end gap-3">
+    <div>
+      <p></p>
+      <span></span>
+    </div>
+
+    <button mat-flat-button color="accent" class="bg-[#ff2e6b] py-[0.2rem]" (click)="authService.signOut()">
+      <img src="assets/svgs/exit-icon.svg">
+    </button>
+  </div>
+</header>

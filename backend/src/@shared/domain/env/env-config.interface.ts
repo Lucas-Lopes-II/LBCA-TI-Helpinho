@@ -3,6 +3,7 @@ export interface IEnvConfig {
   getSecretKeyToken(): string;
   getUsersTableName(): string;
   getHelpsTableName(): string;
+  getHelpsProvidedTableName(): string;
   getRegion(): string;
   getBucketName(): string;
   getBucketUrl(): string;

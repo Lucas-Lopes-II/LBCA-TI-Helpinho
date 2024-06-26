@@ -5,11 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelpService } from '../../../../shared/services';
 import { take } from 'rxjs';
 import { SharedPipesModuleModule } from '../../../../shared/pipes';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'tabela-helps-provided',
   standalone: true,
-  imports: [SharedPipesModuleModule],
+  imports: [SharedPipesModuleModule, CommonModule],
   templateUrl: './tabela.component.html',
 })
 export class TabelaComponent implements OnInit, OnChanges {

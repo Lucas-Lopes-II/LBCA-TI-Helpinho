@@ -1,9 +1,9 @@
-<main class="p-[1.8rem] flex w-screen">
-  <div class="w-1/2">
+<main class="p-[0.8rem] sm:p-[1.8rem] flex flex-col lg:flex-row w-screen h-full">
+  <div class="w-full lg:w-1/2">
     <details-help [help]="help" [user]="user" (onDelete)="deleteOrProvideHelp($event)" />
   </div>
 
-  <div class="w-1/2">
+  <div class="w-full lg:w-1/2 mt-[1rem] lg:m-0">
     <tabela-helps-provided [helpId]="help?.id" />
   </div>
 </main>

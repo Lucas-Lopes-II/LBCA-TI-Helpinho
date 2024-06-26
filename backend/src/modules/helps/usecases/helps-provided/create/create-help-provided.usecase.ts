@@ -28,8 +28,8 @@ export namespace CreateHelpProvided {
       this.validator.validate(input);
 
       const [user, help] = await Promise.all([
-        this.userRepository.findById(input.helpId),
-        this.helpsRepository.findById(input.userHelped),
+        this.userRepository.findById(input.userHelped),
+        this.helpsRepository.findById(input.helpId),
       ]);
 
       console.log(user);

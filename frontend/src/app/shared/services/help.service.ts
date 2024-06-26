@@ -33,6 +33,10 @@ export class HelpService {
     return this.http.get<Help>(`${this.baseUrl}/helps/${id}`);
   }
 
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/helps/${id}`);
+  }
+
   public getAllHelpsProvided(page: number, helpId: string): Observable<PagedList<HelpProvided>> {
     let params = new HttpParams()
       .set('perPage', '10')

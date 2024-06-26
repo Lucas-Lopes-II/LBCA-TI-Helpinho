@@ -1,6 +1,6 @@
 <main class="p-[1.8rem] flex w-screen">
   <div class="w-1/2">
-    <details-help [help]="help" />
+    <details-help [help]="help" [user]="user" (onDelete)="deleteOrProvideHelp($event)" />
   </div>
 
   <div class="w-1/2">

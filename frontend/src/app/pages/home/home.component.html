@@ -1,6 +1,6 @@
 <main class="w-screen p-[1.8rem] flex flex-col">
   <div class="card-grid">
-    @for (item of helps; track $index ) {
+    @for (item of helps; track $index) {
       <card [cardData]="item" (onOpenHelp)="openHelp($event)" />
     }@empty {
       <div class="flex justify-center items-center">

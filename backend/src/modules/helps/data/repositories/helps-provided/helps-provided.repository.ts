@@ -22,7 +22,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
 
   private constructor(private readonly dbClient: DynamoDBClient) {
     const envConfig = EnvConfigFactory.create();
-    this.tableName = envConfig.getHelpsTableName();
+    this.tableName = envConfig.getHelpsProvidedTableName();
   }
 
   public static createInstance(
@@ -145,7 +145,6 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
           TableName: this.tableName,
           IndexName: `${filter.index}`,
           FilterExpression: `${filter.field} = :${filter.field}`,
-          ExpressionAttributeNames: { [`#${filter.field}`]: `${filter.field}` },
           ExpressionAttributeValues: {
             [`:${filter.field}`]: { S: `${filter.value}` },
           },

@@ -4,7 +4,7 @@ import { IStorage } from '@shared/infra/storage';
 import { FileDTO } from '@shared/infra/storage/dtos';
 import { NotFoundError } from '@shared/domain/errors';
 import { Validation } from '@shared/domain/validations';
-import { HelpCategory, IHelpsRepository } from '@helps/data';
+import { Help, HelpCategory, IHelpsRepository } from '@helps/data';
 import { DefaultUseCase } from '@shared/application/usecases';
 
 export namespace CreateHelp {
@@ -19,7 +19,7 @@ export namespace CreateHelp {
     file: FileDTO;
   };
 
-  export type Output = void;
+  export type Output = Help;
 
   export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(
@@ -34,7 +34,7 @@ export namespace CreateHelp {
 
       const user = await this.userRepository.findById(input.userHelped);
       if (!user) {
-        throw new NotFoundError('Usuário não criador não encontrado');
+        throw new NotFoundError('Usuário criador não encontrado');
       }
 
       const { fileUrl } = await this.storage.upload(
@@ -42,7 +42,7 @@ export namespace CreateHelp {
         'hepls',
         user.id,
       );
-      await this.repository.create({
+      const help = {
         id: randomUUID(),
         title: input.title,
         description: input.description,
@@ -54,7 +54,15 @@ export namespace CreateHelp {
         category: input.category,
         userName: user.name,
         imgUrl: fileUrl,
-      });
+      };
+      try {
+        await this.repository.create(help);
+
+        return help;
+      } catch (error) {
+        await this.storage.delete(fileUrl);
+        throw error;
+      }
     }
   }
 }

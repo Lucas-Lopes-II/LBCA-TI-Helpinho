@@ -34,7 +34,7 @@ export namespace CreateHelpProvided {
 
       console.log(user);
       console.log(help);
-      
+
       if (!user) {
         throw new NotFoundError('Usuário não ajudado não encontrado');
       }

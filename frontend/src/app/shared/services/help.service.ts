@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { Help, PagedList } from '../models';
+import { Help, HelpProvided, PagedList } from '../models';
 import { environment } from '../../../eviroments/environment';
 
 @Injectable({
@@ -23,8 +23,6 @@ export class HelpService {
 
   public getAll(page: number): Observable<PagedList<Help>> {
     let params = new HttpParams()
-      .set('select', 'id,name,supertype,rules,set,number,images,types')
-      .set('orderBy', 'name')
       .set('perPage', '10')
       .set('page', String(page));
 
@@ -33,5 +31,13 @@ export class HelpService {
 
   public getById(id: string): Observable<Help> {
     return this.http.get<Help>(`${this.baseUrl}/helps/${id}`);
+  }
+
+  public getAllHelpsProvided(page: number, helpId: string): Observable<PagedList<HelpProvided>> {
+    let params = new HttpParams()
+      .set('perPage', '10')
+      .set('page', String(page));
+
+    return this.http.get<PagedList<HelpProvided>>(`${this.baseUrl}/helps/provided/by-help/${helpId}`, { params });
   }
 }

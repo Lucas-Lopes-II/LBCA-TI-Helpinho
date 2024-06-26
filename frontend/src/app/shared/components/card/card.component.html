@@ -1,14 +1,27 @@
-<mat-card class="w-Full h-full max-h-[300px] rounded-xl">
+<mat-card class="w-Full h-full max-h-[340px] rounded-xl">
   <div class="h-8/12 overflow-hidden">
     <img class="flex min-w-full min-h-full" mat-card-image src="{{ cardData?.imgUrl }}" alt="{{ cardData?.description }}">
   </div>
-  <mat-card-content class="h-2/12">
+  <mat-card-content class="h-2/12  mt-auto">
     <div class="flex justify-between my-[0.5rem]">
       <mat-card-title>{{ cardData?.userName }}</mat-card-title>
       <mat-card-subtitle>{{ cardData?.category }}</mat-card-subtitle>
     </div>
     <p class="overflow-auto">
-      {{ cardData?.description }}
+      <span class="font-semibold">
+        Título:
+      </span>
+      <span>
+        {{ cardData?.title }}
+      </span>
+    </p>
+    <p class="overflow-auto">
+      <span class="font-semibold">
+        Descrição:
+      </span>
+      <span>
+        {{ cardData?.description }}
+      </span>
     </p>
   </mat-card-content>
   <mat-card-actions class="h-2/12 mt-auto">

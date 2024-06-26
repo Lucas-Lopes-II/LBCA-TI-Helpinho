@@ -11,7 +11,7 @@ import { DetailsComponent } from './components/details/details.component';
 import { TabelaComponent } from './components/tabela/tabela.component';
 
 @Component({
-  selector: 'app-help-details',
+  selector: 'help-details',
   standalone: true,
   imports: [DetailsComponent, TabelaComponent],
   templateUrl: './help-details.component.html',

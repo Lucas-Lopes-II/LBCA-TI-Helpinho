@@ -22,6 +22,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home').then((e) => e.HomeComponent),
   },
   {
+    path: 'my-helps',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/my-helps').then((e) => e.MyHelpsComponent),
+  },
+  {
     path: 'helps/:helpId',
     canActivate: [AuthGuard],
     children:[
@@ -35,7 +40,7 @@ export const routes: Routes = [
       {
          path: 'provided/create',
         loadComponent: () =>
-          import('./pages/hep-privided-creation').then(
+          import('./pages/help-privided-creation').then(
             (e) => e.HepPrividedCreationComponent
           ),
       },

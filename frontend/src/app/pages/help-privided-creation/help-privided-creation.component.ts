@@ -15,7 +15,7 @@ import { HelpService, UserService } from '../../shared/services';
 import { CreateHelpProvidedDTO, Help } from '../../shared/models';
 
 @Component({
-  selector: 'app-hep-privided-creation',
+  selector: 'help-privided-creation',
   standalone: true,
   imports: [
     FormsModule,
@@ -30,7 +30,7 @@ import { CreateHelpProvidedDTO, Help } from '../../shared/models';
   providers: [
     provideNgxMask(),
   ],
-  templateUrl: './hep-privided-creation.component.html',
+  templateUrl: './help-privided-creation.component.html',
 })
 export class HepPrividedCreationComponent implements OnInit {
   public helpId!: string;
@@ -41,7 +41,6 @@ export class HepPrividedCreationComponent implements OnInit {
   public readonly route = inject(ActivatedRoute);
   private readonly snackBar = inject(MatSnackBar);
   public readonly helpService = inject(HelpService);
-  public readonly userService = inject(UserService);
 
   constructor() {
     this.helpId = this.route.snapshot.params['helpId'];

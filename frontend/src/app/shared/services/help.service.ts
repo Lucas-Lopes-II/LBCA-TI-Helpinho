@@ -39,7 +39,7 @@ export class HelpService {
 
   public getAllHelpsProvided(page: number, helpId: string): Observable<PagedList<HelpProvided>> {
     let params = new HttpParams()
-      .set('perPage', '10')
+      .set('perPage', '100')
       .set('page', String(page));
 
     return this.http.get<PagedList<HelpProvided>>(`${this.baseUrl}/helps/provided/by-help/${helpId}`, { params });
@@ -47,5 +47,13 @@ export class HelpService {
 
   public createHelpProvided(data: CreateHelpProvidedDTO): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/helps/provided`, data);
+  }
+
+  public getAllByUserHelped(page: number, userHelpedId: string): Observable<PagedList<Help>> {
+    let params = new HttpParams()
+      .set('perPage', '10')
+      .set('page', String(page));
+
+    return this.http.get<PagedList<Help>>(`${this.baseUrl}/helps/by-user-helped/${userHelpedId}`, { params });
   }
 }

@@ -33,12 +33,12 @@
 
     <p class="text-base">
       <span class="mr-[0.8rem] font-semibold">Valor necessário:</span>
-      <span>{{ help?.value }}</span>
+      <span>R$ {{ help?.value | numberFloat }}</span>
     </p>
 
     <p class="text-base">
       <span class="mr-[0.8rem] font-semibold">Já recebido:</span>
-      <span>{{ help?.helpValue }}</span>
+      <span>R$ {{ help?.helpValue | numberFloat }}</span>
     </p>
 
     <p class="text-base">

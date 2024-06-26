@@ -2,9 +2,9 @@
   <div class="card-grid">
     @for (item of helps; track $index) {
       <card [cardData]="item" (onOpenHelp)="openHelp($event)" />
-    }@empty {
-      <div class="flex justify-center items-center">
-        <p class="text-3xl font-semibold">Sem Helpinhos cadastrados</p>
+    } @empty {
+      <div class="mb-5 flex justify-center items-center w-full">
+        <h1 class="font-bold text-lg text-black">Sem Helpinhos cadastrados</h1>
       </div>
     }
   </div>

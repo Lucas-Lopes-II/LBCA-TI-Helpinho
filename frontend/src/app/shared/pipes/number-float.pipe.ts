@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'numeroFloat',
+  name: 'numberFloat',
 })
 export class NumberFloatPipe implements PipeTransform {
-  public transform(value: number): string | number {
-    if (isNaN(value)) return value;
+  public transform(value?: number): string | number| undefined {
+    if (isNaN(value as any) || !value) return value;
 
     const valueString = value.toString().replace('.', ',');
     const parts = valueString.split(',');

@@ -56,19 +56,16 @@ export class LoginComponent implements OnInit {
         .pipe(take(1))
         .subscribe({
           next: () => {
+            this.isLoading = true;
             this.router.navigateByUrl('home');
           },
-          error: (err) => {
-            console.log(err);
-
+          error: () => {
+            this.isLoading = true;
             this.snackBar.open('Ocorreu algum problema', 'fechar', {
               duration: 2000,
               horizontalPosition: 'right',
               verticalPosition: 'top',
             });
-          },
-          complete: () => {
-            this.isLoading = true;
           },
         });
     }

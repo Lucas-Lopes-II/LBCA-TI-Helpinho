@@ -24,32 +24,38 @@ export const routes: Routes = [
   {
     path: 'my-helps',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/my-helps').then((e) => e.MyHelpsComponent),
+    loadComponent: () =>
+      import('./pages/my-helps').then((e) => e.MyHelpsComponent),
   },
   {
-    path: 'helps/:helpId',
+    path: 'helps',
     canActivate: [AuthGuard],
-    children:[
+    children: [
       {
-         path: '',
+        path: 'register',
         loadComponent: () =>
-          import('./pages/help-details/help-details.component').then(
-            (e) => e.HelpDetailsComponent
-          ),
+          import('./pages/create-help').then((e) => e.CreateHelpComponent),
       },
       {
-         path: 'provided/create',
+        path: 'provided/create',
         loadComponent: () =>
           import('./pages/help-privided-creation').then(
             (e) => e.HepPrividedCreationComponent
           ),
       },
       {
+        path: ':helpId',
+        loadComponent: () =>
+          import('./pages/help-details/help-details.component').then(
+            (e) => e.HelpDetailsComponent
+          ),
+      },
+      {
         path: '**',
         pathMatch: 'full',
-        redirectTo: '',
+        redirectTo: ':helpId',
       },
-    ]
+    ],
   },
   {
     path: '**',

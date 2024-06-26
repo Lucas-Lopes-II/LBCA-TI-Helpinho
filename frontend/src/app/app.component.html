@@ -1,4 +1,6 @@
-@if(authService.checkIfIsAutenticated()) {
-  <app-header/>
-}
-<router-outlet/>
+<div class="w-full h-full">
+  @if(authService.checkIfIsAutenticated()) {
+    <app-header/>
+  }
+  <router-outlet/>
+</div>

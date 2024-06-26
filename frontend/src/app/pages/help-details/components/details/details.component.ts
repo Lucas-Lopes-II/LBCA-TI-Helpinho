@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class DetailsComponent implements OnChanges {
   @Input() help: Help | undefined = undefined;
   @Input() user: LoggedUser | undefined = undefined;
+  @Input() showButton: boolean = true;
   @Output() onDelete = new EventEmitter<string>();
   private readonly router = inject(Router);
   public isOwner: boolean = false;
@@ -27,7 +28,7 @@ export class DetailsComponent implements OnChanges {
     if(this.isOwner) {
       this.onDelete.emit(this.help?.id)
     } else {
-      this.router.navigateByUrl('/helps/provided/create');
+      this.router.navigateByUrl(`/helps/${this.help?.id}/provided/create`);
     }
   }
 }

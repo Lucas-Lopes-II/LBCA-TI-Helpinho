@@ -47,9 +47,12 @@
     </p>
   </div>
 
-  <div class="flex justify-end">
-    <button  mat-flat-button color="warn" class="bg-[#ff2e6b]" (click)="deleteOrProvideHelp()">
-      {{ isOwner ? 'Deletar' : 'Ajudar' }}
-    </button>
-  </div>
+  @if(showButton) {
+    <div class="flex justify-end">
+      <button  mat-flat-button color="warn" class="bg-[#ff2e6b]" (click)="deleteOrProvideHelp()">
+        {{ isOwner ? 'Deletar' : 'Ajudar' }}
+      </button>
+    </div>
+
+  }
 </div>

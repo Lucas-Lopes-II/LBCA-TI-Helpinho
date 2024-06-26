@@ -16,7 +16,7 @@ import { TabelaComponent } from './components/tabela/tabela.component';
   imports: [DetailsComponent, TabelaComponent],
   templateUrl: './help-details.component.html',
 })
-export class HelpDetailsComponent implements OnInit, OnDestroy {
+export class HelpDetailsComponent implements OnInit {
   public helpId!: string;
   public help: Help | undefined = undefined;
   public user: LoggedUser | undefined = undefined;
@@ -33,10 +33,6 @@ export class HelpDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.userService.user();
-  }
-
-  ngOnDestroy(): void {
-    this.helpService.help = undefined;
   }
 
   private getHelp(): void {

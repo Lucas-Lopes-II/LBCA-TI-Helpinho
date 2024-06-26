@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { Help, HelpProvided, PagedList } from '../models';
+import { CreateHelpProvidedDTO, Help, HelpProvided, PagedList } from '../models';
 import { environment } from '../../../eviroments/environment';
 
 @Injectable({
@@ -43,5 +43,9 @@ export class HelpService {
       .set('page', String(page));
 
     return this.http.get<PagedList<HelpProvided>>(`${this.baseUrl}/helps/provided/by-help/${helpId}`, { params });
+  }
+
+  public createHelpProvided(data: CreateHelpProvidedDTO): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/helps/provided`, data);
   }
 }

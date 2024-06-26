@@ -1,10 +1,4 @@
 import {
-  HelpProvided,
-  HelpsProvidedFields,
-  HelpsProvidedIndexes,
-  IHelpsProvidedRepository,
-} from '@helps/data';
-import {
   FilterIndexes,
   SearchParams,
   SearchProps,
@@ -12,16 +6,17 @@ import {
 } from '@shared/infra/data';
 import { Validation } from '@shared/domain/validations';
 import { DefaultUseCase } from '@shared/application/usecases';
+import { Help, HelpsFields, HelpsIndexes, IHelpsRepository } from '@helps/data';
 
-export namespace SearchHelpsProvidedByFilter {
+export namespace SearchHelpsByFilter {
   export type Input = SearchProps &
-    FilterIndexes<HelpsProvidedIndexes, HelpsProvidedFields, string>;
+    FilterIndexes<HelpsIndexes, HelpsFields, string>;
 
-  export type Output = SearchResultProps<HelpProvided>;
+  export type Output = SearchResultProps<Help>;
 
   export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(
-      private readonly repository: IHelpsProvidedRepository,
+      private readonly repository: IHelpsRepository,
       private readonly validator: Validation,
     ) {}
 

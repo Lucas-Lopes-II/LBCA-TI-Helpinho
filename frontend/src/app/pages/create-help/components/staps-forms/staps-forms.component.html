@@ -1,7 +1,7 @@
 <div>
-    <mat-stepper [linear]="false" #stepper>
+    <mat-stepper [linear]="true" #stepper>
       <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup" class="flex flex-col self-center m-auto justify-start items-center w-[40rem] mb-[1rem]">
+        <form [formGroup]="firstFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
           <div class="flex justify-start items-center w-full mb-[1rem]">
             <p class="text-2xl font-semibold">
               Em que categoria se encaixa seu helpinho?
@@ -29,7 +29,7 @@
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-        <form [formGroup]="secondFormGroup" class="flex flex-col self-center m-auto justify-start items-center w-[40rem] mb-[1rem]">
+        <form [formGroup]="secondFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
           <div class="flex justify-start items-center w-full mb-[1rem]">
             <p class="text-2xl font-semibold">
               Falta um pouco mais
@@ -53,7 +53,7 @@
               }
           </mat-form-field>
 
-          <div class="w-full">
+          <div class="w-full mb-[2rem]">
             <label class="block">
               <input (change)="chegeFile($event)" formControlName="file" type="file" class="block w-full text-sm text-gray-500
                 file:me-4 file:py-2 file:px-4 cursor-pointer
@@ -75,14 +75,11 @@
             </label>
           </div>
 
-
-
-
           <div class="w-full flex justify-end gap-2">
             <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
               Voltar
             </button>
-            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]" (click)="prepereFilePreView()">
+            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]">
               Continuar
             </button>
           </div>
@@ -90,7 +87,7 @@
       </mat-step>
 
       <mat-step [stepControl]="thirdFormGroup" label="Fill out your address">
-        <form [formGroup]="thirdFormGroup" class="flex flex-col self-center m-auto justify-start items-center w-[40rem] mb-[1rem]">
+        <form [formGroup]="thirdFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
           <div class="flex justify-start items-center w-full mb-[1rem]">
             <p class="text-2xl font-semibold">
               Falta um pouco mais
@@ -129,7 +126,7 @@
             <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
               Voltar
             </button>
-            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]">
+            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]" (click)="prepereFilePreView()">
               Continuar
             </button>
           </div>
@@ -138,13 +135,14 @@
 
       <mat-step>
         <ng-template matStepLabel>Revisando...</ng-template>
-        <div class="flex flex-col self-center m-auto justify-start items-center w-[40rem] mb-[1rem]">
+        <div class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
           <div class="flex justify-start items-center w-full mb-[1rem]">
             <p class="text-2xl font-semibold">
               Veja como ficará seu helpinho
             </p>
           </div>
-          <div class="w-full flex justify-end gap-2">
+          <card [cardData]="helpToPreview" [demo]="true" />
+          <div class="w-full flex justify-end gap-2 mt-[3rem]">
             <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
               Voltar
             </button>

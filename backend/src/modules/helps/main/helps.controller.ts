@@ -41,6 +41,9 @@ export class HelpsController {
   ) {
     const usecase = HelpsUseCasesFactory.createHelp();
 
+    console.log('body', body);
+    console.log('file', file);
+
     return usecase.execute({
       title: body.title,
       description: body.description,

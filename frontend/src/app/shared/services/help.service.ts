@@ -30,4 +30,8 @@ export class HelpService {
 
     return this.http.get<PagedList<Help>>(`${this.baseUrl}/helps`, { params });
   }
+
+  public getById(id: string): Observable<Help> {
+    return this.http.get<Help>(`${this.baseUrl}/helps/${id}`);
+  }
 }

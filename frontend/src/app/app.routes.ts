@@ -22,6 +22,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home').then((e) => e.HomeComponent),
   },
   {
+    path: 'helps/:helpId',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/help-details/help-details.component').then(
+        (e) => e.HelpDetailsComponent
+      ),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: 'login',

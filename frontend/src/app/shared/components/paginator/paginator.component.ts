@@ -20,6 +20,7 @@ export class PaginatorComponent implements OnChanges {
   @Input() public page: number = 0;
   @Input() public pageSize: number = 0;
   @Input() public totalCount: number = 0;
+  @Input() public itemsName: string = 'Cards';
   public initialCount: number = 0;
   public finalCount: number = 0;
 

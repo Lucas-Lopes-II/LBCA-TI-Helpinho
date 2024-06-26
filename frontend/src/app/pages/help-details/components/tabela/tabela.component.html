@@ -1,0 +1,56 @@
+<div class="w-full">
+  <div class="flex justify-start items-center w-full">
+    <p class="text-2xl font-semibold">
+      Tabelas de helps recebidos
+    </p>
+  </div>
+
+  @if(helpId){
+<!-- <div class="w-full mt-[1rem] ml-[1rem]">
+      <table class="w-full self-center rounded-lg min-w-[1000px]">
+        <tr class="bg-slate-300 rounded-lg">
+          <th class="w-4/12 py-2 rounded-tl-lg text-center">Nome</th>
+          <th class="w-1/12 py-2 ">Qtde de Cards</th>
+          <th class="w-2/12 py-2 ">Qtde de Pokémons</th>
+          <th class="w-2/12 py-2 ">Qtde de Trainadores</th>
+          <th class="w-3/12 py-2 rounded-tr-lg">Ações</th>
+        </tr>
+
+        <tr class="border-b rounded-lg" *ngFor="let deck of decks">
+          <td class="w-4/12 text-center py-2">
+            <p> {{ deck?.name }}</p>
+          </td>
+
+          <td class="w-1/12 text-center py-2 md:m-auto">
+            <p>{{ deck?.cards?.length || 0 }}</p>
+          </td>
+
+          <td class="w-2/12 text-center py-2">
+            <p> {{ deck?.pokemons }}</p>
+          </td>
+
+          <td class="w-2/12 text-center py-2">
+            <p> {{ deck?.trainers }}</p>
+          </td>
+
+          <td class="w-3/12 text-center py-2 rounded-b-lg">
+            <div class="w-full flex gap-2 justify-center">
+              <button class="acoes-button hover:bg-slate-100 rounded-lg p-1"
+                (click)="editDeck(deck)" title="Editar">
+                <edit-icon></edit-icon>
+              </button>
+              <button class="acoes-button hover:bg-slate-100 rounded-lg p-1"
+                (click)="deleteDeck(deck)" title="Excluir">
+                <delete-icon></delete-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div> -->
+    } @else {
+      <div class="mb-5 flex justify-center items-center w-full">
+        <h1 class="font-bold text-lg text-black">Não há helps recebidos</h1>
+      </div>
+    }
+</div>

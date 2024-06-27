@@ -37,7 +37,7 @@ export const routes: Routes = [
           import('./pages/create-help').then((e) => e.CreateHelpComponent),
       },
       {
-        path: 'provided/create',
+        path: ':helpId/provided/create',
         loadComponent: () =>
           import('./pages/help-privided-creation').then(
             (e) => e.HepPrividedCreationComponent

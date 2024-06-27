@@ -3,17 +3,17 @@
 
 # Helpinho
 
-Este é um projeto de aplicativo web desenvolvido no frontend em **[Angular 16](https://v17.angular.io/docs)**, utilizando **Tailwind CSS** e **SCSS** para estilização e **Angular Material** para componentes de interface do usuário.
+Este é um projeto de aplicativo web desenvolvido no frontend em **[Angular 17](https://v17.angular.io/docs)**, utilizando **Tailwind CSS** e **SCSS** para estilização e **Angular Material** para componentes de interface do usuário.
 
 ## :memo: Descrição
 
-O objetivo deste aplicativo é permitir que pessoas possam se cadaras, cadastrar helpinho e da um help em outras pessoas. O aplicativo consome a API serveless detalhada **[aqui](../backend/README.md)**.
+O objetivo deste aplicativo é permitir que pessoas possam se cadastrar, cadastrar helpinhos e da um help em outras pessoas. O aplicativo consome a API serveless detalhada **[aqui](../backend/README.md)**.
 
 ## :books: Funcionalidades
 
-### Cadsatro e login
+### Cadastro e login
 
-- **Cadsatro e login:** Os usuários podem se cadastrar e, logar no sistema.
+- **Cadastro e login:** Os usuários podem se cadastrar e, logar no sistema.
   <br/><br/>
   ![lista baralho](src/assets/doc/login-register.gif)
   <br/><br/>
@@ -28,7 +28,7 @@ O objetivo deste aplicativo é permitir que pessoas possam se cadaras, cadastrar
 
 ### Realizar um Help
 
-- **Dar um help:** permite aos usuário cadastara um help realizado a alguém.
+- **Dar um help:** permite aos usuário cadastre um help realizado a alguém.
   <br/><br/>
   ![detalha baralho](src/assets/doc/hepl-provided.gif)
   <br/><br/>
@@ -41,11 +41,11 @@ O objetivo deste aplicativo é permitir que pessoas possam se cadaras, cadastrar
   ![detalha baralho](src/assets/doc/my-helps.gif)
   <br/><br/>
 
-### Cadsatro de helpinho
+### Cadastro de helpinho
 
-- **Cadstro:** uo cadastro é feito em etapas obrigatórias.
+- **Cadastro:** o cadastro é feito em etapas obrigatórias.
 - **Validações:** todos os campos tem validações devidas, com destaque no input de arquivo que valida tipo e tamanho do arquivo.
-- **Pré-visualização:** na ultima etapa do cdastro há uma previsualização de como ficara o helpinho antes de ser csdastrado.
+- **Pré-visualização:** na última etapa do cadastro há uma pré-visualização de como ficará o helpinho antes de ser cadastrado.
   <br/><br/>
   ![detalha baralho](src/assets/doc/resgister.gif)
   <br/><br/>
@@ -65,11 +65,11 @@ A interface do usuário foi desenvolvida com foco na usabilidade e experiência 
 
 ✔ **[Tailwind CSS](https://tailwindcss.com/docs/guides/angular)**
 
-✔ **[ANgular Material](https://v17.material.angular.io/components/categories)**
+✔ **[Angular Material](https://v17.material.angular.io/components/categories)**
 
 ## Arquitetura
 
-O projeto foi desenvolvido na arquitetura MVC padrão recomendada pelo [Angular](https://v16.angular.io/docs), bem como com componentes _standalones_. O gerenciamento de estado foi feito de forma reativa com o [RxJS](https://rxjs.dev/api) e _signals_. Também foi resposividade, fazendo com que o app possa ser utilizado em diverso tipos de dispositivos.
+O projeto foi desenvolvido na arquitetura standalone padrão recomendada pelo [Angular](https://v17.angular.io/docs). O gerenciamento de estado foi feito de forma reativa com o [RxJS](https://rxjs.dev/api) e [Signals](https://v17.angular.io/guide/signals). Também foi resposividade, fazendo com que o app possa ser utilizado em diverso tipos de dispositivos.
 
 ## Ambiente de Desenvolvimento
 
@@ -85,7 +85,7 @@ O projeto foi desenvolvido no seguinte ambiente:
 1. Clone este repositório.
 
 ```sh
-git clone https://github.com/Lucas-Lopes-II/pokemon-decks.git
+git clone https://github.com/Lucas-Lopes-II/LBCA-TI-Helpinho.git
 ```
 
 2. Navegue até o diretório do projeto na pasta frontend.

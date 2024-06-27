@@ -18,7 +18,7 @@ O objetivo desta api é permitir que pessoas possam se cadastrar, cadastrar help
 - **Descrição:** a api permite criar, buscar, atualizar e deletar helpinhos.
   <br/><br/>
 
-### Cdastro de help realizao
+### Cadastro de help realizao
 
 - **Descrição:** a api permite criar, buscar helps realizado.
   <br/><br/>
@@ -89,7 +89,7 @@ npm install
 npm run start:dev
 ```
 
-> OBS: certifique-se que haja instânciais do DynamanoDB e S3 e o endereço destes estejam no arqivo serverless.yml.
+> OBS: certifique-se que haja instânciais do DynamoDB e S3 e o endereço destes estejam no arqivo serverless.yml.
 
 ## Contato
 

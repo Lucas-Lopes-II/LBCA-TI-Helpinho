@@ -1,73 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Helpinho
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este é um projeto de api wed desenvolvido com **[Serveless framework](https://www.serverless.com/framework)** e **[NestJS](https://nestjs.com/)**, utilizando recusos da **[AWS](https://aws.amazon.com/)** como: o seviço de serverless **[Lambda](https://aws.amazon.com/pt/lambda/)**, o banco de dados **[DynamoDB](https://aws.amazon.com/pt/dynamodb/)** e o serviço de storage de objetos **[S3](https://aws.amazon.com/pt/pm/serv-s3)**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## :memo: Descrição
 
-## Description
+O objetivo desta api é permitir que pessoas possam se cadastrar, cadastrar helpinhos e da um help em outras pessoas.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## :books: Funcionalidades
 
-## Installation
+### Crud de usuário
 
-```bash
-$ npm install
+- **Descrição:** a api permite criar, buscar, atualizar e deletar usuários.
+  <br/><br/>
+
+### Crud de helpinho
+
+- **Descrição:** a api permite criar, buscar, atualizar e deletar helpinhos.
+  <br/><br/>
+
+### Cdastro de help realizao
+
+- **Descrição:** a api permite criar, buscar helps realizado.
+  <br/><br/>
+
+## :wrench: Tecnologias utilizadas
+
+✔ **[Serveless framework](https://www.serverless.com/framework)**
+
+✔ **[NestJS](https://nestjs.com/)**
+
+✔ **[Lambda](https://aws.amazon.com/pt/lambda/)**
+
+✔ **[DynamoDB](https://aws.amazon.com/pt/dynamodb/)**
+
+✔ **[S3](https://aws.amazon.com/pt/pm/serv-s3)**
+
+## Arquitetura
+
+O sistema monolítico é estruturado com base na Clean Architecture, promovendo uma separação clara de responsabilidades entre diferentes camadas da aplicação. Este design modulariza o código em quatro camadas principais:
+
+**Camada de Casos de Uso:** Abriga a lógica de aplicação, definindo como as entidades são manipuladas para atender aos requisitos do negócio. Aplicamos o Open/Closed Principle (OCP) e o Interface Segregation Principle (ISP) para assegurar que os casos de uso sejam extensíveis sem modificar código existente e que interfaces específicas sejam definidas para diferentes necessidades.
+
+**Camada de Interface (Interface Adapters):** Responsável por adaptar os dados entre a camada de casos de uso e as interfaces externas, como bancos de dados, APIs e interfaces de usuário. Aqui, padrões como Repository Pattern e Adapter Pattern são usados para isolar a lógica de negócios das tecnologias específicas.
+
+**Camada de Frameworks e Drivers:** Contém detalhes de implementação específica, como frameworks web, ORMs, e outras bibliotecas de terceiros. Esta camada é mantida independente das regras de negócio, permitindo substituições fáceis e testes mais eficientes.
+
+### Principais Design Patterns Utilizados:
+
+**Repository Pattern:** Facilita a abstração e a separação das operações de persistência de dados, permitindo troca fácil de tecnologias de banco de dados sem impactar a lógica de negócios.
+
+**Factory Pattern:** Usado para a criação de objetos complexos, centralizando a lógica de instância em um único ponto, melhorando a manutenção e legibilidade do código.
+
+**Decorator Pattern:** Facilita a adição de funcionalidades a objetos de forma dinâmica, promovendo reutilização e extensão de comportamento sem alterar a estrutura original.
+
+#### Benefícios:
+
+**Manutenção:** A aplicação de princípios SOLID e design patterns garante um código mais modular, fácil de entender, testar e evoluir.
+**Testabilidade:** Com a lógica de negócio separada das dependências de implementação, testes unitários podem ser realizados de forma mais eficiente.
+**Flexibilidade:** A estrutura modular e o uso de design patterns permitem fácil adaptação e extensão do sistema para novos requisitos sem grandes reestruturações.
+
+## Ambiente de Desenvolvimento
+
+O projeto foi desenvolvido no seguinte ambiente:
+
+- **Node.js 20**
+- **NestJS 10.0.0**
+
+## Como Executar o Projeto Localmente
+
+> Para isso você precisa ter [Node, NPM](https://nodejs.org/en) e [Git](https://git-scm.com/) instalados.
+
+1. Clone este repositório.
+
+```sh
+git clone https://github.com/Lucas-Lopes-II/LBCA-TI-Helpinho.git
 ```
 
-## Running the app
+2. Navegue até o diretório do projeto na pasta backend.
+3. Execute `npm install` para instalar as dependências.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+npm install
 ```
 
-## Test
+4. Execute `npm run start:dev` para iniciar o servidor de desenvolvimento.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+npm run start:dev
 ```
 
-## Support
+> OBS: certifique-se que haja instânciais do DynamanoDB e S3 e o endereço destes estejam no arqivo serverless.yml.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Contato
 
-## Stay in touch
+[Linked-in](https://www.linkedin.com/in/lucas-lopes-840965190/)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+[Email](mailto:lucas.santos.pessoal@outlook.com)

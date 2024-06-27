@@ -1,0 +1,19 @@
+$grid-gap: 16px;
+$breakpoint-small: 650px;
+$breakpoint-medium: 700px;
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $grid-gap;
+
+  @media (max-width: $breakpoint-medium) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  @media (max-width: $breakpoint-small) {
+    grid-template-columns: 1fr;
+    margin: auto;
+  }
+
+}

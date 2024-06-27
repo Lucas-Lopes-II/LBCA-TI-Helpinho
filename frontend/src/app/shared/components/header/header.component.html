@@ -1,0 +1,31 @@
+<header class="flex h-[5rem] justify-center items-center w-full py-[1.5rem] px-[1rem] bg-[#ffbcce]">
+  <div class="w-2/12 md:w-2/6 h-1/6 flex items-center justify-center md:justify-start">
+    <img class="hidden md:flex" src="assets/svgs/logo.svg">
+    <img class="flex md:hidden" src="assets/svgs/logo-icon.svg">
+  </div>
+
+  <div class="w-10/12 md:w-2/6 h-full flex items-center justify-center">
+    <ul class="flex gap-5 justify-center items-center">
+      <li title="home" routerLink="home" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
+        Home
+      </li>
+      <li title="meus helps" routerLink="my-helps" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
+        Meus helps
+      </li>
+      <li title="cadastrar help" routerLink="helps/register" routerLinkActive="text-[#ff2e6b] underline font-semibold" class="hover:font-semibold hover:underline hover:text-[#ff2e6b] cursor-pointer md:text-lg">
+        Cadastrar
+      </li>
+    </ul>
+  </div>
+
+  <div class="w-2/12 md:w-2/6  flex items-center justify-end gap-3">
+    <div class="hidden lg:flex flex-col justify-center items-start">
+      <span class="font-semibold span-0 m-0">{{ user?.name }}</span>
+      <span class="p-0 m-0">{{ user?.email }}</span>
+    </div>
+
+    <button mat-flat-button color="accent" class="bg-[#ff2e6b] py-[0.2rem]" (click)="authService.signOut()">
+      <img src="assets/svgs/exit-icon.svg">
+    </button>
+  </div>
+</header>

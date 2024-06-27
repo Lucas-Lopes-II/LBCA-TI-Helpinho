@@ -80,7 +80,7 @@ describe('CreateHelp.UseCase unit tests', () => {
     jest.spyOn(mockedUserRepo, 'findById').mockResolvedValueOnce(undefined);
 
     expect(sut.execute(mockedInput)).rejects.toThrow(
-      new NotFoundError('Usuário não criador não encontrado'),
+      new NotFoundError('Usuário criador não encontrado'),
     );
   });
 

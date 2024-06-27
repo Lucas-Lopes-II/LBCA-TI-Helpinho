@@ -1,0 +1,58 @@
+<div class="w-full">
+  <div class="flex justify-start items-center w-full">
+    <p class="text-2xl font-semibold">
+      Detalhes do {{ isOwner ? 'seu' : '' }} Help
+    </p>
+  </div>
+
+  <div class="mt-[1rem] ml-[1rem]">
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Título:</span>
+      <span>{{ help?.title }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Descrição:</span>
+      <span>{{ help?.description }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Criador do Helpinho:</span>
+      <span>{{ help?.userName }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Categoria:</span>
+      <span>{{ help?.category }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Prazo:</span>
+      <span>{{ help?.deadline | formataData: 'ISO' }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Valor necessário:</span>
+      <span>R$ {{ help?.value | numberFloat }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Já recebido:</span>
+      <span>R$ {{ help?.helpValue | numberFloat }}</span>
+    </p>
+
+    <p class="text-base">
+      <span class="mr-[0.8rem] font-semibold">Chave PIX:</span>
+      <span>{{ help?.pixKey }}</span>
+    </p>
+  </div>
+
+  @if(showButton) {
+    <div class="flex justify-end">
+      <button  mat-flat-button color="warn" class="bg-[#ff2e6b]" (click)="deleteOrProvideHelp()">
+        {{ isOwner ? 'Deletar' : 'Ajudar' }}
+      </button>
+    </div>
+
+  }
+</div>

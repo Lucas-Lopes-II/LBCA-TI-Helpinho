@@ -1,18 +1,21 @@
 import {
-  FilterIndexes,
   HelpProvided,
+  HelpsProvidedFields,
+  HelpsProvidedIndexes,
   IHelpsProvidedRepository,
 } from '@helps/data';
 import {
+  FilterIndexes,
   SearchParams,
   SearchProps,
   SearchResultProps,
 } from '@shared/infra/data';
-import { DefaultUseCase } from '@shared/application/usecases';
 import { Validation } from '@shared/domain/validations';
+import { DefaultUseCase } from '@shared/application/usecases';
 
 export namespace SearchHelpsProvidedByFilter {
-  export type Input = SearchProps & FilterIndexes<string>;
+  export type Input = SearchProps &
+    FilterIndexes<HelpsProvidedIndexes, HelpsProvidedFields, string>;
 
   export type Output = SearchResultProps<HelpProvided>;
 

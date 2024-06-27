@@ -1,5 +1,7 @@
 import {
   HelpCategory,
+  HelpsFields,
+  HelpsIndexes,
   HelpsProvidedFields,
   HelpsProvidedIndexes,
   HelpsProvidedRepositoryFactory,
@@ -27,6 +29,7 @@ import {
 import { UsersRepositoryFactory } from '@users/data';
 import { StorageFactory } from '@shared/infra/storage';
 import { DefaultUseCase } from '@shared/application/usecases';
+import { SearchHelpsByFilter } from './helps/search-by-filter/search-by-filter.usecase';
 
 export class HelpsUseCasesFactory {
   private static readonly helpsRepository = HelpsRepositoryFactory.create();
@@ -145,5 +148,22 @@ export class HelpsUseCasesFactory {
       this.helpsProvidedRepository,
       validator,
     );
+  }
+
+  public static searchHelpsByFilter(): DefaultUseCase<
+    SearchHelpsByFilter.Input,
+    SearchHelpsByFilter.Output
+  > {
+    const validators: Validation<SearchHelpsByFilter.Input>[] = [
+      new MinValueFieldValidation('page', 0, false),
+      new MinValueFieldValidation('perPage', 1, false),
+      new MaxValueFieldValidation('perPage', 100, false),
+      new EnumValidation('index', HelpsIndexes),
+      new EnumValidation('field', HelpsFields),
+      new UUIDValidation('value'),
+    ];
+    const validator = new ValidationComposite(validators);
+
+    return new SearchHelpsByFilter.UseCase(this.helpsRepository, validator);
   }
 }

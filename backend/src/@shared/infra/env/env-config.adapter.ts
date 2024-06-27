@@ -15,6 +15,9 @@ export class EnvConfig implements IEnvConfig {
   public getHelpsTableName(): string {
     return String(process?.env?.HELPS_TABLE);
   }
+  public getHelpsProvidedTableName(): string {
+    return String(process?.env?.HELPS_PROVIDED_TABLE);
+  }
 
   public getHelpsProvidedTableName(): string {
     return String(process?.env?.HELPS_PROVIDED_TABLE);

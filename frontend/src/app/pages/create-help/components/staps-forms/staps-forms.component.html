@@ -1,0 +1,156 @@
+<div>
+    <mat-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
+          <div class="flex justify-start items-center w-full mb-[1rem]">
+            <p class="text-2xl font-semibold">
+              Em que categoria se encaixa seu helpinho?
+            </p>
+          </div>
+          <ng-template matStepLabel>Escolha da categoria</ng-template>
+          <mat-form-field class="w-full">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="category">
+              @for (item of categories; track item) {
+                <mat-option [value]="item">{{ item }}</mat-option>
+              }
+            </mat-select>
+            @if (firstFormGroup.get('category')?.hasError('required')) {
+              <mat-error>Categoria<strong>é obrigatória</strong></mat-error>
+            }
+          </mat-form-field>
+
+          <div class="w-full flex justify-end">
+            <button  mat-flat-button matStepperNext color="warn" class="bg-[#ff2e6b]">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+        <form [formGroup]="secondFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
+          <div class="flex justify-start items-center w-full mb-[1rem]">
+            <p class="text-2xl font-semibold">
+              Falta um pouco mais
+            </p>
+          </div>
+
+          <ng-template matStepLabel>Conhecendo o helpinho</ng-template>
+          <mat-form-field class="w-full mb-[1rem]">
+            <mat-label>Título</mat-label>
+            <input type="text" matInput formControlName="title">
+            @if (secondFormGroup.get('title')?.hasError('required')) {
+              <mat-error>Título<strong>é obrigatório</strong></mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full mb-[1rem]">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+              @if (secondFormGroup.get('description')?.hasError('required')) {
+                <mat-error>Descrição<strong>é obrigatória</strong></mat-error>
+              }
+          </mat-form-field>
+
+          <div class="w-full mb-[2rem]">
+            <label class="block">
+              <input (change)="chegeFile($event)" formControlName="file" type="file" class="block w-full text-sm text-gray-500
+                file:me-4 file:py-2 file:px-4 cursor-pointer
+                file:rounded-lg file:border-0
+                file:text-sm file:font-semibold
+                file:bg-[#ff2e6b] file:text-white
+                hover:file:bg-[#fd6995]
+                file:disabled:opacity-50 file:disabled:pointer-events-none
+              ">
+              @if (secondFormGroup.get('file')?.hasError('required')) {
+                <mat-error>Arquivo<strong>é obrigatório</strong></mat-error>
+              }
+              @if (fileSizeError && !fileTypeError) {
+                <mat-error>Arquivo<strong> deve conter até 5MB</strong></mat-error>
+              }
+              @if (fileTypeError) {
+                <mat-error>Arquivo<strong> deve deve ser .png ou .jpg ou .jpeg ou .gif</strong></mat-error>
+              }
+            </label>
+          </div>
+
+          <div class="w-full flex justify-end gap-2">
+            <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
+              Voltar
+            </button>
+            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="thirdFormGroup" label="Fill out your address">
+        <form [formGroup]="thirdFormGroup" class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
+          <div class="flex justify-start items-center w-full mb-[1rem]">
+            <p class="text-2xl font-semibold">
+              Falta um pouco mais
+            </p>
+          </div>
+
+          <ng-template matStepLabel>Meios de receber um help</ng-template>
+          <mat-form-field class="w-full mb-[1rem]">
+            <mat-label>Valor</mat-label>
+            <input type="text" matInput formControlName="value" laceholder="valor" mask="separator.2" thousandSeparator="." prefix="R$ " separatorLimit="1000000">
+            @if (thirdFormGroup.get('value')?.hasError('required')) {
+              <mat-error>Título<strong>é obrigatório</strong></mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full mb-[1rem]">
+            <mat-label>Chave PIX</mat-label>
+            <input type="text" matInput formControlName="pixKey">
+            @if (thirdFormGroup.get('pixKey')?.hasError('required')) {
+              <mat-error>Título<strong>é obrigatório</strong></mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full mb-[1rem]">
+            <mat-label>Prazo</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="deadline">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (thirdFormGroup.get('deadline')?.hasError('required')) {
+                <mat-error>Prazo<strong>é obrigatório</strong></mat-error>
+            }
+          </mat-form-field>
+
+          <div class="w-full flex justify-end gap-2">
+            <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
+              Voltar
+            </button>
+            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]" (click)="prepereFilePreView()">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Revisando...</ng-template>
+        <div class="flex flex-col self-center m-auto justify-start items-center md:w-[40rem] w-full mb-[1rem]">
+          <div class="flex justify-start items-center w-full mb-[1rem]">
+            <p class="text-2xl font-semibold">
+              Veja como ficará seu helpinho
+            </p>
+          </div>
+          <card [cardData]="helpToPreview" [demo]="true" />
+          <div class="w-full flex justify-end gap-2 mt-[3rem]">
+            <button mat-stroked-button matStepperPrevious color="warn" class="bg-[#ff2e6b]">
+              Voltar
+            </button>
+            <button  mat-flat-button matStepperNext color="warn" class="border-[#ff2e6b]" (click)="sendData()">
+              Criar Helpinho
+            </button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+</div>

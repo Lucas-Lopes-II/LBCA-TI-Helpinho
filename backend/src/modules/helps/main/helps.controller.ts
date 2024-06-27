@@ -18,11 +18,16 @@ import {
   CreateHelpProvidedDTO,
   SearchQueryParamsDTO,
 } from './dtos';
+import {
+  HelpsFields,
+  HelpsIndexes,
+  HelpsProvidedFields,
+  HelpsProvidedIndexes,
+} from '@helps/data';
 import { AuthRequest } from '@auth/main/dtos';
 import { FileDTO } from '@shared/infra/storage/dtos';
 import { CurrentUser } from '@shared/infra/decorators';
 import { HelpsUseCasesFactory } from '@helps/usecases';
-import { HelpsProvidedFields, HelpsProvidedIndexes } from '@helps/data';
 import { NotFoundError } from '@shared/domain/errors';
 
 @Controller('helps')
@@ -36,6 +41,9 @@ export class HelpsController {
     @CurrentUser() { id: actionDoneBy }: AuthRequest,
   ) {
     const usecase = HelpsUseCasesFactory.createHelp();
+
+    console.log('body', body);
+    console.log('file', file);
 
     return usecase.execute({
       title: body.title,
@@ -81,6 +89,23 @@ export class HelpsController {
     return usecase.execute({
       perPage: parseInt(quryParams?.perPage as any),
       page: parseInt(quryParams?.page as any),
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('by-user-helped/:userHelpedId')
+  public findHelpByUserHelpedId(
+    @Query() quryParams: SearchQueryParamsDTO,
+    @Param('userHelpedId') userHelpedId: string,
+  ) {
+    const usecase = HelpsUseCasesFactory.searchHelpsByFilter();
+
+    return usecase.execute({
+      perPage: parseInt(quryParams?.perPage as any),
+      page: parseInt(quryParams?.page as any),
+      field: HelpsFields.USER_HELPED_ID,
+      index: HelpsIndexes.USER_HELPED_ID,
+      value: userHelpedId,
     });
   }
 
@@ -131,8 +156,8 @@ export class HelpsController {
     const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
 
     return usecase.execute({
-      page: Number(quryParams.page),
-      perPage: Number(quryParams.perPage),
+      perPage: parseInt(quryParams?.perPage as any),
+      page: parseInt(quryParams?.page as any),
       field: HelpsProvidedFields.HELP_ID,
       index: HelpsProvidedIndexes.HELP_ID,
       value: helpId,
@@ -148,8 +173,8 @@ export class HelpsController {
     const usecase = HelpsUseCasesFactory.searchHelpsProvidedByFilter();
 
     return usecase.execute({
-      page: Number(quryParams.page),
-      perPage: Number(quryParams.perPage),
+      perPage: parseInt(quryParams?.perPage as any),
+      page: parseInt(quryParams?.page as any),
       field: HelpsProvidedFields.USER_HELPED_ID,
       index: HelpsProvidedIndexes.USER_HELPED_ID,
       value: userHelpedId,

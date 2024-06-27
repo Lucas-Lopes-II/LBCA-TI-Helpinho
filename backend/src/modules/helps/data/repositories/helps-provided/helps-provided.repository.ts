@@ -1,4 +1,16 @@
 import {
+  HelpProvided,
+  HelpsProvidedFields,
+  HelpsProvidedIndexes,
+  IHelpsProvidedRepository,
+} from '@helps/data';
+import {
+  DatabaseUtils,
+  FilterIndexes,
+  SearchParams,
+  SearchResult,
+} from '@shared/infra/data';
+import {
   DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
@@ -9,12 +21,6 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { EnvConfigFactory } from '@shared/infra/env';
 import { InternalServerError } from '@shared/domain/errors';
-import {
-  FilterIndexes,
-  HelpProvided,
-  IHelpsProvidedRepository,
-} from '@helps/data';
-import { DatabaseUtils, SearchParams, SearchResult } from '@shared/infra/data';
 
 export class HelpsProvidedRepository implements IHelpsProvidedRepository {
   public static instance: HelpsProvidedRepository | null = null;
@@ -133,7 +139,7 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
 
   public async searchByFilter(
     props: SearchParams,
-    filter: FilterIndexes<string>,
+    filter: FilterIndexes<HelpsProvidedIndexes, HelpsProvidedFields, string>,
   ): Promise<SearchResult<HelpProvided>> {
     try {
       let exclusiveStartKey;
@@ -145,7 +151,6 @@ export class HelpsProvidedRepository implements IHelpsProvidedRepository {
           TableName: this.tableName,
           IndexName: `${filter.index}`,
           FilterExpression: `${filter.field} = :${filter.field}`,
-          // ExpressionAttributeNames: { [`#${filter.field}`]: `${filter.field}` },
           ExpressionAttributeValues: {
             [`:${filter.field}`]: { S: `${filter.value}` },
           },

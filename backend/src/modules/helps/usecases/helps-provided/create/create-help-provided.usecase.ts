@@ -31,9 +31,6 @@ export namespace CreateHelpProvided {
         this.userRepository.findById(input.userHelped),
         this.helpsRepository.findById(input.helpId),
       ]);
-      console.log('user', user);
-      console.log('help', help);
-
       if (!user) {
         throw new NotFoundError('Usuário ajudado não encontrado');
       }

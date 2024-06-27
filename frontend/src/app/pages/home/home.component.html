@@ -1,0 +1,18 @@
+<main class="w-screen p-[1.8rem] flex flex-col">
+  <div class="card-grid">
+    @for (item of helps; track $index) {
+      <card [cardData]="item" (onOpenHelp)="openHelp($event)" />
+    } @empty {
+      <div class="mb-5 flex justify-center items-center w-full">
+        <h1 class="font-bold text-lg text-black">Sem Helpinhos cadastrados</h1>
+      </div>
+    }
+  </div>
+
+  @if(helps.length > 0){
+    <div class="mt-5">
+      <paginator (next)="onNext()" (previus)="onPrevius()" [page]="this.listMetaData.currentPage" [pageSize]="this.listMetaData.perpage"
+        [totalCount]="this.listMetaData.total"></paginator>
+    </div>
+  }
+</main>

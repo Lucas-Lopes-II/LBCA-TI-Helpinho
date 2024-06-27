@@ -1,0 +1,32 @@
+<mat-card class="w-Full h-full max-h-[340px] rounded-xl shadow-2xl" style="border-radius: 0.50rem; background-color: #f5f2f2; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);">
+  <div class="h-8/12 overflow-hidden px-[0.2rem] pt-[0.2rem]">
+    <img class="flex min-w-full min-h-full rounded-xl" style="border-radius: 0.50rem;" mat-card-image src="{{ cardData?.imgUrl }}" alt="{{ cardData?.description }}">
+  </div>
+  <mat-card-content class="h-2/12  mt-auto">
+    <div class="flex justify-between my-[0.5rem]">
+      <mat-card-title>{{ cardData?.userName }}</mat-card-title>
+      <mat-card-subtitle>{{ cardData?.category }}</mat-card-subtitle>
+    </div>
+    <p class="overflow-auto">
+      <span class="font-semibold">
+        Título:
+      </span>
+      <span>
+        {{ cardData?.title }}
+      </span>
+    </p>
+    <p class="overflow-auto">
+      <span class="font-semibold">
+        Descrição:
+      </span>
+      <span>
+        {{ cardData?.description }}
+      </span>
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="h-2/12 mt-auto">
+    <button  mat-flat-button color="warn" class="bg-[#ff2e6b] w-full py-[5rem]" (click)="openHelp()">
+      Ver detalhes
+    </button>
+  </mat-card-actions>
+</mat-card>

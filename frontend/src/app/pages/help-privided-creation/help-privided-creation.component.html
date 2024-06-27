@@ -1,0 +1,41 @@
+<main class="w-full h-full lg:h-screen flex flex-col lg:flex-row">
+    <section class="w-full lg:w-1/2 h-full flex flex-col justify-between">  
+      <form class="px-[3rem] pt-[3rem] h-5/6 flex flex-col justify-center gap-4 items-center self-center w-full md:w-[45rem] lg:w-[37rem]" [formGroup]="registerForm" (submit)="createHelpProvided()">
+        <div class="w-full flex flex-col justify-center items-start">
+          <p class="text-2xl font-semibold">
+            Cadastro de Help realizado
+          </p>
+          <p>Realizou ajuda? Cadatre aqui para analisarmos</p>
+        </div>
+        <mat-form-field class="w-full">
+          <mat-label>Valor</mat-label>
+          <input type="text" matInput formControlName="value" placeholder="valor" mask="separator.2" thousandSeparator="." prefix="R$ " separatorLimit="1000000">
+          @if (registerForm.get('value')?.hasError('required')) {
+            <mat-error>Valor é <strong>obrigatório</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Data de realização do help</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="executionDate">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (registerForm.get('executionDate')?.hasError('required')) {
+                <mat-error>Data é <strong>obrigatória</strong></mat-error>
+            }
+        </mat-form-field>
+  
+        <div class="w-full h-full">
+          <button [disabled]="registerForm.invalid" mat-flat-button color="warn" class="bg-[#ff2e6b] w-full py-[5rem]" type="submit">
+            Cadastar ajuda realizada
+          </button>
+        </div>
+      </form>
+    </section>
+  
+    <section class="w-full px-[3rem] sm:pt-[3rem] lg:w-1/2 flex justify-start items-start">
+        <details-help [help]="help" [showButton]="false"/>
+    </section>
+  </main>
+  

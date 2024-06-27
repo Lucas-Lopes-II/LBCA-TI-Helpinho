@@ -1,4 +1,5 @@
 export * from './database-utils';
+export * from './filter-indexes.dto';
 export * from './interfaces/delete.interface';
 export * from './interfaces/update.interface';
 export * from './interfaces/create.interface';

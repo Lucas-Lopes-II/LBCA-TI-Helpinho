@@ -1,4 +1,5 @@
 import {
+  FilterIndexes,
   ICreate,
   IDelete,
   IFindById,
@@ -20,12 +21,6 @@ export enum HelpsProvidedFields {
   USER_HELPED_ID = 'userHelped',
 }
 
-export type FilterIndexes<T> = {
-  index: HelpsProvidedIndexes;
-  field: HelpsProvidedFields;
-  value: T;
-};
-
 export interface IHelpsProvidedRepository
   extends ICreate<HelpProvided, void>,
     IFindById<HelpProvided>,
@@ -33,6 +28,6 @@ export interface IHelpsProvidedRepository
     IUpdate<HelpProvided> {
   searchByFilter(
     props: SearchParams,
-    filter: FilterIndexes<string>,
+    filter: FilterIndexes<HelpsProvidedIndexes, HelpsProvidedFields, string>,
   ): Promise<SearchResult<HelpProvided>>;
 }

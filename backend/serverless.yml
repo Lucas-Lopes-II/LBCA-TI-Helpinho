@@ -93,6 +93,8 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: userHelped
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -100,6 +102,12 @@ resources:
           - IndexName: IdIndex
             KeySchema:
               - AttributeName: id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: UserHelpedIndex
+            KeySchema:
+              - AttributeName: userHelped
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
